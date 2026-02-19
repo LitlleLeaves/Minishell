@@ -16,16 +16,15 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-///very important message
-
 typedef enum	e_token_type
 {
-    WORD,
+    COMMAND,
     PIPE,
-    REDIR_OUT_TRUNCT, 	// >
-    REDIR_OUT_APPEND,	// >>
+    REDIR_OUT_TRUNC, 	// >
+    REDIR_OUT_APP,		// >>
     REDIR_IN,			// <
     HEREDOC,			// <<
+
 	ENVIRONMENT,
 }				t_token_type;
 
