@@ -22,10 +22,10 @@ typedef enum	e_token_type
 {
     WORD,
     PIPE,
-    REDIR_OUT,
-    REDIR_APPEND,
-    REDIR_IN,
-    HEREDOC,
+    REDIR_OUT_TRUNCT, 	// >
+    REDIR_OUT_APPEND,	// >>
+    REDIR_IN,			// <
+    HEREDOC,			// <<
 	ENVIRONMENT,
 }				t_token_type;
 
@@ -34,6 +34,7 @@ typedef struct	s_token
     char            *value;
     t_token_type    type;
     struct s_token  *next;
+	int				fd;
 }				t_token;
 
 #endif
