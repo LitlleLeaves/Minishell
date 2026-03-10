@@ -35,8 +35,29 @@ typedef struct	s_token
 	int				fd;
 }				t_token;
 
+typedef struct s_data
+{
+	int		**pipes;
+	pid_t	*pids;
+}	t_data;
+
+//free.c
+void	ft_free_arr(void **array);
+void	ft_free_r(void **array, int i);
+
+//pipes.c
+int	ft_find_pipes(t_token *head);
+int ft_create_pipes_and_pids(int number, t_data *data);
 
 
+//dummy.c
+t_token	*ft_get_head();
+t_token	*create_token(char *value, t_token_type type, int fd);
 
-// 1111111111111111111111111111111
+//helper.c
+void	*ft_calloc(size_t nmemb, size_t size);
+
+//childs.c
+int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i);
+
 #endif
