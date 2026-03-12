@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:53:26 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/10 13:20:14 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/12 13:16:25 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,22 @@ int ft_create_pipes_and_pids(int nmb_of_pipes, t_data *data)
 		i++;
 	}
 	return (1);
+}
+
+//set up the write and read pipesides, to stdin and stdout, except for the first read, and the last write side
+int ft_setup_pipes(t_data *data, int nmb_of_pipes, int i)
+{
+	int	j;
+
+	if (i > 0)
+		dup2(data->pipes[i - 1][0], STDIN_FILENO);
+	if (i < nmb_of_pipes)
+		dup2(data->pipes[i][1], STDOUT_FILENO);
+	j = 0;
+	while (j < nmb_of_pipes)	
+	{
+		close(data->pipes[j][0]);
+		close(data->pipes[j][1]);
+		j++;
+	}
 }
