@@ -6,27 +6,12 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:04:46 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 14:05:45 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/12 15:15:37 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "exec.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	int		len;
-	char	*str;
-
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
-	ft_strlcpy(str, s1, ft_strlen((char *)s1) + 1);
-	ft_strlcat(str, s2, len + 1);
-	str[len] = '\0';
-	return (str);
-}
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
@@ -59,4 +44,19 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	}
 	dst[len] = '\0';
 	return (len + ft_strlen((char *)src));
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		len;
+	char	*str;
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = malloc(sizeof(char) * (len + 1));
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, s1, ft_strlen((char *)s1) + 1);
+	ft_strlcat(str, s2, len + 1);
+	str[len] = '\0';
+	return (str);
 }

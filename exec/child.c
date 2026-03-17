@@ -6,14 +6,19 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 14:56:40 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/12 15:14:29 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
 
-
+void ft_execution_failure(char *executable, char **arguments)
+{
+	free(arguments);
+	ft_free_arr((void **)arguments);
+	exit(127);
+}
 
 //find path in envp and build the argument list, then find executable path and execute
 int ft_child_execute(t_exec_info *exec_info, t_data *data)
@@ -38,7 +43,11 @@ int ft_child_execute(t_exec_info *exec_info, t_data *data)
 		executable = ft_make_executable(arguments[0], data->envp);
 	else
 		executable = ft_relative_executable(arguments[0]);
-	
+	if (executable == NULL)
+		exit(127);
+	execve(executable, arguments, data->envp);
+	ft_execution_failure(executable, arguments);
+	return (-1);
 }
 
 //start execution of the command
@@ -55,7 +64,7 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 	while (curr != exec_info->end && curr != NULL)
 	{
 		if (ft_apply_redirection(&exec_info->fd_in, &exec_info->fd_out, \
-curr, exec_info->str) < 0)
+curr, &exec_info->str) < 0)
 			return (-1);
 		curr = curr->next;
 	}
@@ -63,6 +72,7 @@ curr, exec_info->str) < 0)
 	{
 		ft_child_execute(exec_info, data);
 	}
+	return (1);
 }
 //find start and end of command
 int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)

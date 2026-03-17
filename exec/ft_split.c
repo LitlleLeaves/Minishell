@@ -6,11 +6,11 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 13:39:33 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 13:40:45 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/12 15:10:57 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <exec.h>
+#include "exec.h"
 
 static char	*fill_word(int start, const char *str, int end)
 {

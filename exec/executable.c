@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 14:59:19 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/12 15:10:35 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char *ft_relative_executable(char *command)
 }
 
 //make a executable by looking through the path and finding if it is executable
-char *ft_make_execuatable(char *executable, char **envp)
+char *ft_make_executable(char *executable, char **envp)
 {
 	int		i;
 	char	**paths;
@@ -67,7 +67,7 @@ char *ft_make_execuatable(char *executable, char **envp)
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH=", 5))
 		i++;
-	paths = ft_split(envp[i] + 5, ":");
+	paths = ft_split(envp[i] + 5, ':');
 	if (paths == NULL)
 		return (NULL);
 	i = 0;
@@ -78,10 +78,10 @@ char *ft_make_execuatable(char *executable, char **envp)
 			return (ft_free_arr((void **)paths), NULL);
 		exec = ft_strjoin(path, executable);
 		if (exec == NULL)
-			return (ft_free_arr(paths), free(path), NULL);
+			return (ft_free_arr((void **)paths), free(path), NULL);
 	if (access(exec, F_OK) == 0)
 		return (free(path), ft_free_arr((void **)paths), exec);
 	}
 	printf("%s: command not found", executable);
-	return (free(exec), free(path), ft_free_arr(paths), NULL);
+	return (free(exec), free(path), ft_free_arr((void **)paths), NULL);
 }
