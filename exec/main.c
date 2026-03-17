@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/17 12:36:56 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 15:04:07 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,14 @@ static int	ft_wait_all_children(t_data *data, int nmb_of_pipes)
 	status = 0;
 	while (i < nmb_of_pipes + 1)
 	{
+		printf("childs created: %d\n", data->pids[i]);
+		i++;
+	}
+	i = 0;
+	while (i < nmb_of_pipes + 1)
+	{
 		waitpid(data->pids[i], &status, 0);
+		printf("child %d exited with status %d\n", data->pids[i], WEXITSTATUS(status));
 		i++;
 	}
 	return (status);
@@ -58,15 +65,15 @@ int ft_start_exec(t_token *head, char **envp)
 	t_data	data;
 
 	data.envp = envp;
-	if ((nmb_of_pipes = ft_find_pipes(head)) < 0)
-		return (-1);
+	nmb_of_pipes = ft_find_pipes(head);
 	if (ft_create_pipes_and_pids(nmb_of_pipes, &data) < 0)
-		return (-2);
+		return (ft_free_tokens(head),-2);
 	if (ft_fork_process(head, &data, nmb_of_pipes) < 0)
-		return (-3);
+		return (ft_free_tokens(head),-3);
 	ft_close_all_pipes(&data, nmb_of_pipes);
 	ft_wait_all_children(&data, nmb_of_pipes);
-	return (1);
+	
+	return (ft_cleanup(head, &data, nmb_of_pipes), 1);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -75,6 +82,6 @@ int	main(int argc, char *argv[], char *envp[])
 	
 	head = ft_get_head();
 	if (ft_start_exec(head, envp) < 0)
-		return (-1); //TODO cleanup
+		return (-1);
 	return (0);
 }

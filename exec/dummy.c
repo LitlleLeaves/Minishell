@@ -1,6 +1,6 @@
 #include "exec.h"
 
-t_token	*create_token(char *value, t_token_type type, int fd)
+t_token	*create_token(char *value, t_token_type type)
 {
 	t_token	*token;
 
@@ -12,7 +12,6 @@ t_token	*create_token(char *value, t_token_type type, int fd)
 	else
 		token->value = NULL;
 	token->type = type;
-	token->fd = fd;
 	token->next = NULL;
 	return (token);
 }
@@ -26,13 +25,13 @@ t_token	*ft_get_head()
         t_token_type type;
         int fd;
     } token_data[] = {
-        {"infile1", REDIR_IN, 0},
-        {"grep 1", WORD, -1},
-        {NULL, PIPE, -1},
-        {"grep 2", WORD, -1},
-        {NULL, PIPE, -1},
-        {"wc -l", WORD, -1},
-        {"outfile", REDIR_OUT_TRUNCT, 1},
+        {"infile", REDIR_IN},
+        {"grep 1", WORD},
+        {NULL, PIPE},
+        {"grep 2", WORD},
+        {NULL, PIPE},
+        {"wc -l", WORD},
+        {"outfile", REDIR_OUT_TRUNCT},
     };
     
     int count = sizeof(token_data) / sizeof(token_data[0]);
@@ -41,8 +40,7 @@ t_token	*ft_get_head()
     
     for (int i = 0; i < count; i++) {
         t_token *new = create_token(token_data[i].value, 
-                                     token_data[i].type, 
-                                     token_data[i].fd);
+                                     token_data[i].type);
         if (!head) {
             head = new;
             current = head;

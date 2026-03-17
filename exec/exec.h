@@ -55,15 +55,18 @@ typedef struct s_data
 //free.c
 void	ft_free_arr(void **array);
 void	ft_free_r(void **array, int i);
+void ft_free_tokens(t_token *head);
+void ft_cleanup(t_token *head, t_data *data, int nmb_of_pipes);
 
 //pipes.c
 int	ft_find_pipes(t_token *head);
 int ft_create_pipes_and_pids(int number, t_data *data);
 int ft_setup_pipes(t_data *data, int nmb_of_pipes, int i);
+void ft_close_all_pipes(t_data *data, int nmb_of_pipes);
 
 //dummy.c
 t_token	*ft_get_head();
-t_token	*create_token(char *value, t_token_type type, int fd);
+t_token	*create_token(char *value, t_token_type type);
 
 //helper.c
 void	*ft_calloc(size_t nmemb, size_t size);

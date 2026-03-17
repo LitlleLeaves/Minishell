@@ -6,11 +6,12 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:52:21 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/10 11:59:37 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 15:04:50 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "exec.h"
 
 //free array that is null terminated
 void	ft_free_arr(void **array)
@@ -34,4 +35,36 @@ void	ft_free_r(void **array, int i)
 		free(array[i--]);
 	}
 	free(array);
+}
+
+//free the linked list of tokens after execution is done
+void ft_free_tokens(t_token *head)
+{
+	t_token *curr;
+	t_token *temp;
+
+	curr = head;
+	while (curr != NULL)
+	{
+		temp = curr;
+		curr = curr->next;
+		free(temp->value);
+		free(temp);
+	}
+}
+
+//cleanup function to free all allocated memory at the end of execution, including the linked list of tokens, the array of pids and the array of pipes
+void ft_cleanup(t_token *head, t_data *data, int nmb_of_pipes)
+{
+	int i;
+
+	ft_free_tokens(head);
+	free(data->pids);
+	i = 0;
+	while (i < nmb_of_pipes)
+	{
+		free(data->pipes[i]);
+		i++;
+	}
+	free(data->pipes);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 12:32:51 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 13:29:55 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int ft_handle_in(int *fd_in, t_token *curr)
 		close(*fd_in);
 	*fd_in = open(curr->value, O_RDONLY, 0644);
 	if (*fd_in == -1)
-			printf("Minishell: %s: %s\n", curr->value, strerror(errno));
+	{
+		printf("Minishell: %s: %s\n", curr->value, strerror(errno));
+		exit(1);	
+	}
 	return (*fd_in);
 }
 
@@ -40,6 +43,7 @@ int ft_handle_out_app(int *fd_out, t_token *curr)
 	if (*fd_out == -1)
 	{
 		printf("Minishell %s: %s\n", curr->value, strerror(errno));
+		exit(1);
 	}
 	return (*fd_out);
 }
@@ -53,6 +57,7 @@ int ft_handle_out_trunc(int *fd_out, t_token *curr)
 	if (*fd_out == -1)
 	{
 		printf("Minishell: %s: %s\n", curr->value, strerror(errno));
+		exit(1);
 	}
 	return (*fd_out);
 }

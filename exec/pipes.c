@@ -6,11 +6,26 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:53:26 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/17 12:35:40 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 12:40:39 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+//closes all pipes so the system knows that there is no more data to read, and the childs can exit
+void ft_close_all_pipes(t_data *data, int nmb_of_pipes)
+{
+	int	i;
+
+	i = 0;
+	while (i < nmb_of_pipes)
+	{
+		close(data->pipes[i][0]);
+		close(data->pipes[i][1]);
+		i++;
+	}
+}
+
 //count the amount of pipes
 int	ft_find_pipes(t_token *head)
 {
@@ -73,16 +88,3 @@ int ft_setup_pipes(t_data *data, int nmb_of_pipes, int i)
 	return (1);
 }
 
-//closes all pipes so the system knows that there is no more data to read, and the childs can exit
-static void	ft_close_all_pipes(t_data *data, int nmb_of_pipes)
-{
-	int	i;
-
-	i = 0;
-	while (i < nmb_of_pipes)
-	{
-		close(data->pipes[i][0]);
-		close(data->pipes[i][1]);
-		i++;
-	}
-}

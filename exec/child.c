@@ -6,13 +6,14 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 15:14:29 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 13:57:08 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
 
+//handle execution failure, free arguments and exit with status 127
 void ft_execution_failure(char *executable, char **arguments)
 {
 	free(arguments);
@@ -96,10 +97,11 @@ int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)
 		end = end->next;
 	exec_info->start = start;
 	exec_info->end = end;
+	fprintf(stderr, "command %d: start: %s, end: %s\n", i, exec_info->start->value, exec_info->end ? exec_info->end->value : "NULL");
 	return (1);
 }
 
-
+//child process finds the start and end of its command, applies redirections, and executes the command
 int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i)
 {
 	t_exec_info exec_info;

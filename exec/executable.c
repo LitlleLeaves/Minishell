@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 15:10:35 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 14:01:48 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,9 @@ char *ft_make_executable(char *executable, char **envp)
 		exec = ft_strjoin(path, executable);
 		if (exec == NULL)
 			return (ft_free_arr((void **)paths), free(path), NULL);
-	if (access(exec, F_OK) == 0)
-		return (free(path), ft_free_arr((void **)paths), exec);
+		if (access(exec, F_OK) == 0)
+			return (free(path), ft_free_arr((void **)paths), exec);
+		i++;
 	}
 	printf("%s: command not found", executable);
 	return (free(exec), free(path), ft_free_arr((void **)paths), NULL);
