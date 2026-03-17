@@ -76,6 +76,7 @@ char	*ft_strchr(const char *str, int c);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i);
+void ft_execution_failure(char *executable, char **arguments);
 
 //split.c
 char	**ft_split(const char *str, char c);
@@ -93,4 +94,18 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr, char **str);
 //executable.c
 char *ft_relative_executable(char *command);
 char *ft_make_executable(char *executable, char **envp);
+void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+char *ft_decide_executable(char *command, char **envp);
+
+//built_in.c
+void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_export(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_unset(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_echo(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+
+//built_in2.c
+void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+
 #endif

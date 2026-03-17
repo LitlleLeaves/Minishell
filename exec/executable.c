@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/17 14:01:48 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 15:28:52 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,40 @@ char *ft_make_executable(char *executable, char **envp)
 	}
 	printf("%s: command not found", executable);
 	return (free(exec), free(path), ft_free_arr((void **)paths), NULL);
+}
+
+//decide if the exucatble path is relative or if it needs to be found in the path, and return the executable path
+char *ft_decide_executable(char *command, char **envp)
+{
+	char *executable;
+
+	if (ft_strchr(command, '/') == NULL)
+		executable = ft_make_executable(command, envp);
+	else
+		executable = ft_relative_executable(command);
+	return (executable);
+}
+
+//choose executable is a built in or regular executable, and execute it
+void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments, char *executable)
+{
+	if (ft_strncmp(arguments[0], "cd", 2) == 0)
+		ft_builtin_cd(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "export", 6) == 0)
+		ft_builtin_export(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "unset", 5) == 0)
+		ft_builtin_unset(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "echo", 4) == 0)
+		ft_builtin_echo(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "exit", 4) == 0)
+		ft_builtin_exit(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "env", 3) == 0)
+		ft_builtin_env(exec_info, data, arguments, executable); //TODO
+	else if (ft_strncmp(arguments[0], "pwd", 3) == 0)
+		ft_builtin_pwd(exec_info, data, arguments, executable); //TODO
+	else
+	{
+		execve(executable, arguments, data->envp);
+		ft_execution_failure(executable, arguments);
+	}
 }

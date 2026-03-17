@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/17 13:57:08 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/17 15:32:16 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void ft_execution_failure(char *executable, char **arguments)
 }
 
 //find path in envp and build the argument list, then find executable path and execute
-int ft_child_execute(t_exec_info *exec_info, t_data *data)
+void ft_child_execute(t_exec_info *exec_info, t_data *data)
 {
 	char	**arguments;
 	char	*executable;
@@ -40,15 +40,10 @@ int ft_child_execute(t_exec_info *exec_info, t_data *data)
 	arguments = ft_split(exec_info->str, ' ');
 	if (arguments == NULL || arguments[0] == NULL)
 		exit(EXIT_FAILURE);
-	if (ft_strchr(arguments[0], '/') == NULL)
-		executable = ft_make_executable(arguments[0], data->envp);
-	else
-		executable = ft_relative_executable(arguments[0]);
+	executable = ft_decide_executable(arguments[0], data->envp);
 	if (executable == NULL)
 		exit(127);
-	execve(executable, arguments, data->envp);
-	ft_execution_failure(executable, arguments);
-	return (-1);
+	ft_check_builtins(exec_info, data, arguments, executable);
 }
 
 //start execution of the command
