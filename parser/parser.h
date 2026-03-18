@@ -15,6 +15,7 @@
 #include <termcap.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdbool.h>
 
 typedef enum	e_token_type
 {
@@ -35,5 +36,20 @@ typedef struct	s_token
     struct s_token  *next;
 	int				fd;
 }				t_token;
+
+
+//main
+int		main_loop(void);
+
+//read
+char	*read_input(void);
+
+//tokens
+t_token	*make_new_token(int fd, char *value, t_token_type type);
+
+//ft_helpers
+char	*ft_substr(char *str);
+int		ft_strlen(char *str);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
