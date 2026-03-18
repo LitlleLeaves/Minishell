@@ -15,7 +15,8 @@
 #include <termcap.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-// < infile grep . | < infile > outfile wc -l < infile2 > outfile2 | wc -l > outfile
+// < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
+
 typedef enum	e_token_type
 {
     WORD,
@@ -32,7 +33,6 @@ typedef struct	s_token
     char            *value;
     t_token_type    type;
     struct s_token  *next;
-	int				fd;
 }				t_token;
 
 typedef struct	s_exec_info
@@ -107,5 +107,10 @@ void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments, cha
 //built_in2.c
 void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
 void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+
+//single_builtin_execution
+int ft_check_single_builtin(char *str);
+int ft_check_builtins_before_fork(t_token *head, t_data *data);
+void ft_single_builtin(t_token *head, t_data *data);
 
 #endif

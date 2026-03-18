@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:53:26 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/17 12:40:39 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/18 16:01:51 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,3 @@ int ft_setup_pipes(t_data *data, int nmb_of_pipes, int i)
 	}
 	return (1);
 }
-

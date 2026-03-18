@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_execution.c                                :+:      :+:    :+:   */
+/*   single_builtin_execution.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/18 13:18:50 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/18 16:57:19 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,9 @@ int ft_check_builtins_before_fork(t_token *head, t_data *data)
 	while (curr->value != WORD)
 		curr = curr->next;
 	return (ft_check_single_builtin(curr->value));
+}
+
+void ft_single_builtin(t_token *head, t_data *data)
+{
+	//TODO
 }

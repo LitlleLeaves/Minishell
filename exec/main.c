@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/18 13:27:42 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/18 16:59:06 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int ft_start_exec(t_token *head, char **envp)
 	data.envp = envp;
 	nmb_of_pipes = ft_find_pipes(head);
 	if (ft_check_builtins_before_fork(head, &data) > 0 && nmb_of_pipes == 0)
-		return (ft_single_builtin(head, &data));
+		return (ft_single_builtin(head, &data), 0); //TODO
 	if (ft_create_pipes_and_pids(nmb_of_pipes, &data) < 0)
 		return (ft_free_tokens(head),-2);
 	if (ft_fork_process(head, &data, nmb_of_pipes) < 0)
