@@ -34,7 +34,6 @@ typedef struct	s_token
     char            *value;
     t_token_type    type;
     struct s_token  *next;
-	int				fd;
 }				t_token;
 
 
@@ -45,14 +44,20 @@ int		main_loop(void);
 char	*get_line(void);
 
 //tokens
-t_token	**tokenize_input(char *str);
-t_token	*make_new_token(int fd, char *value, t_token_type type);
-//t_token	*tokenize_line(char *str, int counter, t_token *head);
+t_token	*classify_and_make(char *line);
+t_token	*tokenize_input(char *str);
 int		check_delimeters(char c);
+t_token *if_redirection(int start, char *line, t_token_type type);
+//t_token	*if_pipe(char *line);
+t_token	*if_word(int start, char *line);
+t_token	*make_new_token(char *value, t_token_type type);
 
 //ft_helpers
-char	*ft_strdup(char *str);
-int		ft_strlen(char *str);
+char	*ft_strdup(char const *str);
+int		ft_strlen(char const *str);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_substr(char const *str, int start, int length);
+
+//errorhandler
 
 #endif

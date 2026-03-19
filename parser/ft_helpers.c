@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 21:19:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/18 22:07:26 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/19 18:51:53 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,34 @@
 //different strjoin!!!
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int		len;
-	char	*str;
+	int		len1;
+	int		len2;
+	char	*new_str;
+	int		counter;
 
-	if (!str && s2 != NULL)
-		return (ft_substr(s2));
-	len = ft_strlen(s1) + ft_strlen(s2);
-	str = malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	new_str = malloc((len1 + len2) + 1);
+	if (!new_str)
 		return (NULL);
-	ft_strlcpy(str, s1, ft_strlen((char *)s1) + 1);
-	ft_strlcat(str, s2, len + 1);
-	str[len] = '\0';
-	return (str);
+	counter = 0;
+	while (s1[counter] != '\0')
+	{
+		new_str[counter] = s1[counter];
+		counter++;
+	}
+	counter = 0;
+	while (s2[counter] != '\0')
+	{
+		new_str[counter + len1] = s2[counter];
+		counter++;
+	}
+	new_str[counter + len1] = '\0';
+	return (new_str);
 }
 
-char	*ft_strdup(char *str)
+
+char	*ft_strdup(char const *str)
 {
 	char	*new;
 	int 	counter;
@@ -53,7 +65,7 @@ char	*ft_strdup(char *str)
 	return (new);
 }
 
-int		ft_strlen(char *str)
+int		ft_strlen(char const *str)
 {
 	int counter;
 
@@ -61,4 +73,31 @@ int		ft_strlen(char *str)
 	while (str[counter] != '\0')
 		counter++;
 	return (counter);
+}
+
+char	*ft_substr(char const *str, int start, int length)
+{
+	char	*new;
+	int		counter;
+	int		str_len;
+
+	counter = 0;
+	if (!str)
+		return (printf("bad input\n"), NULL);
+	str_len = ft_strlen(str);
+	if (start > str_len)
+		return (ft_strdup(""));
+	if (start + length > str_len)
+		new = (char *)malloc((str_len - start) + 1);
+	else
+		new = (char *)malloc(length + 1);
+	if (!new)
+		return (printf("malloc error"), NULL);
+	while (counter < length && str[start + counter] != '\0')
+	{
+		new[counter] = str[start + counter];
+		counter++;
+	}
+	new[counter] = '\0';
+	return (new);
 }
