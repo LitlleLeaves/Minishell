@@ -26,13 +26,13 @@ t_token	*ft_get_head()
         int fd;
     } token_data[] = {
         {"infile", REDIR_IN},
-        {"grep", WORD},
+        {"cd", WORD},
 		{"1", WORD},
 		{"outfile", REDIR_OUT_TRUNCT},
-        {NULL, PIPE},
-		{"infile", REDIR_IN},
-        {"grep", WORD},
-		{"2", WORD},
+        // {NULL, PIPE},
+		// {"infile", REDIR_IN},
+        // {"grep", WORD},
+		// {"2", WORD},
         // {NULL, PIPE},
         // {"wc", WORD},
 		// {"-l", WORD},

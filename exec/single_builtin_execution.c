@@ -6,45 +6,38 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/18 16:57:19 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 14:50:18 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int ft_check_single_builtin(char *str)
+int ft_check_single_builtin(char *str, t_token *head)
 {
-	if (strncmp(str, "cd", 2))
-		return(1);
-	else if (strncmp(str, "echo", 4))
-		return(2);
-	else if (strncmp(str, "pwd", 3))
-		return(3);
-	else if (strncmp(str, "export", 6))
-		return(4);
-	else if (strncmp(str, "unset", 5))
-		return(5);
-	else if (strncmp(str, "env", 3))
-		return(6);
-	else if (strncmp(str, "exit", 4))
-		return(7);
+	if (ft_strncmp(str, "cd", 2) == 0)
+		return(ft_builtin_single_cd(head), 1);
+	else if (ft_strncmp(str, "echo", 4) == 0)
+		return(ft_builtin_single_echo(head), 2);
+	else if (ft_strncmp(str, "pwd", 3) == 0)
+		return(ft_builtin_single_pwd(head), 3);
+	else if (ft_strncmp(str, "export", 6) == 0)
+		return(ft_builtin_single_export(head), 4);
+	else if (ft_strncmp(str, "unset", 5) == 0)
+		return(ft_builtin_single_unset(head), 5);
+	else if (ft_strncmp(str, "env", 3) == 0)
+		return(ft_builtin_single_env(head), 6);
+	else if (ft_strncmp(str, "exit", 4) == 0)
+		return(ft_builtin_single_exit(head), 7);
 	else
 		return (0);
 }
 
-int ft_check_builtins_before_fork(t_token *head, t_data *data)
+int ft_check_builtins_before_fork(t_token *head)
 {
 	t_token *curr;
 	
-	if (head == NULL || head->type != WORD)
-		return (0);
 	curr = head;
-	while (curr->value != WORD)
+	while (curr->type != WORD)
 		curr = curr->next;
-	return (ft_check_single_builtin(curr->value));
-}
-
-void ft_single_builtin(t_token *head, t_data *data)
-{
-	//TODO
+	return (ft_check_single_builtin(curr->value, head));
 }

@@ -111,9 +111,21 @@ void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments, cha
 void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
 void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
 
-//single_builtin_execution
-int ft_check_single_builtin(char *str);
-int ft_check_builtins_before_fork(t_token *head, t_data *data);
+//single_builtin_execution.c
+int ft_check_single_builtin(char *str, t_token *head);
+int ft_check_builtins_before_fork(t_token *head);
 void ft_single_builtin(t_token *head, t_data *data);
+
+//builtin_single.c
+void ft_builtin_single_exit(t_token *head);
+void ft_builtin_single_echo(t_token *head);
+void ft_builtin_single_unset(t_token *head);
+void ft_builtin_single_export(t_token *head);
+void ft_builtin_single_cd(t_token *head);
+
+//builtin_single2.c
+void ft_builtin_single_pwd(t_token *head);
+void ft_builtin_single_env(t_token *head);
+
 
 #endif
