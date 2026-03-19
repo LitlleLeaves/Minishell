@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 14:47:28 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 14:59:14 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void ft_builtin_single_cd(t_token *head)
 {
 	// (void)head;
-	printf("builtin cd\n");
+	printf("builtin single cd\n");
 }
 
 void ft_builtin_single_export(t_token *head)

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 14:50:24 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 14:58:27 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int ft_start_exec(t_token *head, char **envp)
 		return (ft_free_tokens(head), ft_close_all_pipes(&data, nmb_of_pipes),- 3);
 	ft_close_all_pipes(&data, nmb_of_pipes);
 	ft_wait_all_children(&data, nmb_of_pipes);
-	
 	return (ft_cleanup(head, &data, nmb_of_pipes), 1);
 }
 

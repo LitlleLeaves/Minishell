@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 13:33:47 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 15:03:07 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
         dup2(exec_info->fd_out, STDOUT_FILENO);
         close(exec_info->fd_out);
     }
-	executable = ft_decide_executable(exec_info->arguments[0], data->envp);
+	executable = ft_decide_executable(exec_info->arguments[0], data->envp); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
 	if (executable == NULL)
 		exit(127);
 	ft_check_builtins(exec_info, data, exec_info->arguments, executable);
