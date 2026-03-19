@@ -97,19 +97,19 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr);
 //executable.c
 char *ft_relative_executable(char *command);
 char *ft_make_executable(char *executable, char **envp);
-void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments);
 char *ft_decide_executable(char *command, char **envp);
 
 //built_in.c
-void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
-void ft_builtin_export(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
-void ft_builtin_unset(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
-void ft_builtin_echo(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
-void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_export(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_unset(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_echo(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments);
 
 //built_in2.c
-void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
-void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments, char *executable);
+void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments);
 
 //single_builtin_execution.c
 int ft_check_single_builtin(char *str, t_token *head);
