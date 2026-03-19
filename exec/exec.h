@@ -43,6 +43,8 @@ typedef struct	s_exec_info
 	int		fd_in;
 	int		fd_out;
 	int		command_number;
+	int		words;
+	char	**arguments;
 }				t_exec_info;
 
 typedef struct s_data
@@ -73,6 +75,7 @@ void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);
+char	*ft_strdup(const char *s);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i);
@@ -89,7 +92,7 @@ int ft_handle_in(int *fd_in, t_token *curr);
 int ft_handle_in_heredoc(int *fd_in, t_token *curr);
 int ft_handle_out_app(int *fd_out, t_token *curr);
 int ft_handle_out_trunc(int *fd_out, t_token *curr);
-int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr, char **str);
+int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr);
 
 //executable.c
 char *ft_relative_executable(char *command);

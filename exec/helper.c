@@ -6,13 +6,14 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:02:36 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/12 14:39:02 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 11:52:26 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <limits.h>
 
+//allocate nmemb amount of data of size size
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	unsigned char	*ptr;
@@ -34,6 +35,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	return ((void *)ptr);
 }
 
+//compare string 1 and 2 and return the difference for n number of characters, if there is no difference, return 0;
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	const unsigned char	*ucs1;
@@ -78,4 +80,27 @@ char	*ft_strchr(const char *str, int c)
 	if ((unsigned char)c == '\0')
 		return ((char *) str);
 	return (NULL);
+}
+
+//returns a copy of str s
+char	*ft_strdup(const char *s)
+{
+	int		size;
+	char	*str;
+	int		i;
+
+	size = ft_strlen(s);
+	if (!s)
+		return (NULL);
+	str = malloc(sizeof(char) * (size + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

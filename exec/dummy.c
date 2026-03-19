@@ -26,12 +26,17 @@ t_token	*ft_get_head()
         int fd;
     } token_data[] = {
         {"infile", REDIR_IN},
-        {"grep 1", WORD},
+        {"grep", WORD},
+		{"1", WORD},
+		{"outfile", REDIR_OUT_TRUNCT},
         {NULL, PIPE},
-        {"grep 2", WORD},
-        {NULL, PIPE},
-        {"wc -l", WORD},
-        {"outfile", REDIR_OUT_TRUNCT},
+		{"infile", REDIR_IN},
+        {"grep", WORD},
+		{"2", WORD},
+        // {NULL, PIPE},
+        // {"wc", WORD},
+		// {"-l", WORD},
+        {"outfile2", REDIR_OUT_APPEND},
     };
     
     int count = sizeof(token_data) / sizeof(token_data[0]);

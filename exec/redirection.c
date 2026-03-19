@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/18 16:03:58 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 13:33:13 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int ft_handle_out_trunc(int *fd_out, t_token *curr)
 }
 
 //handle redirection and save command
-int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr, char **str)
+int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr)
 {
 	if (curr->type == REDIR_IN)
 		ft_handle_in(fd_in, curr);
@@ -73,8 +73,6 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr, char **str)
 		ft_handle_out_app(fd_out, curr);
 	else if (curr->type == REDIR_OUT_TRUNCT)
 		ft_handle_out_trunc(fd_out, curr);
-	else if (curr->type == WORD)
-		*str = curr->value;
 	if (*fd_in == -1 || *fd_out == -1)
 		return (-1);
 	return(1);
