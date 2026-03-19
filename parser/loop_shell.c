@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/18 21:22:23 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/18 23:00:07 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,27 @@ int	main(int argc, char *argv[])
 //main loop of te shell
 int		main_loop(void)
 {
+	char 	*temp;
 	char	*line;
 	t_token	*head;
 	
 	while (true)
 	{
 		printf("> ");
-		line = read_input();
+		line = get_line();
 		if (line == NULL)
 			return (0);
-		//tokenize_input(line);
+		temp = line;
+		line = parse(line);
+		free(temp);
+		tokenize_input(line);
 		//print_result
 		usleep(500);
 	}
 }
 
-char	*read_input(void)
+char	*parse(char *line)
 {
-	char	*line;
-	char	*temp;
-	int		read_return;
-
-	read_return = 0;
-	temp = malloc(1024 * sizeof(char));
-	if (!temp)
-		return (printf("malloc fail"), 0);
-	while (temp != NULL)
-	{
-		read_return	= read(0, line, 1024);
-		if (read_return == -1)
-			return (printf("read error"), NULL);
-		line = strjoin(line, temp);
-		free(temp);
-	}
+	int	counter;
+	
 }
-

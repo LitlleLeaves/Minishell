@@ -42,13 +42,16 @@ typedef struct	s_token
 int		main_loop(void);
 
 //read
-char	*read_input(void);
+char	*get_line(void);
 
 //tokens
+t_token	**tokenize_input(char *str);
 t_token	*make_new_token(int fd, char *value, t_token_type type);
+//t_token	*tokenize_line(char *str, int counter, t_token *head);
+int		check_delimeters(char c);
 
 //ft_helpers
-char	*ft_substr(char *str);
+char	*ft_strdup(char *str);
 int		ft_strlen(char *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 

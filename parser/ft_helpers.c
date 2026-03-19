@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 21:19:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/18 21:21:09 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/18 22:07:26 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-char	*ft_substr(char *str)
+char	*ft_strdup(char *str)
 {
 	char	*new;
 	int 	counter;
