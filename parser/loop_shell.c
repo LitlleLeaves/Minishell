@@ -6,12 +6,12 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/19 19:15:37 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/27 14:08:35 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
+static char	*stringify_enum(t_token_type token);
 
 int	main(int argc, char *argv[])
 {
@@ -23,31 +23,74 @@ int	main(int argc, char *argv[])
 //main loop of te shell
 int		main_loop(void)
 {
-	char 	*temp;
 	char	*line;
 	t_token	*head;
+	t_token	*token;
 
-	printf("yes\n");
 	while (1)
 	{
-		printf("minishell > ");
-		fflush(stdout);
 		line = get_line();
-		if (line == NULL)
-			return (0);
-		//temp = line;
-		//line = parse(line);
-		//free(temp);
-		temp = line;
+		if (!line)
+			break ;
+		//printf("%s\n", line);
 		head = tokenize_input(line);
-		free(temp);
-		//print_result
-		usleep(500);
+		token = head;
+		while (token != NULL)
+		{
+			printf("%s %s\n", token->value, stringify_enum(token->type));
+			token = token->next;
+		}
+		while (head != NULL)
+		{
+			token = head;
+			head = head->next;
+			free(token->value);
+			free(token);
+		}
 	}
+	return (0);
 }
 
+static char	*stringify_enum(t_token_type token)
+{
+	if (token == COMMAND)
+		return ("command");
+	if (token == PIPE)
+		return ("PIPE");
+	if (token == REDIR_OUT_APP)
+		return ("REDIR_OUT_APP");
+	if (token == REDIR_OUT_TRUNC)
+		return ("REDIR_OUT_TRUNC");
+	if (token == REDIR_IN)
+		return ("REDIR_IN");
+	if (token == HEREDOC)
+		return ("HEREDOC");
+	return (NULL);
+}
 //char	*parse(char *line)
 //{
 //	int	counter;
-	
+
+//}
+//int	main(void)
+//{
+//	char	str[7] = " wc -l";
+//	t_token *token;
+//	t_token	*head;
+
+//	head = tokenize_input(str);
+//	token = head;
+//	while (token != NULL)
+//	{
+//		printf("%s\n", token->value );
+//		token = token->next;
+//	}
+//	while (head != NULL)
+//	{
+//		token = head;
+//		head = head->next;
+//		free(token->value);
+//		free(token);
+//	}
+//	return (0);
 //}

@@ -3,6 +3,7 @@ NAME    := MINISHELLL
 # Compiler and flags
 CC      := cc
 CFLAGS  := -Wall -Wextra -Werror -g -fsanitize=address
+LDFLAGS = -lreadline
 
 #Source files
 SRC :=	ft_helpers.c \
@@ -17,7 +18,7 @@ OBJ := $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(HEADERS)-o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(HEADERS)-o $(NAME) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)"

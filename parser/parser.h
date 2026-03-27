@@ -2,6 +2,8 @@
 # define MINISHELL_H
 
 #include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -10,11 +12,9 @@
 #include <dirent.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
+#include <termcap.h>
 #include <sys/ioctl.h>
 #include <termios.h>
-#include <termcap.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <stdbool.h>
 
 typedef enum	e_token_type
@@ -42,6 +42,7 @@ int		main_loop(void);
 
 //read
 char	*get_line(void);
+char	*readline (const char *prompt);
 
 //tokens
 t_token	*classify_and_make(char *line);
@@ -51,6 +52,7 @@ t_token *if_redirection(int start, char *line, t_token_type type);
 //t_token	*if_pipe(char *line);
 t_token	*if_word(int start, char *line);
 t_token	*make_new_token(char *value, t_token_type type);
+int		index_to_next_delimetre(char *line, int index);
 
 //ft_helpers
 char	*ft_strdup(char const *str);

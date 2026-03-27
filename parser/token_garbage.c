@@ -6,11 +6,40 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:17:09 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/19 19:24:05 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/27 21:41:48 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+//int		index_over_command(char *line, int index)
+//{
+//	//printf("before comand index:%d\n", index);
+//	while (line[index] != '\0' && check_delimeters(line[index]) == 0)
+//		index++;
+//	return (index);
+//}
+
+int		index_to_next_delimetre(char *line, int index)
+{
+	while (line[index] == ' ')
+		index++;
+	if (line[index] == '<' || line[index] == '>')
+	{
+		while (check_delimeters(line[index]) == 1)
+			index++;
+		while (check_delimeters(line[index]) == 0)
+			index++;
+	}
+	else if (line[index] == '|')
+		index++;
+	else
+	{
+		while (check_delimeters(line[index]) == 0)
+			index++;
+	}
+	return (index);
+}
 
 t_token	*tokenize_input(char *str)
 {
@@ -24,6 +53,7 @@ t_token	*tokenize_input(char *str)
 	while (str[index] != '\0')
 	{
 		start = index;
+		//make the token
 		if (current == NULL)
 		{
 			current = classify_and_make(str + start);
@@ -34,18 +64,19 @@ t_token	*tokenize_input(char *str)
 			current->next = classify_and_make(str + start);
 			current = current->next;
 		}
-		if (check_delimeters(str[index]) == 0)
-		{
-			while (check_delimeters(str[index] == 0))
-				index++;
-		}
-		while (check_delimeters(str[index]) == 1 && str[index] != '\0')
-			index++;
+		//index towards new token
+		//if (check_delimeters(str[index]) == 0)
+		//	index = index_over_command(str, index);
+		//else
+		index = index_to_next_delimetre(str, index);
+		//printf("token value%s\n", current->value);
+		//printf("index:%d\n", index);
+		//printf("%c, %s\n", str[index] ,ft_substr(str, start, index - start));
 	}
 	return (head);
 }
 
-// < infile< infile2.txt < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
+//< infile< infile2.txt < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
 t_token	*classify_and_make(char *line)
 {
 	t_token	*token;
@@ -54,6 +85,8 @@ t_token	*classify_and_make(char *line)
 	index = 0;
 	while (line[index] == ' ')
 		index++;
+	//printf("index%d\n", index);
+	//printf("on:%c\n", line[index]);
 	if (check_delimeters(line[index]) == 0) //command
 	{
 		token = if_word(index, line);
@@ -61,7 +94,7 @@ t_token	*classify_and_make(char *line)
 	}
 	else if (line[index] == '|') //pipe
 	{
-		token = make_new_token(NULL, PIPE);
+		token = make_new_token("|", PIPE);
 		return (token);
 	}
  	else if (line[index] == '>' && line[index + 1] == '>') //append
@@ -87,36 +120,12 @@ t_token	*classify_and_make(char *line)
 	return (NULL);
 }
 
-int		check_delimeters(char c)
-{
-	if (c == '|' && c == '>' && c == '<' && c == ' ')
-		return (1);
-	return (0);
-}
-
 char	*get_line(void)
 {
 	char	*line;
-	char	*temp;
-	int		read_return;
 
-	read_return = 0;
-	line = ft_strdup("");
-	temp = malloc(1024 * sizeof(char));
-	if (!temp)
-		return (printf("malloc fail"), NULL);
-	while (temp != NULL)
-	{
-		read_return	= read(0, line, 1024);
-		printf("%d\n", read_return);
-		if (read_return == -1)
-			return (printf("read error"), NULL);
-		line[read_return] = '\0';
-		line = ft_strjoin(line, temp);
-		free(temp);
-		if (!line)
-			return (printf("join error"), NULL);
-	}
+	line = readline("you are a cog>");
+	if (!line)
+		return (NULL);
 	return (line);
 }
-
