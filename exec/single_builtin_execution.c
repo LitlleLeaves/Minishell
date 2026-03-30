@@ -6,11 +6,27 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 14:50:18 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/30 12:14:28 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+int ft_count_single_words(t_token *head)
+{
+	t_token	*curr;
+	int		words;
+
+	curr = head;
+	words = 0;
+	while (curr != NULL)
+	{
+		if (curr->type == WORD)
+			words++;
+		curr = curr->next;
+	}
+	return (words);
+}
 
 int ft_check_single_builtin(char *str, t_token *head)
 {

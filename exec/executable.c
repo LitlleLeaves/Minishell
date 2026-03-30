@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 15:29:20 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/19 15:30:43 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ char *ft_decide_executable(char *command, char **envp)
 //choose executable is a built in or regular executable, and execute it
 void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments)
 {
-	fprintf(stderr, "%s\n", arguments[0]);
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
 		ft_builtin_cd(exec_info, data, arguments); //TODO
 	else if (ft_strncmp(arguments[0], "export", 6) == 0)
