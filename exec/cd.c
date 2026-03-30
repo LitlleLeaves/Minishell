@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/30 13:27:00 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/30 16:53:37 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void ft_cd_helper(t_token **curr)
 	}
 }
 
-void ft_cd_one_argument(t_token *head)
+void ft_cd_one_argument(t_token *head, int words)
 {
 	t_token	*curr;
 	char	*path;
