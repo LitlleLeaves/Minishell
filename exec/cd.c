@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:21:28 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:53:31 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void ft_cd_helper(t_token **curr)
 	}
 }
 
-void ft_cd_one_argument(t_token *head, int words, t_data *data)
+void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir)
 {
 	t_token	*curr;
 	char	*path;
@@ -49,7 +49,7 @@ void ft_cd_one_argument(t_token *head, int words, t_data *data)
 	if (ft_strncmp(curr->value, "~", 1) == 0)
 	{
 		// printf("~ detected\n");
-		home = getenv("HOME");
+		home = ft_getenv(data, "HOME");
 		// printf("%s\n", home);
 		if (curr->value[1] != '\0')
 			path = ft_strjoin(home, curr->value + 1);

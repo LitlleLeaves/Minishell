@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 12:54:19 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:54:59 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,18 +90,18 @@ void ft_single_redirection(t_token *curr, int *fd_in, int *fd_out)
 {
 	while (curr != NULL)
 	{
-		ft_apply_redirection(&fd_in, &fd_out, curr);
+		ft_apply_redirection(fd_in, fd_out, curr);
 		curr = curr->next;	
 	}
 		if (fd_in >= 0)
     {
-        dup2(fd_in, STDIN_FILENO);
-        close(fd_in);
+        dup2(*fd_in, STDIN_FILENO);
+        close(*fd_in);
     }
 	if (fd_out >= 0)
     {
-        dup2(fd_out, STDOUT_FILENO);
-        close(fd_out);
+        dup2(*fd_out, STDOUT_FILENO);
+        close(*fd_out);
     }
 }
 

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:22:37 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:49:55 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *da
 
 void ft_builtin_single_export(t_token *head, int words, char **arguments, t_data *data)
 {
-	if (arguments[1] == NULL)
-		ft_export_print_list(); //TODO
-	else
-		ft_add_to_export_list(arguments); //TODO
+	// if (arguments[1] == NULL)
+	// 	ft_export_print_list(); //TODO
+	// else
+	// 	ft_add_to_export_list(arguments); //TODO
 }
 
 void ft_builtin_single_unset(t_token *head, int words, char **arguments, t_data *data)

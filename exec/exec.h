@@ -112,7 +112,7 @@ void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments);
 
 //single_builtin_execution.c
-int ft_check_single_builtin( t_token *head, int words, char **arguments);
+int ft_check_single_builtin( t_token *head, int words, char **arguments, t_data *data);
 int ft_check_builtins_before_fork(t_token *head, t_data *data);
 void ft_single_builtin(t_token *head, t_data *data);
 int ft_count_single_words(t_token *head);
@@ -129,8 +129,8 @@ void ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *d
 void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data);
 
 //cd.c
-void ft_cd_no_arguments(t_data *data, char **curr_dir);
-void ft_cd_one_argument(t_token *head, int words, t_data *data, char **curr_dir);
+void ft_cd_no_arguments(t_data *data, char *curr_dir);
+void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir);
 
 //ft_getenv.c
 char *ft_getenv(t_data *data, char *var);

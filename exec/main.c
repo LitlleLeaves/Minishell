@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 12:44:41 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:55:16 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ int ft_start_exec(t_token *head, char **envp, t_data *data)
 	int		nmb_of_pipes;
 
 	nmb_of_pipes = ft_find_pipes(head);
-	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head, &data) > 0)
+	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head, data) > 0)
 		return (-1);
-	if (ft_create_pipes_and_pids(nmb_of_pipes, &data) < 0)
+	if (ft_create_pipes_and_pids(nmb_of_pipes,data) < 0)
 		return (ft_free_tokens(head),-2);
-	if (ft_fork_process(head, &data, nmb_of_pipes) < 0)
-		return (ft_free_tokens(head), ft_close_all_pipes(&data, nmb_of_pipes),- 3);
-	ft_close_all_pipes(&data, nmb_of_pipes);
-	ft_wait_all_children(&data, nmb_of_pipes);
-	return (ft_cleanup(head, &data, nmb_of_pipes), 1);
+	if (ft_fork_process(head, data, nmb_of_pipes) < 0)
+		return (ft_free_tokens(head), ft_close_all_pipes(data, nmb_of_pipes),- 3);
+	ft_close_all_pipes(data, nmb_of_pipes);
+	ft_wait_all_children(data, nmb_of_pipes);
+	return (ft_cleanup(head, data, nmb_of_pipes), 1);
 }
 
 int ft_copy_envp(t_data *data, char **envp)
@@ -98,12 +98,12 @@ int ft_copy_envp(t_data *data, char **envp)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_token *head;
-	t_data	*data;
+	t_data	data;
 	
 	head = ft_get_head();
-	if (ft_copy_envp(data, envp) == -1)
+	if (ft_copy_envp(&data, envp) == -1)
 		return (ft_free_arr((void **)head), -1);
-	if (ft_start_exec(head, envp, data) < 0)
+	if (ft_start_exec(head, envp, &data) < 0)
 		return (ft_free_arr((void **)head), -1);
 	return (0);
 }
