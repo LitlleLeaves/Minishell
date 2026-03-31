@@ -19,7 +19,7 @@
 
 typedef enum	e_token_type
 {
-    COMMAND,
+    WORD,
     PIPE,
     REDIR_OUT_TRUNC, 	// >
     REDIR_OUT_APP,		// >>
@@ -39,20 +39,23 @@ typedef struct	s_token
 
 //main
 int		main_loop(void);
-
+	
 //read
 char	*get_line(void);
-char	*readline (const char *prompt);
 
 //tokens
 t_token	*classify_and_make(char *line);
 t_token	*tokenize_input(char *str);
 int		check_delimeters(char c);
 t_token *if_redirection(int start, char *line, t_token_type type);
-//t_token	*if_pipe(char *line);
 t_token	*if_word(int start, char *line);
 t_token	*make_new_token(char *value, t_token_type type);
-int		index_to_next_delimetre(char *line, int index);
+t_token	*word_with_quotes(char *line, int start);
+//t_token	*if_pipe(char *line);
+
+//token_indexer
+int		index_to_next_delimeter(char *line, int index);
+int		if_index_finds_quotations(char *line, int index);
 
 //ft_helpers
 char	*ft_strdup(char const *str);

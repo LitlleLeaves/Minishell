@@ -2,7 +2,7 @@ NAME    := MINISHELLL
 
 # Compiler and flags
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS  := -Wall -Wextra -Werror -g -fsanitize=address,undefined
 LDFLAGS = -lreadline
 
 #Source files

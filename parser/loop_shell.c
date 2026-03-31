@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/27 14:08:35 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:06:18 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,30 +30,36 @@ int		main_loop(void)
 	while (1)
 	{
 		line = get_line();
-		if (!line)
-			break ;
-		//printf("%s\n", line);
-		head = tokenize_input(line);
-		token = head;
-		while (token != NULL)
+		if (line && *line)
 		{
-			printf("%s %s\n", token->value, stringify_enum(token->type));
-			token = token->next;
-		}
-		while (head != NULL)
-		{
+            add_history(line);
+			head = tokenize_input(line);
 			token = head;
-			head = head->next;
-			free(token->value);
-			free(token);
+			printf("woopwooop\n");
+			while (token != NULL)
+			{
+				if (token->value == NULL)
+					token = token->next;
+				printf("%s %s\n", token->value, stringify_enum(token->type));
+				token = token->next;
+			}
+			while (head != NULL)
+			{
+				token = head;
+				head = head->next;
+				free(token->value);
+				free(token);
+			}
 		}
+		//printf("%s\n", line);
 	}
+	rl_clear_history();	
 	return (0);
 }
 
 static char	*stringify_enum(t_token_type token)
 {
-	if (token == COMMAND)
+	if (token == WORD)
 		return ("command");
 	if (token == PIPE)
 		return ("PIPE");

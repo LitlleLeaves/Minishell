@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:17:09 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/27 21:41:48 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:40:49 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 //	return (index);
 //}
 
-int		index_to_next_delimetre(char *line, int index)
+int		index_to_next_delimeter(char *line, int index)
 {
 	while (line[index] == ' ')
 		index++;
@@ -31,6 +31,8 @@ int		index_to_next_delimetre(char *line, int index)
 		while (check_delimeters(line[index]) == 0)
 			index++;
 	}
+	if (line[index] == '\'' || line[index] == '"')
+		index = if_index_finds_quotations(line, index);
 	else if (line[index] == '|')
 		index++;
 	else
@@ -40,6 +42,29 @@ int		index_to_next_delimetre(char *line, int index)
 	}
 	return (index);
 }
+
+int if_index_finds_quotations(char *line, int index)
+{
+    char	quote_type;
+
+    quote_type = line[index];
+    index++;
+    while (line[index] != '\0' && line[index] != quote_type)
+        index++;
+    if (line[index] == quote_type)
+        index++;
+    else
+    {
+        printf("minishell: syntax error: unclosed quote\n");
+    }
+    return (index);
+}
+
+//echo 'hello     world'
+//echo "My home is $HOME" and 'My home is $HOME'
+//echo "It's a 'beautiful' day"
+//ls "" "-l"
+//echo 'Wait'"...""$USER"'!'
 
 t_token	*tokenize_input(char *str)
 {
@@ -64,22 +89,14 @@ t_token	*tokenize_input(char *str)
 			current->next = classify_and_make(str + start);
 			current = current->next;
 		}
-		//index towards new token
-		//if (check_delimeters(str[index]) == 0)
-		//	index = index_over_command(str, index);
-		//else
-		index = index_to_next_delimetre(str, index);
-		//printf("token value%s\n", current->value);
-		//printf("index:%d\n", index);
-		//printf("%c, %s\n", str[index] ,ft_substr(str, start, index - start));
+		index = index_to_next_delimeter(str, index);
 	}
 	return (head);
 }
 
-//< infile< infile2.txt < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
+//< infile< infile2.txt < infile3 wc <"infile4 " -l |  wc -l  | wc -l > outfile
 t_token	*classify_and_make(char *line)
 {
-	t_token	*token;
 	int		index;
 
 	index = 0;
@@ -88,35 +105,17 @@ t_token	*classify_and_make(char *line)
 	//printf("index%d\n", index);
 	//printf("on:%c\n", line[index]);
 	if (check_delimeters(line[index]) == 0) //command
-	{
-		token = if_word(index, line);
-		return (token);
-	}
+		return (if_word(index, line));
 	else if (line[index] == '|') //pipe
-	{
-		token = make_new_token("|", PIPE);
-		return (token);
-	}
+		return (make_new_token("|", PIPE));
  	else if (line[index] == '>' && line[index + 1] == '>') //append
-	{
-		token = if_redirection(index, line, REDIR_OUT_APP);
-		return (token);
-	}
+		return (if_redirection(index, line, REDIR_OUT_APP));
  	else if (line[index] == '<' && line[index + 1] == '<') // heredeoc
-	{
-		token = if_redirection(index, line, HEREDOC);
-		return (token);
-	}
+		return (if_redirection(index, line, HEREDOC));
  	else if (line[index] == '>') // truncate
-	{
-		token = if_redirection(index, line, REDIR_OUT_TRUNC);
-		return (token);
-	}
+		return (if_redirection(index, line, REDIR_OUT_TRUNC));
  	else if (line[index] == '<') // input
-	{
-		token = if_redirection(index, line, REDIR_IN);
-		return (token);
-	}
+		return (if_redirection(index, line, REDIR_IN));
 	return (NULL);
 }
 
@@ -125,7 +124,7 @@ char	*get_line(void)
 	char	*line;
 
 	line = readline("you are a cog>");
-	if (!line)
-		return (NULL);
+	if (line[0] == '\0')
+		return (free(line), NULL);
 	return (line);
 }
