@@ -132,8 +132,11 @@ void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *d
 void ft_cd_no_arguments(t_data *data, char *curr_dir);
 void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir);
 
-//ft_getenv.c
+//env_list
 char *ft_getenv(t_data *data, char *var);
+int ft_extend_env(t_data *data, char *entry);
+int ft_change_env_key_value(char *key, char *value, t_data *data);
+int ft_change_env_key(char *entry, t_data *data);
 
 //ft_strjoin.c
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
