@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_single2.c                                  :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 14:28:07 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 12:36:12 by jjhurry          ###   ########.fr       */
+/*   Created: 2026/03/31 12:55:38 by jjhurry           #+#    #+#             */
+/*   Updated: 2026/03/31 13:03:51 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data)
+char *ft_getenv(t_data *data, char *var)
 {
-	(void)head;
-	printf("builtin env\n");
-}
+	int i;
+	size_t len;
 
-void ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *data)
-{
-	(void)head;
-	printf("builtin pwd\n");
+	i = 0;
+	len = ft_strlen(var);
+	while (data->envp[i])
+	{
+		if (ft_strncmp(data->envp[i], var, len) == 0\
+&& data->envp[i][len] == '=')
+			return (data->envp[i] + len + 1);
+		i++;
+	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 14:58:27 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 12:44:41 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,12 @@ int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 	return (1);
 }
 //parent process sets up pipes and pids,check for single builtin and executes it or then forks the children, and waits for them to finish
-int ft_start_exec(t_token *head, char **envp)
+int ft_start_exec(t_token *head, char **envp, t_data *data)
 {
 	int		nmb_of_pipes;
-	t_data	data;
 
-	data.envp = envp;
 	nmb_of_pipes = ft_find_pipes(head);
-	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head) > 0)
+	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head, &data) > 0)
 		return (-1);
 	if (ft_create_pipes_and_pids(nmb_of_pipes, &data) < 0)
 		return (ft_free_tokens(head),-2);
@@ -77,12 +75,35 @@ int ft_start_exec(t_token *head, char **envp)
 	return (ft_cleanup(head, &data, nmb_of_pipes), 1);
 }
 
+int ft_copy_envp(t_data *data, char **envp)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (envp[i] != NULL)
+		i++;
+	data->envp = ft_calloc(i + 1, sizeof(char *));
+	if (data->envp == NULL)
+		return (-1);
+	j = 0;
+	while (j < i)
+	{
+		data->envp[j] = ft_strdup(envp[j]);
+		j++;
+	}
+	return (1);
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_token *head;
+	t_data	*data;
 	
 	head = ft_get_head();
-	if (ft_start_exec(head, envp) < 0)
-		return (-1);
+	if (ft_copy_envp(data, envp) == -1)
+		return (ft_free_arr((void **)head), -1);
+	if (ft_start_exec(head, envp, data) < 0)
+		return (ft_free_arr((void **)head), -1);
 	return (0);
 }
