@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 12:35:54 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:22:37 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,19 @@
 void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *data)
 {
 	char cwd[4096]; // debug
+	char *curr_dir;
 
-	printf("%s\n", getenv("PWD")); // debug
+	curr_dir = ft_getenv(data, "PWD");
+	printf("%s\n", ft_getenv(data, "PWD")); // debug
 	if (words > 2)
 	{
 		printf("minishell: cd: too many arguments\n");
 		errno = 1;
 	}
 	else if (words == 1)
-		ft_cd_no_arguments();
+		ft_cd_no_arguments(data, curr_dir);
 	else if (words == 2)
-		ft_cd_one_argument(head, words);
+		ft_cd_one_argument(head, words, data, curr_dir);
 	printf("%s\n", getcwd(cwd, sizeof(cwd))); // debug
 	// printf("builtin single cd\n");
 }

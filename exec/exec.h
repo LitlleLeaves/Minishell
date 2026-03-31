@@ -129,11 +129,14 @@ void ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *d
 void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data);
 
 //cd.c
-void ft_cd_no_arguments();
-void ft_cd_one_argument(t_token *head, int words);
+void ft_cd_no_arguments(t_data *data, char **curr_dir);
+void ft_cd_one_argument(t_token *head, int words, t_data *data, char **curr_dir);
 
 //ft_getenv.c
 char *ft_getenv(t_data *data, char *var);
 
+//ft_strjoin.c
+size_t	ft_strlcat(char *dst, const char *src, size_t size);
+size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 #endif

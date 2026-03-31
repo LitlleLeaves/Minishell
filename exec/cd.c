@@ -6,18 +6,18 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/30 16:53:37 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/03/31 13:21:28 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
 
-void ft_cd_no_arguments()
+void ft_cd_no_arguments(t_data *data, char *curr_dir)
 {
 	char *home;
 	
-	home = getenv("HOME");
+	home = ft_getenv(data, "HOME");
 	if (chdir(home) == -1)
 		printf("minishell: %s", strerror(errno));
 }
@@ -37,7 +37,7 @@ void ft_cd_helper(t_token **curr)
 	}
 }
 
-void ft_cd_one_argument(t_token *head, int words)
+void ft_cd_one_argument(t_token *head, int words, t_data *data)
 {
 	t_token	*curr;
 	char	*path;
