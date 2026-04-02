@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_single.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:49:55 by jjhurry          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   builtin_single.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2026/03/19 14:28:04 by jjhurry       #+#    #+#                 */
+/*   Updated: 2026/04/02 14:36:41 by jjhurry       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ void ft_builtin_single_unset(t_token *head, int words, char **arguments, t_data 
 
 void ft_builtin_single_echo(t_token *head, int words, char **arguments, t_data *data)
 {
-	(void)head;
-	printf("builtin echo\n");
+	if (arguments[1] == NULL)
+		ft_echo_no_arguments();
+	else if (ft_check_echo_option(arguments) == 2)
+		ft_echo_no_newline(arguments, 2);
+		else
+			ft_echo_newline(arguments, 1);
 }
 
 void ft_builtin_single_exit(t_token *head, int words, char **arguments, t_data *data)

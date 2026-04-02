@@ -13,8 +13,8 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <termcap.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+// #include <readline/readline.h>
+// #include <readline/history.h>
 // < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
 
 typedef enum	e_token_type
