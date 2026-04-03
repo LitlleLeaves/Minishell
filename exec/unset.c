@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 13:22:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 13:46:35 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:03:31 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ft_unset(char **args, t_data *data)
 		while (data->envp[j] != NULL)
 		{
 			
-			if (ft_strncmp(args[i], data->envp[j], ft_strlen(args[i] == 0)) && \
+			if (ft_strncmp(args[i], data->envp[j], ft_strlen(args[i] )) == 0 && \
 (data->envp[j][ft_strlen(args[i])] == '=' || \
 data->envp[j][ft_strlen(args[i])] == '\0'))
 			{

@@ -125,11 +125,11 @@ void ft_builtin_single_export(t_token *head, int words, char **arguments, t_data
 void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *data);
 
 //builtin_single2.c
-void ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *data);
+int ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *data);
 void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data);
 
 //cd.c
-void ft_cd_no_arguments(t_data *data, char *curr_dir);
+int ft_cd_no_arguments(t_data *data, char *curr_dir);
 void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir);
 
 //env_list
@@ -149,5 +149,10 @@ void ft_export_print_list(t_data *data);
 //unset.c
 void ft_unset(char **args, t_data *data);
 
+//echo.c
+void ft_echo_newline(char **arguments, int i);
+void ft_echo_no_arguments();
+void ft_echo_no_newline(char **arguments, int i);
+int ft_check_echo_option(char **arguments);
 
 #endif

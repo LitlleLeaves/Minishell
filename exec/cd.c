@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 15:37:41 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:02:38 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int ft_cd_no_arguments(t_data *data, char *curr_dir)
 		return (printf("minishell: %s\n", strerror(errno)), -1);
 	else	
 		ft_set_pwd_oldpwd(data);
-	
+	return (1);
 }
 
 void ft_cd_helper(t_token **curr)
