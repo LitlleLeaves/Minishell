@@ -6,35 +6,69 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 14:31:15 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 15:30:54 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 13:21:45 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-	void ft_export_print_list()
-	{
-		
-	}
-	void ft_add_to_export_list(char **arguments, t_data *data)
-	{
-		int i;
-		int j;
-		char *entry;
+void ft_export_print_list(t_data *data)
+{
+	int i;
 
-		i = 1;
-		while (arguments[i] != NULL)
-		{
-			j = 0;
-			if (ft_strchr(arguments[i], '=') == NULL)
-			{
-				entry = ft_calloc(ft_strlen(arguments[i]), sizeof(char));
-				entry = ft_strdup(arguments[i]);
-				ft_change_env_key(entry, data);
-			}
-			else
-			{
-				//TODO export with key=value pair
-			}
-		}
+	i = 0;
+	while (data->envp[i] != NULL)
+	{
+		printf("declare -x %s\n", data->envp[i]);
+		i++;
 	}
+}
+
+static int ft_key_value_helper(char *argument, t_data *data)
+{
+	char	*key;
+	char	*value;
+	int		j;
+	int		res;
+
+	j = 0;
+	while (argument[j] != '=')
+		j++;
+	key = ft_calloc(j + 1, sizeof(char));
+	value = ft_strdup(argument + j + 1);
+	if (key == NULL || value == NULL)
+		return (-1);
+	ft_strlcpy(key, argument, j + 1);
+	res = ft_change_env_key_value(key, value, data);
+	free(key);
+	free(value);
+	return (res);	
+}
+
+int ft_add_to_export_list(char **arguments, t_data *data)
+{
+	int		i;
+	int		j;
+	char	*entry;
+
+	i = 1;
+	while (arguments[i] != NULL)
+	{
+		j = 0;
+		if (ft_strchr(arguments[i], '=') == NULL)
+		{
+			entry = ft_strdup(arguments[i]);
+			if (entry == NULL)
+				return (-1);
+			ft_change_env_key(entry, data);
+		}
+		else
+		{
+			if (ft_key_value_helper(arguments[i], data) < 0)
+				return (-1);
+		}
+		i++;
+	}
+	return (1);
+}
+	

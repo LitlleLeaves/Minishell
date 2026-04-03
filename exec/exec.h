@@ -142,4 +142,12 @@ int ft_change_env_key(char *entry, t_data *data);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
+//export.c
+int ft_add_to_export_list(char **arguments, t_data *data);
+void ft_export_print_list(t_data *data);
+
+//unset.c
+void ft_unset(char **args, t_data *data);
+
+
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   builtin_single.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2026/03/19 14:28:04 by jjhurry       #+#    #+#                 */
-/*   Updated: 2026/04/02 14:36:41 by jjhurry       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   builtin_single.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
+/*   Updated: 2026/04/03 13:48:10 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,18 @@ void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *da
 
 void ft_builtin_single_export(t_token *head, int words, char **arguments, t_data *data)
 {
-	// if (arguments[1] == NULL)
-	// 	ft_export_print_list(); //TODO
-	// else
-	// 	ft_add_to_export_list(arguments); //TODO
+	if (arguments[1] == NULL)
+		ft_export_print_list(data); //TODO
+	else
+		ft_add_to_export_list(arguments, data);
 }
 
 void ft_builtin_single_unset(t_token *head, int words, char **arguments, t_data *data)
 {
-	(void)head;
-	printf("builtin unset\n");
+		if (arguments[1] == NULL)
+			return ;
+		else
+			ft_unset(arguments, data);
 }
 
 void ft_builtin_single_echo(t_token *head, int words, char **arguments, t_data *data)

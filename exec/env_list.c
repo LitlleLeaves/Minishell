@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 12:55:38 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 15:26:02 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 13:09:02 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ int ft_change_env_key_value(char *key, char *value, t_data *data)
 
 	i = 0;
 	len = ft_strlen(key) + ft_strlen(value) + 2;
-	entry = malloc(len);
+	entry = ft_calloc(len, sizeof(char));
 	if (entry == NULL)
 		return (-1);
-	ft_strlcpy(entry, key, ft_strlen(key));
+	ft_strlcpy(entry, key, len);
 	ft_strlcat(entry, "=", len );
 	ft_strlcat(entry, value, len );
 	while (data->envp[i] != NULL)
@@ -89,13 +89,9 @@ int ft_change_env_key(char *entry, t_data *data)
 	i = 0;
 	while (data->envp[i] != NULL)
 	{
-		if (ft_strncmp(data->envp[i], entry, ft_strlen(entry)) == 0\
-&& data->envp[i][ft_strlen(entry)] == '=')
+		if (ft_strncmp(data->envp[i], entry, ft_strlen(entry)) == 0 \
+&& (data->envp[i][ft_strlen(entry)] == '=' || data->envp[i][ft_strlen(entry)] == '\0'))
 		{		
-			free(data->envp[i]);
-			data->envp[i] = ft_strdup(entry);
-			if (data->envp[i] == NULL)
-				return (-1);
 			return (free(entry), 1);
 		}
 		i++;
