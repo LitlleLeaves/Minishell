@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:55:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:30:26 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_data	data;
 	
 	head = ft_get_head();
+	data.shutdown = -1;
 	if (ft_copy_envp(&data, envp) == -1)
 		return (ft_free_arr((void **)head), -1);
 	if (ft_start_exec(head, envp, &data) < 0)

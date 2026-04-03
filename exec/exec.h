@@ -52,6 +52,7 @@ typedef struct s_data
 	int		**pipes;
 	pid_t	*pids;
 	char	**envp;
+	long	shutdown;
 }	t_data;
 
 //free.c
@@ -154,5 +155,8 @@ void ft_echo_newline(char **arguments, int i);
 void ft_echo_no_arguments();
 void ft_echo_no_newline(char **arguments, int i);
 int ft_check_echo_option(char **arguments);
+
+//ft_atol.c
+long	ft_atol(const char *ptr);
 
 #endif

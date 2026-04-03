@@ -6,12 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 13:48:10 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:40:31 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
+#include <limits.h>
 
 void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *data)
 {
@@ -61,7 +62,20 @@ void ft_builtin_single_echo(t_token *head, int words, char **arguments, t_data *
 
 void ft_builtin_single_exit(t_token *head, int words, char **arguments, t_data *data)
 {
-	(void)head;
-	printf("builtin exit\n");
+	long	res;
+
+	if (words == 1)
+		data->shutdown = 0;
+	else if (words == 3)
+	{
+		printf("Minishell: exit: too many arguments");
+		errno = 1;
+	}
+	else
+	{
+		data->shutdown = ft_atol(arguments[1]);
+		if (res == LONG_MAX)
+			printf("Minishell: exit: %s numeric argument required", arguments[1]);
+	}
 }
 
