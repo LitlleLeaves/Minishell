@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:11:42 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 17:07:45 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,16 @@ void ft_single_redirection(t_token *curr, int *fd_in, int *fd_out)
 	while (curr != NULL)
 	{
 		ft_apply_redirection(fd_in, fd_out, curr);
+		if (ft_apply_redirection(fd_in, fd_out, curr) < 0)
+            return ;
 		curr = curr->next;	
 	}
-		if (fd_in >= 0)
+	if (*fd_in >= 0)
     {
         dup2(*fd_in, STDIN_FILENO);
         close(*fd_in);
     }
-	if (fd_out >= 0)
+	if (*fd_out >= 0)
     {
         dup2(*fd_out, STDOUT_FILENO);
         close(*fd_out);
@@ -131,5 +133,5 @@ int ft_check_builtins_before_fork(t_token *head, t_data *data)
 	if (ft_check_single_builtin(head, words, arguments, data) == 0)
 		return (ft_free_arr((void **)arguments),-1);
 	ft_single_redirection(curr, &fd_in, &fd_out);
-	return (ft_execute_single_builtin(head, words, arguments, data), 1);
+	return (ft_execute_single_builtin(head, words, arguments, data),ft_free_arr((void **)arguments), 1);
 }

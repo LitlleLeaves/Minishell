@@ -26,8 +26,8 @@ t_token	*ft_get_head()
         int fd;
     } token_data[] = {
         {"infile", REDIR_IN},
-        {"cd", WORD},
-		{"~/Projects/", WORD},
+        {"pwd", WORD},
+		// {"HOME", WORD},
 		// {"2", WORD},
 		// {"outfile", REDIR_OUT_TRUNCT},
         // // {NULL, PIPE},
