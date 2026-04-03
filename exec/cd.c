@@ -6,20 +6,55 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:53:31 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 15:37:41 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
 
-void ft_cd_no_arguments(t_data *data, char *curr_dir)
+int ft_set_pwd_oldpwd(t_data *data)
+{
+	int		i;
+	char	*old_pwd;
+	char 	*curr_pwd;
+
+	i = 0;
+	while (data->envp[i] != NULL)
+	{
+		if ((ft_strncmp(data->envp[i], "PWD", 3) == 0 && data->envp[i][3] == '='))
+		{
+			old_pwd = ft_strdup(ft_getenv(data, "PWD"));
+			curr_pwd = getcwd(NULL, 0);
+			if (old_pwd == NULL || curr_pwd == NULL)
+				return (-1);
+			if (ft_change_env_key_value("OLDPWD", old_pwd, data) < 0)
+				return (-2);
+			ft_change_env_key_value("PWD", curr_pwd, data);
+			free(old_pwd);
+			free(curr_pwd);
+			return (2);
+		}
+		i++;
+	}
+	return (1);
+}
+
+int ft_cd_no_arguments(t_data *data, char *curr_dir)
 {
 	char *home;
 	
 	home = ft_getenv(data, "HOME");
+	if (home == NULL)
+	{
+		printf ("Minishell: cd: HOME not set\n");
+		return (1);
+	}
 	if (chdir(home) == -1)
-		printf("minishell: %s", strerror(errno));
+		return (printf("minishell: %s\n", strerror(errno)), -1);
+	else	
+		ft_set_pwd_oldpwd(data);
+	
 }
 
 void ft_cd_helper(t_token **curr)
@@ -27,7 +62,7 @@ void ft_cd_helper(t_token **curr)
 	int	count;
 
 	count = 0;
-	while (curr != NULL)
+	while (*curr != NULL)
 	{
 		if ((*curr)->type == WORD)
 			count++;
@@ -59,9 +94,13 @@ void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir)
 			return;
 		if (chdir(path) == -1)
 			printf("minishell: %s", strerror(errno));
-		free(path);
+
 	}
 	// printf("%s", curr->value);
-	else if (chdir(path) == -1)
-		printf("minishell: %s", strerror(errno));
+	else 
+		if (chdir(path) == -1)
+			printf("minishell: %s", strerror(errno));
+		else
+			ft_set_pwd_oldpwd(data);
+	free(path);
 }
