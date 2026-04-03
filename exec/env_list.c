@@ -6,12 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 12:55:38 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 13:09:02 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:14:58 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+//function that parses the x= part of the env variables and returns onlue the value part
 char *ft_getenv(t_data *data, char *var)
 {
 	int		i;
@@ -29,6 +30,7 @@ char *ft_getenv(t_data *data, char *var)
 	return (NULL);
 }
 
+//create a new list of size+1 and copy and then add the new env variable
 int ft_extend_env(t_data *data, char *entry)
 {
 	int		i;
@@ -55,6 +57,7 @@ int ft_extend_env(t_data *data, char *entry)
 	return (1);
 }
 
+//change a key/value pair if it exists otherwise add to the list
 int ft_change_env_key_value(char *key, char *value, t_data *data)
 {
 	int		i;
@@ -82,6 +85,7 @@ int ft_change_env_key_value(char *key, char *value, t_data *data)
 	return (ft_extend_env(data, entry));
 }
 
+//change a value if already present, otherwise increase the env
 int ft_change_env_key(char *entry, t_data *data)
 {
 	int	i;

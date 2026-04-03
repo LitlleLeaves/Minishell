@@ -6,13 +6,14 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:02:38 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:17:55 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
 
+//helper funtion that sets the env variable OLDPWD and PWD to the actual new values
 int ft_set_pwd_oldpwd(t_data *data)
 {
 	int		i;
@@ -40,6 +41,7 @@ int ft_set_pwd_oldpwd(t_data *data)
 	return (1);
 }
 
+//cd with no argument to home
 int ft_cd_no_arguments(t_data *data, char *curr_dir)
 {
 	char *home;
@@ -57,6 +59,7 @@ int ft_cd_no_arguments(t_data *data, char *curr_dir)
 	return (1);
 }
 
+//cd helper funtion
 void ft_cd_helper(t_token **curr)
 {
 	int	count;
@@ -72,6 +75,7 @@ void ft_cd_helper(t_token **curr)
 	}
 }
 
+//cd funciton that checks ~ variable at start of a path
 void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir)
 {
 	t_token	*curr;

@@ -6,17 +6,19 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 14:04:24 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:01:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:16:07 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+// exho with no arguments
 void ft_echo_no_arguments()
 {
 	printf("\n");
 }
 
+//check funtion if there is a 0n, newline option
 int ft_check_echo_option(char **arguments)
 {
 	if (strncmp(arguments[1], "-n", 3) == 0)
@@ -24,6 +26,7 @@ int ft_check_echo_option(char **arguments)
 	return (1);
 }
 
+//echo funtion prints all words with spaces inbetween, no newline
 void ft_echo_no_newline(char **arguments, int i)
 {
 	while (arguments[i] != NULL && arguments[i + 1] != NULL)
@@ -35,6 +38,7 @@ void ft_echo_no_newline(char **arguments, int i)
 		printf("%s", arguments[i]);
 }
 
+//echo funciton prints all words with spaces with newline
 void ft_echo_newline(char **arguments, int i)
 {
 	while (arguments[i] != NULL && arguments[i + 1] != NULL)

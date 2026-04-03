@@ -6,12 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 14:31:15 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 13:21:45 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:12:53 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+//print declare -x <string> for each env member
 void ft_export_print_list(t_data *data)
 {
 	int i;
@@ -24,6 +25,7 @@ void ft_export_print_list(t_data *data)
 	}
 }
 
+//helper function
 static int ft_key_value_helper(char *argument, t_data *data)
 {
 	char	*key;
@@ -45,6 +47,7 @@ static int ft_key_value_helper(char *argument, t_data *data)
 	return (res);	
 }
 
+//add either a key or key and value pair to env
 int ft_add_to_export_list(char **arguments, t_data *data)
 {
 	int		i;

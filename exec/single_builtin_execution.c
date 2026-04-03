@@ -6,12 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/31 13:54:59 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/03 16:11:42 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
+//count the words
 int ft_count_single_words(t_token *head)
 {
 	t_token	*curr;
@@ -28,6 +29,7 @@ int ft_count_single_words(t_token *head)
 	return (words);
 }
 
+//check to handle builtin or not
 int ft_check_single_builtin(t_token *head, int words, char **arguments, t_data *data)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
@@ -48,6 +50,7 @@ int ft_check_single_builtin(t_token *head, int words, char **arguments, t_data *
 		return (0);
 }
 
+//actual builtin execution
 int ft_execute_single_builtin(t_token *head, int words, char **arguments, t_data *data)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
@@ -67,6 +70,7 @@ int ft_execute_single_builtin(t_token *head, int words, char **arguments, t_data
 	return (0);
 }
 
+//built list of size words
 int ft_single_argument_list(t_token *curr, int words, char **arguments)
 {
 	int	counter;
@@ -86,6 +90,7 @@ int ft_single_argument_list(t_token *curr, int words, char **arguments)
 	return (1);
 }
 
+//apply redirection if applicable
 void ft_single_redirection(t_token *curr, int *fd_in, int *fd_out)
 {
 	while (curr != NULL)
@@ -105,6 +110,7 @@ void ft_single_redirection(t_token *curr, int *fd_in, int *fd_out)
     }
 }
 
+//main single builtin chekc, first checks if its a builtin command, then applies redirecion and executes the code
 int ft_check_builtins_before_fork(t_token *head, t_data *data)
 {
 	t_token *curr;
