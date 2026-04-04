@@ -50,12 +50,12 @@ int		check_delimeters(char c);
 t_token *if_redirection(int start, char *line, t_token_type type);
 t_token	*if_word(int start, char *line);
 t_token	*make_new_token(char *value, t_token_type type);
-t_token	*word_with_quotes(char *line, int start);
+t_token	*if_quotes(char *line, int start);
 //t_token	*if_pipe(char *line);
 
 //token_indexer
 int		index_to_next_delimeter(char *line, int index);
-int		if_index_finds_quotations(char *line, int index);
+int		move_over_quotes(char *line, int index);
 
 //ft_helpers
 char	*ft_strdup(char const *str);

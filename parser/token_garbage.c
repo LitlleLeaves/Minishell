@@ -6,19 +6,12 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:17:09 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/31 17:40:49 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/04 16:17:33 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
-//int		index_over_command(char *line, int index)
-//{
-//	//printf("before comand index:%d\n", index);
-//	while (line[index] != '\0' && check_delimeters(line[index]) == 0)
-//		index++;
-//	return (index);
-//}
 
 int		index_to_next_delimeter(char *line, int index)
 {
@@ -32,7 +25,7 @@ int		index_to_next_delimeter(char *line, int index)
 			index++;
 	}
 	if (line[index] == '\'' || line[index] == '"')
-		index = if_index_finds_quotations(line, index);
+		index = move_over_quotes(line, index);
 	else if (line[index] == '|')
 		index++;
 	else
@@ -43,28 +36,20 @@ int		index_to_next_delimeter(char *line, int index)
 	return (index);
 }
 
-int if_index_finds_quotations(char *line, int index)
+int		move_over_quotes(char *line, int index)
 {
-    char	quote_type;
-
-    quote_type = line[index];
-    index++;
-    while (line[index] != '\0' && line[index] != quote_type)
-        index++;
-    if (line[index] == quote_type)
-        index++;
-    else
-    {
-        printf("minishell: syntax error: unclosed quote\n");
-    }
-    return (index);
+	char	c_to_find;
+	
+	c_to_find = line[index];
+	if (line[index] != '\0')
+		index++;
+	while (line[index] != '\0' && line[index] != c_to_find)
+		index++;
+	if (line[index] != '\0')
+		index++;
+	// printf("yowpindex = %s\n", line + index);
+	return (index);
 }
-
-//echo 'hello     world'
-//echo "My home is $HOME" and 'My home is $HOME'
-//echo "It's a 'beautiful' day"
-//ls "" "-l"
-//echo 'Wait'"...""$USER"'!'
 
 t_token	*tokenize_input(char *str)
 {
@@ -94,7 +79,6 @@ t_token	*tokenize_input(char *str)
 	return (head);
 }
 
-//< infile< infile2.txt < infile3 wc <"infile4 " -l |  wc -l  | wc -l > outfile
 t_token	*classify_and_make(char *line)
 {
 	int		index;

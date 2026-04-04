@@ -6,14 +6,14 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/31 17:06:18 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/04 16:19:20 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 static char	*stringify_enum(t_token_type token);
 
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	argc = 0;
 	argv[0] = 0;

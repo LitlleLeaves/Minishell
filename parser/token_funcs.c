@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/31 17:37:14 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/04 16:17:14 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,7 @@ t_token	*make_new_token(char *value, t_token_type type)
 	return (token);	
 }
 
-//t_token	*if_pipe(char *line)
-//{
-//	char 	*value;
-//	t_token	*token;
-	
-//	value = ft_strdup("|");
-//	if (!value)
-//		return (printf("strdup error"), NULL);
-//	token = make_new_token(value, PIPE);
-//	return (token);
-//}
+
 int		check_delimeters(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
@@ -53,36 +43,28 @@ int		check_delimeters(char c)
 	return (0);
 }
 
-t_token	*word_with_quotes(char *line, int start)
+t_token	*if_quotes(char *line, int start)
 {
+	char	c_to_find;
 	int		index;
 	char	*value;
 
 	index = 0;
-	if (line[index + start - 1] == '\'')
+	c_to_find = line[start];
+	if (line[start] != '\0')
+		start++;
+	while (line[start + index] != '\0' && line[start + index] != c_to_find)
 	{
-		while (line[index + start] != '\'')
-			index++;
-	}
-	else if (line[index + start - 1] == '"')
-	{
-		while (line[index + start] != '"')
-		{
-			index++;
-			//if (line[index + start] == '$')
-			//{
-			//	//line = expansionfunciton(index, start, line);
-			//	return (printf("dollarsign"), NULL);
-			//}
-		}
-	}
-	if (line[index] != '\0')	
 		index++;
-	if (index - start == 1 || index - start == 0)
-		return (make_new_token(ft_strdup(""), WORD));
+		//if (line[start + index] == '$' && c_to_find == '"')
+		//	line = expansion_in_quotes(line, start, index);
+	}
+	if (index == 0)
+	{
+		value = ft_strdup("");
+		return (make_new_token(value, WORD));
+	}
 	value = ft_substr(line, start, index);
-	if (!value)
-		return (printf("substr error"), NULL);
 	return (make_new_token(value, WORD));
 }
 
@@ -96,7 +78,7 @@ t_token	*if_word(int start, char *line)
 	index = 0;
 	if (line[start] == '\'' || line[start] == '"')
 	{
-		return (word_with_quotes(line, start + 1));
+		return (if_quotes(line, start));
 	}
 	while (check_delimeters(line[index + start]) == 0 && line[index + start] != '\0')
 		index++;
