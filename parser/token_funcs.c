@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/04 16:17:14 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/04 17:22:54 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_token	*make_new_token(char *value, t_token_type type)
 	token->value = temp;
 	token->type = type;
 	token->next = NULL;
-	printf("token:%s\n", token->value);
+	//printf("token:%s\n", token->value);
 	return (token);	
 }
 

@@ -2,8 +2,6 @@
 # define MINISHELL_H
 
 #include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
@@ -12,9 +10,12 @@
 #include <dirent.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-#include <termcap.h>
 #include <sys/ioctl.h>
 #include <termios.h>
+#include <termcap.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <limits.h>
 #include <stdbool.h>
 
 typedef enum	e_token_type
@@ -36,12 +37,20 @@ typedef struct	s_token
     struct s_token  *next;
 }				t_token;
 
+typedef struct	s_data
+{
+	char	**envp;
+	t_token	*head;
+	t_token	*current;
+	char	*line;
+}				t_data;
 
 //main
-int		main_loop(void);
-	
-//read
+int		main_loop(char	*envp[]);
+
+//read input
 char	*get_line(void);
+int		ft_copy_envp(t_data *data, char **envp);
 
 //tokens
 t_token	*classify_and_make(char *line);
@@ -62,7 +71,15 @@ char	*ft_strdup(char const *str);
 int		ft_strlen(char const *str);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_substr(char const *str, int start, int length);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+void	*ft_calloc(size_t nmemb, size_t size);
 
+//expansions
+bool	check_expansions(t_data *data);
+bool	convert_expansions(t_data *d, int start);
+char 	*ft_getenv(t_data *data, char *var);
+char	*get_key(char *line, int start);
+bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key_len);
 //errorhandler
 
 #endif

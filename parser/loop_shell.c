@@ -6,97 +6,125 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/04 16:19:20 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:15:05 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-static char	*stringify_enum(t_token_type token);
+//static char	*stringify_enum(t_token_type token);
+//static void	print_tokenized_list(t_data	*data);
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	argc = 0;
 	argv[0] = 0;
-	main_loop();
+	main_loop(envp);
 	return (0);
 }
-//main loop of te shell
-int		main_loop(void)
-{
-	char	*line;
-	t_token	*head;
-	t_token	*token;
 
+//main loop of te shell
+int		main_loop(char	*envp[])
+{
+	t_data	data;
+
+	data.current = NULL;
+	data.head = NULL;
+	data.line = NULL;
+	if (ft_copy_envp(&data, envp) == -1)
+		return (printf("error"));
 	while (1)
 	{
-		line = get_line();
-		if (line && *line)
+		data.line = get_line();
+		if (data.line && *data.line)
 		{
-            add_history(line);
-			head = tokenize_input(line);
-			token = head;
-			printf("woopwooop\n");
-			while (token != NULL)
-			{
-				if (token->value == NULL)
-					token = token->next;
-				printf("%s %s\n", token->value, stringify_enum(token->type));
-				token = token->next;
-			}
-			while (head != NULL)
-			{
-				token = head;
-				head = head->next;
-				free(token->value);
-				free(token);
-			}
+			add_history(data.line);
+			if (check_expansions(&data) == false)
+				return (printf("weirderror"));
+		//	data.head = tokenize_input(data.line);
+		//	data.current = data.head;
+		//	//printf("woopwooop\n");
+		//	print_tokenized_list(&data);
 		}
-		//printf("%s\n", line);
+		//printf("%s\n", data.line);
 	}
 	rl_clear_history();	
 	return (0);
 }
 
-static char	*stringify_enum(t_token_type token)
+//static void	print_tokenized_list(t_data	*data)
+//{
+//	while (data->current != NULL)
+//	{
+//		if (data->current->value == NULL)
+//			data->current = data->current->next;
+//		printf("%s %s\n", data->current->value, stringify_enum(data->current->type));
+//		data->current = data->current->next;
+//	}
+//	while (data->head != NULL)
+//	{
+//		data->current = data->head;
+//		data->head = data->head->next;
+//		free(data->current->value);
+//		free(data->current);
+//	}
+//}
+
+
+
+//static char	*stringify_enum(t_token_type token)
+//{
+//	if (token == WORD)
+//		return ("command");
+//	if (token == PIPE)
+//		return ("PIPE");
+//	if (token == REDIR_OUT_APP)
+//		return ("REDIR_OUT_APP");
+//	if (token == REDIR_OUT_TRUNC)
+//		return ("REDIR_OUT_TRUNC");
+//	if (token == REDIR_IN)
+//		return ("REDIR_IN");
+//	if (token == HEREDOC)
+//		return ("HEREDOC");
+//	return (NULL);
+//}
+
+int ft_copy_envp(t_data *data, char **envp)
 {
-	if (token == WORD)
-		return ("command");
-	if (token == PIPE)
-		return ("PIPE");
-	if (token == REDIR_OUT_APP)
-		return ("REDIR_OUT_APP");
-	if (token == REDIR_OUT_TRUNC)
-		return ("REDIR_OUT_TRUNC");
-	if (token == REDIR_IN)
-		return ("REDIR_IN");
-	if (token == HEREDOC)
-		return ("HEREDOC");
-	return (NULL);
+    int i = 0;
+
+    while (envp[i] != NULL)
+        i++;
+    data->envp = ft_calloc(i + 1, sizeof(char *));
+    if (data->envp == NULL)
+        return (-1);
+    int j = 0;
+    while (j < i)
+    {
+        data->envp[j] = ft_strdup(envp[j]);
+        if (!data->envp[j])
+            return (-1);
+        j++;
+    }
+    return (1);
 }
-//char	*parse(char *line)
-//{
-//	int	counter;
 
-//}
-//int	main(void)
-//{
-//	char	str[7] = " wc -l";
-//	t_token *token;
-//	t_token	*head;
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
 
-//	head = tokenize_input(str);
-//	token = head;
-//	while (token != NULL)
-//	{
-//		printf("%s\n", token->value );
-//		token = token->next;
-//	}
-//	while (head != NULL)
-//	{
-//		token = head;
-//		head = head->next;
-//		free(token->value);
-//		free(token);
-//	}
-//	return (0);
-//}
+	if (nmemb == 0 || size == 0)
+		return (malloc(0));
+	if (nmemb > INT_MAX / size)
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < nmemb * size)
+	{
+		ptr[i] = 0;
+		i++;
+	}
+	return ((void *)ptr);
+}

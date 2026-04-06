@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 21:19:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/03/23 17:25:07 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:00:05 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,49 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new_str);
 }
 
-char	*ft_strdup(char const *str)
-{
-	char	*new;
-	int 	counter;
-	int		size;
+//char	*ft_strdup(char const *str)
+//{
+//	char	*new;
+//	int 	counter;
+//	int		size;
 
-	if (!str)
-		return (printf("empty string"), NULL);
-	size = ft_strlen(str);
-	counter = 0;
-	new	= malloc(sizeof(char) * size);
-	if (!new)
-		return (printf("malloc error"), NULL);
+//	if (!str)
+//		return (printf("empty string"), NULL);
+//	size = ft_strlen(str);
+//	counter = 0;
+//	new	= malloc(sizeof(char) * size);
+//	if (!new)
+//		return (printf("malloc error"), NULL);
 	
-	while (str[counter] != '\0')
+//	while (str[counter] != '\0')
+//	{
+//		new[counter] = str[counter];
+//		counter++;
+//	}
+//	new[counter] = '\0';
+//	return (new);
+//}
+
+char	*ft_strdup(const char *s)
+{
+	int		size;
+	char	*str;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	size = ft_strlen(s);
+	str = malloc(sizeof(char) * (size + 1));
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
 	{
-		new[counter] = str[counter];
-		counter++;
+		str[i] = s[i];
+		i++;
 	}
-	new[counter] = '\0';
-	return (new);
+	str[i] = '\0';
+	return (str);
 }
 
 int		ft_strlen(char const *str)
