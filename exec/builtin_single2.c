@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:07 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 13:59:37 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:53:31 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void ft_builtin_single_env(char **arguments, t_data *data)
 	int	i;
 
 	if (arguments[1] != NULL)
+	{
 		printf("wrong amount of argments for env\n");
+		data->exit_code = 1	;
+	}
 	else
 	{
 		i = 0;
@@ -26,7 +29,7 @@ void ft_builtin_single_env(char **arguments, t_data *data)
 			printf("%s\n", data->envp[i]);
 			i++;
 		}
-	}	
+	}
 }
 
 int ft_builtin_single_pwd(t_data *data)

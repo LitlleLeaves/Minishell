@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 13:56:07 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:42:50 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int ft_cd_no_arguments(t_data *data)
 	if (home == NULL)
 	{
 		printf ("Minishell: cd: HOME not set\n");
+		exit (1);
 		return (1);
 	}
 	if (chdir(home) == -1)
