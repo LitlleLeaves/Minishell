@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 17:18:39 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 17:51:34 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 	int i;
 
 	i = 0;
+	data->nmb_of_pipes = nmb_of_pipes;
 	while (i < nmb_of_pipes + 1)
 	{
 		data->pids[i] = fork();
@@ -107,6 +108,7 @@ int	main(int argc, char *argv[], char *envp[])
 	head = ft_get_head();
 	data.shutdown = -1;
 	data.exit_code = 0;
+	data.head = head;
 	if (ft_copy_envp(&data, envp) == -1)
 		return (ft_free_arr((void **)head), -1);
 	if (ft_start_exec(head, &data) < 0)

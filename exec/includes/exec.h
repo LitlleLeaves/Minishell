@@ -55,6 +55,8 @@ typedef struct s_data
 	char	**envp;
 	long	shutdown;
 	int		exit_code;
+	t_token *head;
+	int		nmb_of_pipes;
 }	t_data;
 
 //free.c
