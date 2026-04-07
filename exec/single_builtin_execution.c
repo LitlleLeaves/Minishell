@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 17:07:45 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:08:46 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int ft_count_single_words(t_token *head)
 }
 
 //check to handle builtin or not
-int ft_check_single_builtin(t_token *head, int words, char **arguments, t_data *data)
+int ft_check_single_builtin(char **arguments)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
 		return (1);
@@ -51,22 +51,22 @@ int ft_check_single_builtin(t_token *head, int words, char **arguments, t_data *
 }
 
 //actual builtin execution
-int ft_execute_single_builtin(t_token *head, int words, char **arguments, t_data *data)
+int ft_execute_single_builtin(int words, char **arguments, t_data *data)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
-		return(ft_builtin_single_cd(head, words, arguments, data), 1);
+		return(ft_builtin_single_cd(words, arguments, data), 1);
 	else if (ft_strncmp(arguments[0], "echo", 4) == 0)
-		return(ft_builtin_single_echo(head, words, arguments, data), 2);
+		return(ft_builtin_single_echo(arguments, data), 2);
 	else if (ft_strncmp(arguments[0], "pwd", 3) == 0)
-		return(ft_builtin_single_pwd(head, words, arguments, data), 3);
+		return(ft_builtin_single_pwd(data), 3);
 	else if (ft_strncmp(arguments[0], "export", 6) == 0)
-		return(ft_builtin_single_export(head, words, arguments, data), 4);
+		return(ft_builtin_single_export(arguments, data), 4);
 	else if (ft_strncmp(arguments[0], "unset", 5) == 0)
-		return(ft_builtin_single_unset(head, words, arguments, data), 5);
+		return(ft_builtin_single_unset(arguments, data), 5);
 	else if (ft_strncmp(arguments[0], "env", 3) == 0)
-		return(ft_builtin_single_env(head, words, arguments, data), 6);
+		return(ft_builtin_single_env(arguments, data), 6);
 	else if (ft_strncmp(arguments[0], "exit", 4) == 0)
-		return(ft_builtin_single_exit(head, words, arguments, data), 7);
+		return(ft_builtin_single_exit(arguments, data), 7);
 	return (0);
 }
 
@@ -130,8 +130,8 @@ int ft_check_builtins_before_fork(t_token *head, t_data *data)
 	if (arguments == NULL)
 		return (-1);
 	ft_single_argument_list(curr , words, arguments);
-	if (ft_check_single_builtin(head, words, arguments, data) == 0)
+	if (ft_check_single_builtin(arguments) == 0)
 		return (ft_free_arr((void **)arguments),-1);
 	ft_single_redirection(curr, &fd_in, &fd_out);
-	return (ft_execute_single_builtin(head, words, arguments, data),ft_free_arr((void **)arguments), 1);
+	return (ft_execute_single_builtin(words, arguments, data),ft_free_arr((void **)arguments), 1);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 15:28:22 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:02:51 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void ft_execution_failure(char *executable, char **arguments)
 {
 	free(arguments);
 	ft_free_arr((void **)arguments);
+	free(executable);
 	exit(127);
 }
 
@@ -38,13 +39,13 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
         close(exec_info->fd_out);
     }
 	ft_check_builtins(exec_info, data, exec_info->arguments);
-	executable = ft_decide_executable(exec_info->arguments[0], data->envp); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
+	executable = ft_decide_executable(exec_info->arguments[0], data->envp, data); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
 	if (executable == NULL)
 		exit(127);
 	
 }
 
-int ft_build_arguments_array(t_exec_info *exec_info, int j)
+int ft_build_arguments_array(t_exec_info *exec_info)
 {
 	int i;
 	t_token *curr;
@@ -78,7 +79,7 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 	exec_info->fd_out = -2;
 	exec_info->command_number = i;
 	curr = exec_info->start;
-	ft_build_arguments_array(exec_info, i);
+	ft_build_arguments_array(exec_info);
 	while (curr != exec_info->end && curr != NULL)
 	{
 		if (ft_apply_redirection(&exec_info->fd_in, &exec_info->fd_out, curr) < 0)

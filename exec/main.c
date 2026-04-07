@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 17:04:28 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:06:05 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	ft_wait_all_children(t_data *data, int nmb_of_pipes)
 		printf("child %d exited with status %d\n", data->pids[i], WEXITSTATUS(status));
 		i++;
 	}
+	data->shutdown = status;
 	return (status);
 }
 
@@ -59,7 +60,7 @@ int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 	return (1);
 }
 //parent process sets up pipes and pids,check for single builtin and executes it or then forks the children, and waits for them to finish
-int ft_start_exec(t_token *head, char **envp, t_data *data)
+int ft_start_exec(t_token *head, t_data *data)
 {
 	int		nmb_of_pipes;
 
@@ -100,11 +101,14 @@ int	main(int argc, char *argv[], char *envp[])
 	t_token *head;
 	t_data	data;
 	
+	if (argc != 1)
+		return (1);
 	head = ft_get_head();
 	data.shutdown = -1;
+	data.exit_code = 0;
 	if (ft_copy_envp(&data, envp) == -1)
 		return (ft_free_arr((void **)head), -1);
-	if (ft_start_exec(head, envp, &data) < 0)
+	if (ft_start_exec(head, &data) < 0)
 		// return (ft_free_arr((void **)head), -1);
 	ft_free_arr((void **)data.envp);
 	ft_free_tokens(head);

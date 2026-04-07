@@ -6,13 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:07 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 15:59:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 13:59:37 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data)
+void ft_builtin_single_env(char **arguments, t_data *data)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *d
 	}	
 }
 
-int ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *data)
+int ft_builtin_single_pwd(t_data *data)
 {
 	int		i;
 	char	*buff;

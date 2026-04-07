@@ -13,6 +13,7 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <termcap.h>
+#include <errno.h>
 // #include <readline/readline.h>
 // #include <readline/history.h>
 // < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
@@ -53,6 +54,7 @@ typedef struct s_data
 	pid_t	*pids;
 	char	**envp;
 	long	shutdown;
+	int		exit_code;
 }	t_data;
 
 //free.c
@@ -77,6 +79,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
+int	ft_isdigit(int c);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i);
@@ -99,10 +102,10 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr);
 char *ft_relative_executable(char *command);
 char *ft_make_executable(char *executable, char **envp);
 void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments);
-char *ft_decide_executable(char *command, char **envp);
+char *ft_decide_executable(char *command, char **envp, t_data *data);
 
 //built_in.c
-void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_cd(int words, t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_export(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_unset(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_echo(t_exec_info *exec_info, t_data *data, char **arguments);
@@ -119,19 +122,19 @@ void ft_single_builtin(t_token *head, t_data *data);
 int ft_count_single_words(t_token *head);
 
 //builtin_single.c
-void ft_builtin_single_exit(t_token *head, int words, char **arguments, t_data *data);
-void ft_builtin_single_echo(t_token *head, int words, char **arguments, t_data *data);
-void ft_builtin_single_unset(t_token *head, int words, char **arguments, t_data *data);
-void ft_builtin_single_export(t_token *head, int words, char **arguments, t_data *data);
-void ft_builtin_single_cd(t_token *head, int words, char **arguments, t_data *data);
+void ft_builtin_single_exit(char **arguments, t_data *data);
+void ft_builtin_single_echo(char **arguments, t_data *data);
+void ft_builtin_single_unset(char **arguments, t_data *data);
+void ft_builtin_single_export(char **arguments, t_data *data);
+void ft_builtin_single_cd(int words, char **arguments, t_data *data);
 
 //builtin_single2.c
-int ft_builtin_single_pwd(t_token *head, int words, char **arguments, t_data *data);
-void ft_builtin_single_env(t_token *head, int words, char **arguments, t_data *data);
+int ft_builtin_single_pwd(t_data *data);
+void ft_builtin_single_env(char **arguments, t_data *data);
 
 //cd.c
-int ft_cd_no_arguments(t_data *data, char *curr_dir);
-void ft_cd_one_argument(t_token *head, int words, t_data *data, char *curr_dir);
+int ft_cd_no_arguments(t_data *data);
+int ft_cd_one_argument(char **arguments, t_data *data);
 
 //env_list
 char *ft_getenv(t_data *data, char *var);
@@ -151,12 +154,13 @@ void ft_export_print_list(t_data *data);
 void ft_unset(char **args, t_data *data);
 
 //echo.c
-void ft_echo_newline(char **arguments, int i);
-void ft_echo_no_arguments();
-void ft_echo_no_newline(char **arguments, int i);
+int ft_echo_newline(char **arguments, int i);
+int ft_echo_no_arguments();
+int ft_echo_no_newline(char **arguments, int i);
 int ft_check_echo_option(char **arguments);
 
 //ft_atol.c
 long	ft_atol(const char *ptr);
+
 
 #endif

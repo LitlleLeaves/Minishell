@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/03/19 15:30:43 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 14:08:26 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,14 @@ char *ft_relative_executable(char *command)
 }
 
 //make a executable by looking through the path and finding if it is executable
-char *ft_make_executable(char *executable, char **envp)
+char *ft_make_executable(char *executable, t_data *data)
 {
 	int		i;
 	char	**paths;
 	char	*exec;
 	char	*path;
 
-	i = 0;
-	while (ft_strncmp(envp[i], "PATH=", 5))
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(ft_getenv(data, "PATH"), ':');
 	if (paths == NULL)
 		return (NULL);
 	i = 0;
@@ -88,22 +85,22 @@ char *ft_make_executable(char *executable, char **envp)
 }
 
 //decide if the exucatble path is relative or if it needs to be found in the path, and return the executable path
-char *ft_decide_executable(char *command, char **envp)
+char *ft_decide_executable(char *command, char **envp, t_data *data)
 {
 	char *executable;
 
 	if (ft_strchr(command, '/') == NULL)
-		executable = ft_make_executable(command, envp);
+		executable = ft_make_executable(command, data);
 	else
 		executable = ft_relative_executable(command);
 	return (executable);
 }
 
 //choose executable is a built in or regular executable, and execute it
-void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments)
+void ft_check_builtins(int words, t_exec_info *exec_info, t_data *data, char **arguments)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
-		ft_builtin_cd(exec_info, data, arguments); //TODO
+		ft_builtin_cd(words, exec_info, data, arguments); //TODO
 	else if (ft_strncmp(arguments[0], "export", 6) == 0)
 		ft_builtin_export(exec_info, data, arguments); //TODO
 	else if (ft_strncmp(arguments[0], "unset", 5) == 0)

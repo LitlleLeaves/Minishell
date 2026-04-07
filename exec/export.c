@@ -6,14 +6,14 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 14:31:15 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:12:53 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 13:22:04 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
 //print declare -x <string> for each env member
-void ft_export_print_list(t_data *data)
+int ft_export_print_list(t_data *data)
 {
 	int i;
 
@@ -23,6 +23,33 @@ void ft_export_print_list(t_data *data)
 		printf("declare -x %s\n", data->envp[i]);
 		i++;
 	}
+	return (0);
+}
+
+static int ft_export_valid_char(char c)
+{
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z') || c == '_')
+		return (1);
+	return (0);
+}
+
+int ft_export_validity_checker(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str == NULL)
+		return (0);
+	if (ft_isdigit(str[0]) == 1 || str[0] == '\0')
+		return (0);
+	while(str[i] != '\0' && str[i] != '=')
+	{
+		if (ft_export_valid_char(str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 //helper function
@@ -54,23 +81,32 @@ int ft_add_to_export_list(char **arguments, t_data *data)
 	int		j;
 	char	*entry;
 
-	i = 1;
+	i = 0;
 	while (arguments[i] != NULL)
 	{
+		i++;
 		j = 0;
+		if (ft_export_validity_checker(arguments[i]) == 0)
+		{
+			data->exit_code = 1;	
+			continue ;
+		}
 		if (ft_strchr(arguments[i], '=') == NULL)
 		{
 			entry = ft_strdup(arguments[i]);
 			if (entry == NULL)
-				return (-1);
+				return (data->shutdown = 1 ,-1);
+			if (ft_isdigit(entry[0]) == 1)
+			{
+				
+			}
 			ft_change_env_key(entry, data);
 		}
 		else
 		{
 			if (ft_key_value_helper(arguments[i], data) < 0)
-				return (-1);
+				return (data->shutdown = 1 ,-1);
 		}
-		i++;
 	}
 	return (1);
 }
