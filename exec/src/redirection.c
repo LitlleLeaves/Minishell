@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:58:36 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:23:11 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int ft_handle_in(int *fd_in, t_token *curr)
 //infile heredoc
 int ft_handle_in_heredoc(int *fd_in, t_token *curr)
 {
+	printf("heredoc not implemented yet %i %i\n", *fd_in, *curr->value);
 	//TODO heredoc implemntation
 	return (1);
 }

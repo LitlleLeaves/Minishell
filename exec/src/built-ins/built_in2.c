@@ -6,13 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 15:29:24 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:58:48 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:29:30 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments)
+void ft_builtin_env(t_data *data, char **arguments)
 {
 	int	i;
 
@@ -34,9 +34,8 @@ void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments)
 	exit(data->exit_code);
 }
 
-void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments)
+void ft_builtin_pwd(t_data *data, char **arguments)
 {
-	int		i;
 	char	*buff;
 	char	*pwd;
 	

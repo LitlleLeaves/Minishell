@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:42:50 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:31:16 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,10 @@ void ft_cd_helper(t_token **curr)
 //cd funciton that checks ~ variable at start of a path
 int ft_cd_one_argument(char **arguments, t_data *data)
 {
-	t_token	*curr;
 	char	*path;
 	char	*home;
 	
-
+	path = NULL;
 	if (ft_strncmp(arguments[1], "~", 1) == 0)
 	{
 		home = ft_getenv(data, "HOME");
@@ -97,9 +96,11 @@ int ft_cd_one_argument(char **arguments, t_data *data)
 			return (printf("minishell: %s", strerror(errno)), 1);
 	}
 	else 
+	{
 		if (chdir(path) == -1)
 			return (printf("minishell: %s", strerror(errno)), 1);
 		else
 			ft_set_pwd_oldpwd(data);
+	}
 	return (free(path), 0);
 }

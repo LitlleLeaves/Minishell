@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:33:20 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:28:57 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ char *ft_decide_executable(char *command, t_data *data)
 void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
-		ft_builtin_cd(exec_info, data, arguments); //TODO
+		ft_builtin_cd(exec_info, data, arguments);
 	else if (ft_strncmp(arguments[0], "export", 6) == 0)
-		ft_builtin_export(exec_info, data, arguments); //TODO
+		ft_builtin_export(data, arguments);
 	else if (ft_strncmp(arguments[0], "unset", 5) == 0)
-		ft_builtin_unset(exec_info, data, arguments); //TODO
+		ft_builtin_unset(data, arguments);
 	else if (ft_strncmp(arguments[0], "echo", 4) == 0)
-		ft_builtin_echo(exec_info, data, arguments); //TODO
+		ft_builtin_echo(data, arguments);
 	else if (ft_strncmp(arguments[0], "exit", 4) == 0)
-		ft_builtin_exit(exec_info, data, arguments); //TODO
+		ft_builtin_exit(exec_info ,data, arguments);
 	else if (ft_strncmp(arguments[0], "env", 3) == 0)
-		ft_builtin_env(exec_info, data, arguments); //TODO
+		ft_builtin_env(data, arguments);
 	else if (ft_strncmp(arguments[0], "pwd", 3) == 0)
-		ft_builtin_pwd(exec_info, data, arguments); //TODO
+		ft_builtin_pwd(data, arguments);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:34:23 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 16:22:00 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void ft_execution_failure(char *executable, char **arguments)
 //find path in envp and build the argument list, then find executable path and execute
 void ft_child_execute(t_exec_info *exec_info, t_data *data)
 {
-	char	**arguments;
 	char	*executable;
 
 	if (exec_info->fd_in >= 0)
@@ -73,7 +72,6 @@ int ft_build_arguments_array(t_exec_info *exec_info)
 int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 {
 	t_token *curr;
-	char	*str;
 
 	exec_info->fd_in = -2;
 	exec_info->fd_out = -2;
@@ -92,6 +90,7 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 	}
 	return (1);
 }
+
 //find start and end of command
 int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)
 {

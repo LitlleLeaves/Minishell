@@ -1,40 +1,85 @@
-NAME    := MINISHELLL
+################################################################################
+# Makefile for minishell
+# - lists all .c files once in `SRC_FILES`
+# - object files go to `obj/`
+# - dependency files go to `dep/`
+# - headers in `includes/`
+################################################################################
 
-# Compiler and flags
-CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -g -fsanitize=address
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g -I includes
 
-#Source files
-SRC := 
+NAME := minishell
 
-# libft
-LIBFTDIR := ../Libft
-LIBFT := $(LIBFTDIR)/libft.a
+SRC_DIR := src
+OBJ_DIR := obj
+DEP_DIR := dep
+BUILTINS_DIR := src/built-ins
+INCLUDES := includes
+HEADERS := $(INCLUDES)/exec.h
 
-#obj
-OBJ := $(SRC:.c=.o)
+# List sources once by directory (basenames)
+SRC_FILES := \
+	child.c \
+	dummy.c \
+	env_list.c \
+	executable.c \
+	export.c \
+	ft_atol.c \
+	ft_split.c \
+	ft_strjoin.c \
+	helper.c \
+	main.c \
+	pipes.c \
+	redirection.c \
+	test.c \
+	unset.c
 
-# Rules
+BUILTINS_SRC_FILES := \
+	built_in.c \
+	built_in2.c \
+	builtin_single.c \
+	builtin_single2.c \
+	cd.c \
+	echo.c \
+	free.c \
+	single_builtin_execution.c
+
+# Object filenames: place in obj/ with same basenames
+OBJS := $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o) $(BUILTINS_SRC_FILES:.c=.o))
+
+# Dependency files (one per object) in dep/
+DEPS := $(addprefix $(DEP_DIR)/, $(SRC_FILES:.c=.d) $(BUILTINS_SRC_FILES:.c=.d))
+
+.PHONY: all clean fclean re obj dep
+
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) 
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(HEADERS) $(LIBFT) -o $(NAME)
+$(NAME): | $(OBJ_DIR) $(DEP_DIR) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-$(LIBFT):
-	make -C $(LIBFTDIR)
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ $(HEADERS) && printf "Compiling: $(notdir $<)"
+$(DEP_DIR):
+	mkdir -p $(DEP_DIR)
+
+# Pattern rules: compile from src/ or src/built-ins/ to obj/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(DEP_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MP -MF $(DEP_DIR)/$*.d
+
+$(OBJ_DIR)/%.o: $(BUILTINS_DIR)/%.c | $(OBJ_DIR) $(DEP_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MP -MF $(DEP_DIR)/$*.d
 
 clean:
-	rm -f $(OBJ)
-	make -C $(LIBFTDIR) clean
+	rm -f $(OBJS)
+	rm -rf $(DEP_DIR)
 
 fclean: clean
 	rm -f $(NAME)
-	make -C $(LIBFTDIR) fclean
-	rm -rf build
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# Include dependency files if they exist (ignore missing files)
+-include $(DEPS)
+
