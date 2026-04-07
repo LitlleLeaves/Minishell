@@ -24,20 +24,22 @@ t_token	*ft_get_head()
         char *value;
         t_token_type type;
     } token_data[] = {
-        {"infile", REDIR_IN},
-        {"pwd", WORD},
-		// {"HOME", WORD},
+        // {"infile", REDIR_IN},
+        {"echo", WORD},
+		{"~/projects", WORD},
 		// {"2", WORD},
 		// {"outfile", REDIR_OUT_TRUNCT},
         // // {NULL, PIPE},
 		// // {"infile", REDIR_IN},
         // // {"grep", WORD},
 		// // {"2", WORD},
-        // // {NULL, PIPE},
-        // // {"wc", WORD},
-		// // {"-l", WORD},
+        {NULL, PIPE},
+        {"wc", WORD},
+		{"-l", WORD},
         // {"outfile2", REDIR_OUT_APPEND},
+		
     };
+	// printf("dummy function called\n"); // debug
     
     int count = sizeof(token_data) / sizeof(token_data[0]);
     t_token *head = NULL;

@@ -55,14 +55,14 @@ DEPS := $(addprefix $(DEP_DIR)/, $(SRC_FILES:.c=.d) $(BUILTINS_SRC_FILES:.c=.d))
 
 all: $(NAME)
 
-$(NAME): | $(OBJ_DIR) $(DEP_DIR) $(OBJS)
+$(NAME): $(OBJS) | $(OBJ_DIR) $(DEP_DIR)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@if [ ! -d $(OBJ_DIR) ]; then echo "creating $(OBJ_DIR)"; mkdir -p $(OBJ_DIR); fi
 
 $(DEP_DIR):
-	mkdir -p $(DEP_DIR)
+	@if [ ! -d $(DEP_DIR) ]; then echo "creating $(DEP_DIR)"; mkdir -p $(DEP_DIR); fi
 
 # Pattern rules: compile from src/ or src/built-ins/ to obj/
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR) $(DEP_DIR)

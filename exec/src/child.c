@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:22:00 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 17:29:28 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
 	executable = ft_decide_executable(exec_info->arguments[0], data); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
 	if (executable == NULL)
 		exit(127);
-	
+	else
+		execve(executable, exec_info->arguments, data->envp);
 }
 
 int ft_build_arguments_array(t_exec_info *exec_info)
@@ -80,8 +81,9 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 	ft_build_arguments_array(exec_info);
 	while (curr != exec_info->end && curr != NULL)
 	{
+		// printf("current token: %s, type: %d\n", curr->value, curr->type); // debug
 		if (ft_apply_redirection(&exec_info->fd_in, &exec_info->fd_out, curr) < 0)
-			return (-1);
+			return (ft_free_arr((void **)exec_info->arguments) ,-1);
 		curr = curr->next;
 	}
 	if (exec_info->arguments != NULL)

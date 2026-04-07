@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:32:23 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 17:18:39 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	ft_wait_all_children(t_data *data, int nmb_of_pipes)
 		printf("child %d exited with status %d\n", data->pids[i], WEXITSTATUS(status));
 		i++;
 	}
-	data->shutdown = status;
+	data->exit_code = status;
 	return (status);
 }
 
@@ -73,6 +73,7 @@ int ft_start_exec(t_token *head, t_data *data)
 		return (ft_free_tokens(head), ft_close_all_pipes(data, nmb_of_pipes),- 3);
 	ft_close_all_pipes(data, nmb_of_pipes);
 	ft_wait_all_children(data, nmb_of_pipes);
+	ft_free_arr((void **)data->envp);
 	return (ft_cleanup(head, data, nmb_of_pipes), 1);
 }
 
@@ -111,6 +112,5 @@ int	main(int argc, char *argv[], char *envp[])
 	if (ft_start_exec(head, &data) < 0)
 		// return (ft_free_arr((void **)head), -1);
 	ft_free_arr((void **)data.envp);
-	ft_free_tokens(head);
 	return (0);
 }
