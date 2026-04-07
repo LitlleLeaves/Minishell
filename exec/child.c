@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 14:02:51 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:34:23 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
         close(exec_info->fd_out);
     }
 	ft_check_builtins(exec_info, data, exec_info->arguments);
-	executable = ft_decide_executable(exec_info->arguments[0], data->envp, data); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
+	executable = ft_decide_executable(exec_info->arguments[0], data); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
 	if (executable == NULL)
 		exit(127);
 	
@@ -123,7 +123,7 @@ int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)
 }
 
 //child process finds the start and end of its command, applies redirections, and executes the command
-int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i)
+int	ft_child_process(t_token *head, t_data *data, int i)
 {
 	t_exec_info exec_info;
 

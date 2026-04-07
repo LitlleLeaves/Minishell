@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/03 16:36:33 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/03 16:42:58 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:18:58 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ static long	ft_atol_help(const char *ptr, int sign)
 *ptr == '\n' || *ptr == '\f' || *ptr == '\v')
 		ptr++;
 	if (*ptr != '\0')
-		return (LONG_MAX);
+		return (-1);
 	number *= sign;
+	number = number % 256;
 	return (number);
 }
 
 //converts a string with possible char to integer
-long	ft_atol(const char *ptr)
+int	ft_atol(const char *ptr)
 {
 	int		sign;
 	long	res;
@@ -49,10 +50,7 @@ long	ft_atol(const char *ptr)
 		ptr++;
 	}
 	if (!(*ptr >= '0' && *ptr <= '9'))
-		return (LONG_MAX);
+		return (-1);
 	res = ft_atol_help(ptr, sign);
-	if (res == LONG_MAX)
-		return (LONG_MAX);
-	else
-		return (res);
+	return ((int)res);
 }

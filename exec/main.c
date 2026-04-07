@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 14:06:05 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:32:23 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 		else if (data->pids[i] == 0)
 		{
 			ft_setup_pipes(data, nmb_of_pipes, i);
-			if (ft_child_process(head, data, nmb_of_pipes, i) < 0)
+			if (ft_child_process(head, data, i) < 0)
 				exit(EXIT_FAILURE);
 			exit(EXIT_SUCCESS);
 		}
@@ -101,7 +101,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_token *head;
 	t_data	data;
 	
-	if (argc != 1)
+	if (argc != 1 || argv[1] != NULL)
 		return (1);
 	head = ft_get_head();
 	data.shutdown = -1;

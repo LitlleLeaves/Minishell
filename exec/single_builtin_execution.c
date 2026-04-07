@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 14:08:46 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:24:38 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int ft_execute_single_builtin(int words, char **arguments, t_data *data)
 	else if (ft_strncmp(arguments[0], "env", 3) == 0)
 		return(ft_builtin_single_env(arguments, data), 6);
 	else if (ft_strncmp(arguments[0], "exit", 4) == 0)
-		return(ft_builtin_single_exit(arguments, data), 7);
+		return(ft_builtin_single_exit(words, arguments, data), 7);
 	return (0);
 }
 

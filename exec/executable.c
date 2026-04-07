@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 14:08:26 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:33:20 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char *ft_make_executable(char *executable, t_data *data)
 }
 
 //decide if the exucatble path is relative or if it needs to be found in the path, and return the executable path
-char *ft_decide_executable(char *command, char **envp, t_data *data)
+char *ft_decide_executable(char *command, t_data *data)
 {
 	char *executable;
 
@@ -97,10 +97,10 @@ char *ft_decide_executable(char *command, char **envp, t_data *data)
 }
 
 //choose executable is a built in or regular executable, and execute it
-void ft_check_builtins(int words, t_exec_info *exec_info, t_data *data, char **arguments)
+void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments)
 {
 	if (ft_strncmp(arguments[0], "cd", 2) == 0)
-		ft_builtin_cd(words, exec_info, data, arguments); //TODO
+		ft_builtin_cd(exec_info, data, arguments); //TODO
 	else if (ft_strncmp(arguments[0], "export", 6) == 0)
 		ft_builtin_export(exec_info, data, arguments); //TODO
 	else if (ft_strncmp(arguments[0], "unset", 5) == 0)

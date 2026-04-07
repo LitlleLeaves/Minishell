@@ -23,7 +23,6 @@ t_token	*ft_get_head()
     struct {
         char *value;
         t_token_type type;
-        int fd;
     } token_data[] = {
         {"infile", REDIR_IN},
         {"pwd", WORD},

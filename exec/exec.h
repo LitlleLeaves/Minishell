@@ -82,7 +82,7 @@ char	*ft_strdup(const char *s);
 int	ft_isdigit(int c);
 
 //childs.c
-int	ft_child_process(t_token *head, t_data *data, int nmb_of_pipes, int i);
+int	ft_child_process(t_token *head, t_data *data, int i);
 void ft_execution_failure(char *executable, char **arguments);
 
 //split.c
@@ -100,12 +100,12 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr);
 
 //executable.c
 char *ft_relative_executable(char *command);
-char *ft_make_executable(char *executable, char **envp);
+char *ft_make_executable(char *executable, t_data *data);
 void ft_check_builtins(t_exec_info *exec_info, t_data *data, char **arguments);
-char *ft_decide_executable(char *command, char **envp, t_data *data);
+char *ft_decide_executable(char *command, t_data *data);
 
 //built_in.c
-void ft_builtin_cd(int words, t_exec_info *exec_info, t_data *data, char **arguments);
+void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_export(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_unset(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_echo(t_exec_info *exec_info, t_data *data, char **arguments);
@@ -116,13 +116,13 @@ void ft_builtin_env(t_exec_info *exec_info, t_data *data, char **arguments);
 void ft_builtin_pwd(t_exec_info *exec_info, t_data *data, char **arguments);
 
 //single_builtin_execution.c
-int ft_check_single_builtin( t_token *head, int words, char **arguments, t_data *data);
+int ft_check_single_builtin(char **arguments);
 int ft_check_builtins_before_fork(t_token *head, t_data *data);
 void ft_single_builtin(t_token *head, t_data *data);
 int ft_count_single_words(t_token *head);
 
 //builtin_single.c
-void ft_builtin_single_exit(char **arguments, t_data *data);
+void ft_builtin_single_exit(int words, char **arguments, t_data *data);
 void ft_builtin_single_echo(char **arguments, t_data *data);
 void ft_builtin_single_unset(char **arguments, t_data *data);
 void ft_builtin_single_export(char **arguments, t_data *data);
@@ -148,7 +148,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
 //export.c
 int ft_add_to_export_list(char **arguments, t_data *data);
-void ft_export_print_list(t_data *data);
+int ft_export_print_list(t_data *data);
 
 //unset.c
 void ft_unset(char **args, t_data *data);
@@ -160,7 +160,6 @@ int ft_echo_no_newline(char **arguments, int i);
 int ft_check_echo_option(char **arguments);
 
 //ft_atol.c
-long	ft_atol(const char *ptr);
-
+int	ft_atol(const char *ptr);
 
 #endif

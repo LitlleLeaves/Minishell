@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 14:00:17 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/07 15:21:38 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ void ft_builtin_single_exit(int words, char **arguments, t_data *data)
 	else
 	{
 		data->exit_code = ft_atol(arguments[1]);
-		if (data->exit_code == LONG_MAX)
+		if (data->exit_code == -1)
+		{
+			data->exit_code = 2;
 			printf("Minishell: exit: %s numeric argument required\n", arguments[1]);
+		}
 	}
 }
 
