@@ -14,8 +14,8 @@
 #include <termios.h>
 #include <termcap.h>
 #include <errno.h>
-// #include <readline/readline.h>
-// #include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 // < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
 
 typedef enum	e_token_type
@@ -91,16 +91,7 @@ int	ft_child_process(t_token *head, t_data *data, int i);
 void ft_execution_failure(char *executable, char **arguments);
 
 //split.c
-char	**ft_split(const char *str, char while (1)
-{
-    line = readline("> ");
-    if (line == NULL || ft_strcmp(line, delimiter) == 0)
-        break ;
-    // do NOT add_history(line) here
-    write(fd, line, ft_strlen(line));
-    write(fd, "\n", 1);
-    free(line);
-}c);
+char	**ft_split(const char *str, char);
 
 //ft_strjoin.c
 char	*ft_strjoin(char const *s1, char const *s2);
