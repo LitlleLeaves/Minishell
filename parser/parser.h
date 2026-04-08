@@ -25,7 +25,8 @@ typedef enum	e_token_type
     REDIR_OUT_TRUNC, 	// >
     REDIR_OUT_APP,		// >>
     REDIR_IN,			// <
-    HEREDOC,			// <<
+    HEREDOC_EXPANSION,		// << eof
+	HEREDOC_NO_EXPANSION,	// << 'eof' || << "eof"
 
 	ENVIRONMENT,
 }				t_token_type;

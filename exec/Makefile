@@ -33,6 +33,8 @@ SRC_FILES := \
 	redirection.c \
 	test.c \
 	free.c \
+	ft_itoa.c \
+	heredoc.c
 
 BUILTINS_SRC_FILES := \
 	built_in.c \

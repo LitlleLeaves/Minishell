@@ -22,10 +22,11 @@ typedef enum	e_token_type
 {
     WORD,
     PIPE,
-    REDIR_OUT_TRUNCT, 	// >
-    REDIR_OUT_APPEND,	// >>
-    REDIR_IN,			// <
-    HEREDOC,			// <<
+    REDIR_OUT_TRUNCT, 		// >
+    REDIR_OUT_APPEND,		// >>
+    REDIR_IN,				// <
+    HEREDOC_EXPANSION,		// << eof
+	HEREDOC_NO_EXPANSION,	// << 'eof' || << "eof"
 	ENVIRONMENT,
 }				t_token_type;
 
@@ -34,6 +35,7 @@ typedef struct	s_token
     char            *value;
     t_token_type    type;
     struct s_token  *next;
+	int				heredoc_fd;
 }				t_token;
 
 typedef struct	s_exec_info
@@ -89,7 +91,16 @@ int	ft_child_process(t_token *head, t_data *data, int i);
 void ft_execution_failure(char *executable, char **arguments);
 
 //split.c
-char	**ft_split(const char *str, char c);
+char	**ft_split(const char *str, char while (1)
+{
+    line = readline("> ");
+    if (line == NULL || ft_strcmp(line, delimiter) == 0)
+        break ;
+    // do NOT add_history(line) here
+    write(fd, line, ft_strlen(line));
+    write(fd, "\n", 1);
+    free(line);
+}c);
 
 //ft_strjoin.c
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -164,5 +175,8 @@ int ft_check_echo_option(char **arguments);
 
 //ft_atol.c
 int	ft_atol(const char *ptr);
+
+//ft_itoa.c
+char	*ft_itoa(int n)
 
 #endif
