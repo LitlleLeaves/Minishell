@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 15:29:24 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 12:52:29 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 14:39:27 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_builtin_env(t_data *data, char **arguments)
 
 	if (arguments[1] != NULL)
 	{
-		printf("wrong amount of argments for env\n");
+		write(2, "wrong amount of arguments for env\n", 34);
 		data->exit_code = 1	;
 	}
 	else

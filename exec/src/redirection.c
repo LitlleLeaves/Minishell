@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:23:11 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 15:14:39 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ int ft_handle_in(int *fd_in, t_token *curr)
 	*fd_in = open(curr->value, O_RDONLY, 0644);
 	if (*fd_in == -1)
 	{
-		 printf("minishell: %s: %s\n", curr->value, strerror(errno));
+		write(2, "Minishell: ", 12);
+		write(2, curr->value, ft_strlen(curr->value));
+		write(2, ": ", 3);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 2);
     	return (-1); 
 	}
 	return (*fd_in);
@@ -30,7 +34,8 @@ int ft_handle_in(int *fd_in, t_token *curr)
 //infile heredoc
 int ft_handle_in_heredoc(int *fd_in, t_token *curr)
 {
-	printf("heredoc not implemented yet %i %i\n", *fd_in, *curr->value);
+	printf("%i %s", *fd_in, curr->value);
+	write(2, "heredoc not implemented yet\n", 29);
 	//TODO heredoc implemntation
 	return (1);
 }
@@ -42,9 +47,13 @@ int ft_handle_out_app(int *fd_out, t_token *curr)
 		close(*fd_out);
 	*fd_out = open(curr->value, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (*fd_out == -1)
-	{ 
-		printf("minishell: %s: %s\n", curr->value, strerror(errno));
-    	return (-1); // ✅ let caller decide what to do
+	{
+		write(2, "Minishell: ", 12);
+		write(2, curr->value, ft_strlen(curr->value));
+		write(2, ": ", 3);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 2);
+    	return (-1);
 	}
 	return (*fd_out);
 }
@@ -57,8 +66,12 @@ int ft_handle_out_trunc(int *fd_out, t_token *curr)
 	*fd_out = open(curr->value, O_WRONLY| O_TRUNC | O_CREAT, 0644);
 	if (*fd_out == -1)
 	{
-		 printf("minishell: %s: %s\n", curr->value, strerror(errno));
-    	return (-1); // ✅ let caller decide what to do
+		write(2, "Minishell: ", 12);
+		write(2, curr->value, ft_strlen(curr->value));
+		write(2, ": ", 3);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 2);
+    	return (-1);
 	}
 	return (*fd_out);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 12:55:07 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:08:18 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,15 @@ void ft_cd_helper(t_token **curr)
 	}
 }
 
+void ft_print_cd_error(char *path)
+{
+	write(2, "Minishell: ", 12);
+	write(2, strerror(errno),ft_strlen(strerror(errno)));
+	write(2, ": ", 3);
+	write(2, path, ft_strlen(path));
+	write(2, "\n", 2);
+}
+
 //cd funciton that checks ~ variable at start of a path
 int ft_cd_one_argument(char **arguments, t_data *data)
 {
@@ -93,14 +102,12 @@ int ft_cd_one_argument(char **arguments, t_data *data)
 		if (path  == NULL)
 			return (data->shutdown = 1 ,1);
 		if (chdir(path) == -1)
-			return (free(path), printf("minishell: %s", strerror(errno)), 1);
+			return (ft_print_cd_error(path), free(path), 1);
 	}
 	else 
-	{
-		if (chdir(path) == -1)
-			return (free(path), printf("minishell: %s", strerror(errno)), 1);
+		if (chdir(arguments[1]) == -1)
+			return (ft_print_cd_error(arguments[1]), 1);
 		else
 			ft_set_pwd_oldpwd(data);
-	}
 	return (free(path), 0);
 }

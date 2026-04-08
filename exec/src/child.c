@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 12:44:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 15:50:52 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 //handle execution failure, free arguments and exit with status 127
 void ft_execution_failure(char *executable, char **arguments)
 {
-	free(arguments);
 	ft_free_arr((void **)arguments);
 	free(executable);
 	exit(127);
@@ -38,7 +37,7 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
         close(exec_info->fd_out);
     }
 	ft_check_builtins(exec_info, data, exec_info->arguments);
-	executable = ft_decide_executable(exec_info->arguments[0], data); //TODO nieuwe build manier en moet dan eerst voor builtin checken en daarna pas path proberen te zoeken.
+	executable = ft_decide_executable(exec_info->arguments[0], data);
 	if (executable == NULL)
 		exit(127);
 	else
@@ -61,7 +60,7 @@ int ft_build_arguments_array(t_exec_info *exec_info)
 		{
 			exec_info->arguments[i] = ft_strdup(curr->value);
 			if (exec_info->arguments[i] == NULL)
-				return (free(exec_info->arguments), -1);
+				return (ft_free_r((void **)exec_info->arguments, i), -1);
 			i++;
 		}
 		curr = curr->next;
@@ -81,7 +80,6 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 	ft_build_arguments_array(exec_info);
 	while (curr != exec_info->end && curr != NULL)
 	{
-		// printf("current token: %s, type: %d\n", curr->value, curr->type); // debug
 		if (ft_apply_redirection(&exec_info->fd_in, &exec_info->fd_out, curr) < 0)
 			return (ft_free_arr((void **)exec_info->arguments) ,-1);
 		curr = curr->next;

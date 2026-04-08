@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:02:36 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 12:51:28 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 15:13:46 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	if (nmemb == 0 || size == 0)
 		return (malloc(0));
-	if (nmemb > INT_MAX / size)
+	if (nmemb > __SIZE_MAX__ / size)
 		return (NULL);
 	ptr = malloc(nmemb * size);
 	if (ptr == NULL)
@@ -43,6 +43,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	size_t				i;
 
 	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (0);
 	ucs1 = (const unsigned char *)s1;
 	ucs2 = (const unsigned char *)s2;
 	while ((ucs1[i] || ucs2[i]) && i < n)
@@ -71,6 +73,8 @@ size_t	ft_strlen(const char *str)
 if not found returns NULL*/
 char	*ft_strchr(const char *str, int c)
 {
+	if (str == NULL)
+		return (NULL);
 	while (*str)
 	{
 		if (*str == (unsigned char) c)
@@ -89,9 +93,9 @@ char	*ft_strdup(const char *s)
 	char	*str;
 	int		i;
 
-	size = ft_strlen(s);
 	if (!s)
 		return (NULL);
+	size = ft_strlen(s);
 	str = malloc(sizeof(char) * (size + 1));
 	if (str == NULL)
 		return (NULL);

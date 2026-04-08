@@ -32,7 +32,7 @@ SRC_FILES := \
 	pipes.c \
 	redirection.c \
 	test.c \
-	unset.c
+	free.c \
 
 BUILTINS_SRC_FILES := \
 	built_in.c \
@@ -42,8 +42,8 @@ BUILTINS_SRC_FILES := \
 	export.c \
 	cd.c \
 	echo.c \
-	free.c \
-	single_builtin_execution.c
+	single_builtin_execution.c \
+	unset.c
 
 # Object filenames: place in obj/ with same basenames
 OBJS := $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o) $(BUILTINS_SRC_FILES:.c=.o))

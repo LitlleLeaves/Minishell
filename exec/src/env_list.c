@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 12:55:38 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 12:58:28 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 15:00:53 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int ft_extend_env(t_data *data, char *entry)
 	{
 		new_list[i] = ft_strdup(data->envp[i]);
 		if (new_list[i] == NULL)
-			return (free(new_list), -2);
+			return (ft_free_arr((void **)new_list), -2);
 		free(data->envp[i]);
 		i++;
 	}

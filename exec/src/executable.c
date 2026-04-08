@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:28:57 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 15:29:47 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void ft_relative_executable_help(char *command)
 	{
 		if (errno == EACCES)
 		{
-			printf("minishell: %s: Permission denied\n", command);
+			write(2, "Minishell: ", 12);
+			write(2, command, ft_strlen(command));
+			write(2, ": Permission denied\n", 21);
 			exit(126);
 		}
 		else
@@ -29,6 +31,7 @@ void ft_relative_executable_help(char *command)
 		}
 	}
 }
+
 //check whether the relative path exsists and if the file is executable
 char *ft_relative_executable(char *command)
 {
@@ -38,7 +41,9 @@ char *ft_relative_executable(char *command)
 	{
 		if (errno == ENOENT)
 		{
-			printf("minishell: %s: No such file or directory\n", command);
+			write(2, "Minishell: ", 12);
+			write(2, command, ft_strlen(command));
+			write(2, ": No such file or directory\n", 29);
 			exit(127);
 		}
 		else
@@ -49,7 +54,9 @@ char *ft_relative_executable(char *command)
 	}
 	if (S_ISDIR(st.st_mode))
 	{
-		printf("minishell: %s: Is a directory\n", command);
+		write(2, "Minishell: ", 12);
+		write(2, command, ft_strlen(command));
+		write(2, ": Is a directory\n", 18);
 		exit(126);
 	}
 	ft_relative_executable_help(command);
@@ -80,7 +87,8 @@ char *ft_make_executable(char *executable, t_data *data)
 			return (free(path), ft_free_arr((void **)paths), exec);
 		i++;
 	}
-	printf("%s: command not found", executable);
+	write(2, executable, ft_strlen(executable));
+	write(2,": command not found\n", 21);
 	return (free(exec), free(path), ft_free_arr((void **)paths), NULL);
 }
 
