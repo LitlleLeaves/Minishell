@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 15:29:24 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 17:40:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 12:52:29 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void ft_builtin_env(t_data *data, char **arguments)
 			i++;
 		}
 	}
-	ft_free_tokens(data->head);
-	free(data->envp);
-	ft_free_arr((void **)arguments);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit(data->exit_code);
 }
 
@@ -55,9 +52,6 @@ void ft_builtin_pwd(t_data *data, char **arguments)
 		printf("%s\n", buff);
 		free(buff);
 	}
-	ft_free_tokens(data->head);
-	free(data->envp);
-	ft_free_arr((void **)arguments);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:46:00 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 13:16:31 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void ft_builtin_single_cd(int words, char **arguments, t_data *data)
 	// printf("%s\n", ft_getenv(data, "PWD")); // debug
 	if (words > 2)
 	{
-		printf("minishell: cd: too many arguments\n");
+		write(2, "minishell: cd: too many arguments\n", 35);
 		data->exit_code = 1;
 	}
 	else if (words == 1)
@@ -62,15 +62,15 @@ void ft_builtin_single_echo(char **arguments, t_data *data)
 
 void ft_builtin_single_exit(int words, char **arguments, t_data *data)
 {
+	write(2, "exit\n", 5);
 	data->shutdown = 1;	
 	if (words == 1)
 	{
 		data->exit_code = 0;
 	}
-		
 	else if (words == 3)
 	{
-		printf("Minishell: exit: too many arguments\n");
+		write(2, "Minishell: exit: too many arguments\n", 37);
 		data->exit_code = 1;
 	}
 	else
@@ -79,7 +79,9 @@ void ft_builtin_single_exit(int words, char **arguments, t_data *data)
 		if (data->exit_code == -1)
 		{
 			data->exit_code = 2;
-			printf("Minishell: exit: %s numeric argument required\n", arguments[1]);
+			write (2, "Minishell: exit: ", 18);
+			write (2, arguments[1], ft_strlen(arguments[1]));
+			write (2, ": numeric argument required\n", 29);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:07 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:29:52 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 13:16:45 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void ft_builtin_single_env(char **arguments, t_data *data)
 
 	if (arguments[1] != NULL)
 	{
-		printf("wrong amount of argments for env\n");
+		write(2, "wrong amount of argments for env\n", 34);
 		data->exit_code = 1	;
 	}
 	else

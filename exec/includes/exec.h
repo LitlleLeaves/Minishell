@@ -64,6 +64,7 @@ void	ft_free_arr(void **array);
 void	ft_free_r(void **array, int i);
 void ft_free_tokens(t_token *head);
 void ft_cleanup(t_token *head, t_data *data, int nmb_of_pipes);
+void ft_child_builtin_cleanup(t_data *data, char **arguments);
 
 //pipes.c
 int	ft_find_pipes(t_token *head);

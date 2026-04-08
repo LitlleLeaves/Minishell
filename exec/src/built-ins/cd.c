@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 16:31:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 12:55:07 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ int ft_cd_one_argument(char **arguments, t_data *data)
 		if (path  == NULL)
 			return (data->shutdown = 1 ,1);
 		if (chdir(path) == -1)
-			return (printf("minishell: %s", strerror(errno)), 1);
+			return (free(path), printf("minishell: %s", strerror(errno)), 1);
 	}
 	else 
 	{
 		if (chdir(path) == -1)
-			return (printf("minishell: %s", strerror(errno)), 1);
+			return (free(path), printf("minishell: %s", strerror(errno)), 1);
 		else
 			ft_set_pwd_oldpwd(data);
 	}

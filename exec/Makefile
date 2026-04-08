@@ -24,7 +24,6 @@ SRC_FILES := \
 	dummy.c \
 	env_list.c \
 	executable.c \
-	export.c \
 	ft_atol.c \
 	ft_split.c \
 	ft_strjoin.c \
@@ -40,6 +39,7 @@ BUILTINS_SRC_FILES := \
 	built_in2.c \
 	builtin_single.c \
 	builtin_single2.c \
+	export.c \
 	cd.c \
 	echo.c \
 	free.c \

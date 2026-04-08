@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/17 15:29:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 17:52:30 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 13:06:50 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments)
 		data->exit_code = ft_cd_no_arguments(data);
 	else if (exec_info->words == 2)
 		data->exit_code = ft_cd_one_argument(arguments, data);
-	ft_free_arr((void **)arguments);
-	ft_free_tokens(data->head);
-	free(data->envp);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit (data->exit_code);
 }
 
@@ -43,10 +40,7 @@ void ft_builtin_export(t_data *data, char **arguments)
 		ft_export_print_list(data);
 	else
 		ft_add_to_export_list(arguments, data);
-	ft_free_arr((void **)arguments);
-	ft_free_tokens(data->head);
-	free(data->envp);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit (data->exit_code);
 }
 
@@ -55,10 +49,7 @@ void ft_builtin_unset(t_data *data, char **arguments)
 
 	if (arguments[1] != NULL)
 		ft_unset(arguments, data);
-	ft_free_arr((void **)arguments);
-	ft_free_tokens(data->head);
-	free(data->envp);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit (0);
 }
 
@@ -70,15 +61,13 @@ void ft_builtin_echo(t_data *data, char **arguments)
 		data->exit_code = ft_echo_no_newline(arguments, 2);
 	else
 		data->exit_code = ft_echo_newline(arguments, 1);
-	ft_free_arr((void **)arguments);
-	ft_free_tokens(data->head);
-	ft_free_arr((void **)data->envp);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit(data->exit_code);
 }
 
 void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments)
 {
+	
 	data->shutdown = 1;	
 	if (exec_info->words == 1)
 	{
@@ -99,9 +88,6 @@ void ft_builtin_exit(t_exec_info *exec_info, t_data *data, char **arguments)
 			printf("Minishell: exit: %s numeric argument required\n", arguments[1]);
 		}
 	}
-	ft_free_arr((void **)arguments);
-	ft_free_tokens(data->head);
-	free(data->envp);
-	free(data->pids);
+	ft_child_builtin_cleanup(data, arguments);
 	exit (data->exit_code);
 }
