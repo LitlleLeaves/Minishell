@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:52:21 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 12:50:31 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:38:59 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "exec.h"
 
 //free array that is null terminated
-void	ft_free_arr(void **array)
+void ft_free_arr(void **array)
 {
 	int	i;
 
@@ -28,7 +28,7 @@ void	ft_free_arr(void **array)
 }
 
 // free an array from [0] to [i] incase of malloc failure
-void	ft_free_r(void **array, int i)
+void ft_free_r(void **array, int i)
 {
 	while (i >= 0)
 	{
@@ -40,8 +40,8 @@ void	ft_free_r(void **array, int i)
 //free the linked list of tokens after execution is done
 void ft_free_tokens(t_token *head)
 {
-	t_token *curr;
-	t_token *temp;
+	t_token	*curr;
+	t_token	*temp;
 
 	curr = head;
 	while (curr != NULL)
@@ -56,7 +56,7 @@ void ft_free_tokens(t_token *head)
 //cleanup function to free all allocated memory at the end of execution, including the linked list of tokens, the array of pids and the array of pipes
 void ft_cleanup(t_token *head, t_data *data, int nmb_of_pipes)
 {
-	int i;
+	int	i;
 
 	ft_free_tokens(head);
 	free(data->pids);

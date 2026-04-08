@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 15:29:47 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:38:25 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void ft_relative_executable_help(char *command)
 //check whether the relative path exsists and if the file is executable
 char *ft_relative_executable(char *command)
 {
-	struct stat st;
-	
+	struct stat	st;
+
 	if (stat(command, &st) == -1)
 	{
 		if (errno == ENOENT)
@@ -59,8 +59,8 @@ char *ft_relative_executable(char *command)
 		write(2, ": Is a directory\n", 18);
 		exit(126);
 	}
-	ft_relative_executable_help(command);
-	return (strdup(command));
+	
+	return (ft_relative_executable_help(command), strdup(command));
 }
 
 //make a executable by looking through the path and finding if it is executable
@@ -95,7 +95,7 @@ char *ft_make_executable(char *executable, t_data *data)
 //decide if the exucatble path is relative or if it needs to be found in the path, and return the executable path
 char *ft_decide_executable(char *command, t_data *data)
 {
-	char *executable;
+	char	*executable;
 
 	if (ft_strchr(command, '/') == NULL)
 		executable = ft_make_executable(command, data);

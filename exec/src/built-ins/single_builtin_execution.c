@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 13:07:12 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 15:24:38 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:36:15 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,17 +115,17 @@ void ft_single_redirection(t_token *curr, int *fd_in, int *fd_out)
 //main single builtin chekc, first checks if its a builtin command, then applies redirecion and executes the code
 int ft_check_builtins_before_fork(t_token *head, t_data *data)
 {
-	t_token *curr;
+	t_token	*curr;
 	int		fd_in;
 	int		fd_out;
 	int		words;
-	char **arguments;
-	
+	char	**arguments;
+
 	curr = head;
 	words = ft_count_single_words(curr);
 	fd_in = -2;
 	fd_out = -2;
-	
+
 	arguments = ft_calloc(words + 1, sizeof(char *));
 	if (arguments == NULL)
 		return (-1);

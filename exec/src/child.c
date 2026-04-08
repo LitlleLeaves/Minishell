@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:53:09 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 15:50:52 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:37:28 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ void ft_child_execute(t_exec_info *exec_info, t_data *data)
 
 int ft_build_arguments_array(t_exec_info *exec_info)
 {
-	int i;
-	t_token *curr;
+	int		i;
+	t_token	*curr;
 
 	i = 0;
 	exec_info->arguments = ft_calloc(exec_info->words + 1, sizeof(char *));
@@ -71,7 +71,7 @@ int ft_build_arguments_array(t_exec_info *exec_info)
 //start execution of the command
 int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 {
-	t_token *curr;
+	t_token	*curr;
 
 	exec_info->fd_in = -2;
 	exec_info->fd_out = -2;
@@ -94,7 +94,7 @@ int	ft_child_start_execute(t_exec_info *exec_info ,t_data *data, int i)
 //find start and end of command
 int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)
 {
-	int	counter;
+	int		counter;
 	t_token	*start;
 	t_token	*end;
 
@@ -124,7 +124,7 @@ int ft_find_start_end(int i, t_exec_info *exec_info, t_token *head)
 //child process finds the start and end of its command, applies redirections, and executes the command
 int	ft_child_process(t_token *head, t_data *data, int i)
 {
-	t_exec_info exec_info;
+	t_exec_info	exec_info;
 
 	if (ft_find_start_end(i, &exec_info, head) < 0)
 		return (-1);

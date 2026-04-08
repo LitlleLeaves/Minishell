@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 14:28:07 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 13:16:45 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:33:45 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int ft_builtin_single_pwd(t_data *data)
 {
 	char	*buff;
 	char	*pwd;
-	
+
 	pwd = ft_getenv(data, "PWD");
     if (pwd != NULL)
     {

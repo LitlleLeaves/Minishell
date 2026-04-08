@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 12:27:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:08:18 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:33:59 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int ft_set_pwd_oldpwd(t_data *data)
 //cd with no argument to home
 int ft_cd_no_arguments(t_data *data)
 {
-	char *home;
-	
+	char	*home;
+
 	home = ft_getenv(data, "HOME");
 	if (home == NULL)
 	{
@@ -90,7 +90,7 @@ int ft_cd_one_argument(char **arguments, t_data *data)
 {
 	char	*path;
 	char	*home;
-	
+
 	path = NULL;
 	if (ft_strncmp(arguments[1], "~", 1) == 0)
 	{

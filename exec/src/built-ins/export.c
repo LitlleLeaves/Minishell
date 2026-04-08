@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 14:31:15 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/07 13:22:04 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:35:45 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //print declare -x <string> for each env member
 int ft_export_print_list(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->envp[i] != NULL)
@@ -36,7 +36,7 @@ static int ft_export_valid_char(char c)
 
 int ft_export_validity_checker(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str == NULL)
@@ -78,14 +78,12 @@ static int ft_key_value_helper(char *argument, t_data *data)
 int ft_add_to_export_list(char **arguments, t_data *data)
 {
 	int		i;
-	int		j;
 	char	*entry;
 
 	i = 0;
 	while (arguments[i] != NULL)
 	{
 		i++;
-		j = 0;
 		if (ft_export_validity_checker(arguments[i]) == 0)
 		{
 			data->exit_code = 1;	
@@ -96,17 +94,11 @@ int ft_add_to_export_list(char **arguments, t_data *data)
 			entry = ft_strdup(arguments[i]);
 			if (entry == NULL)
 				return (data->shutdown = 1 ,-1);
-			if (ft_isdigit(entry[0]) == 1)
-			{
-				
-			}
 			ft_change_env_key(entry, data);
 		}
 		else
-		{
 			if (ft_key_value_helper(arguments[i], data) < 0)
 				return (data->shutdown = 1 ,-1);
-		}
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 15:18:08 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/08 16:39:44 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static int	ft_wait_all_children(t_data *data, int nmb_of_pipes)
 	}
 	data->exit_code = WEXITSTATUS(status);
 	return (WEXITSTATUS(status));
-}
+}ft_relative_executable_help(command);
 
 //fork a proces for each command
 int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	data->nmb_of_pipes = nmb_of_pipes;
@@ -63,7 +63,7 @@ int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)
 //parent process sets up pipes and pids,check for single builtin and executes it or then forks the children, and waits for them to finish
 int ft_start_exec(t_token *head, t_data *data)
 {
-	int		nmb_of_pipes;
+	int	nmb_of_pipes;
 
 	nmb_of_pipes = ft_find_pipes(head);
 	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head, data) > 0)
@@ -99,9 +99,9 @@ int ft_copy_envp(t_data *data, char **envp)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	t_token *head;
+	t_token	*head;
 	t_data	data;
-	
+
 	if (argc != 1 || argv[1] != NULL)
 		return (1);
 	head = ft_get_head();
