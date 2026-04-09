@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 15:14:39 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/09 12:45:33 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int ft_apply_redirection(int *fd_in, int *fd_out, t_token *curr)
 {
 	if (curr->type == REDIR_IN)
         return (ft_handle_in(fd_in, curr));
-    else if (curr->type == HEREDOC)
+    else if (curr->type == HEREDOC_EXPANSION || curr->type == HEREDOC_NO_EXPANSION)
         return (ft_handle_in_heredoc(fd_in, curr));
     else if (curr->type == REDIR_OUT_APPEND)
         return (ft_handle_out_app(fd_out, curr));

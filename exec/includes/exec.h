@@ -168,6 +168,10 @@ int ft_check_echo_option(char **arguments);
 int	ft_atol(const char *ptr);
 
 //ft_itoa.c
-char	*ft_itoa(int n)
+char	*ft_itoa(int n);
+
+//heredoc.c
+int handle_heredoc(t_token *head, t_data *data);
+
 
 #endif
