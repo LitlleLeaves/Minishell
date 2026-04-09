@@ -34,7 +34,8 @@ SRC_FILES := \
 	test.c \
 	free.c \
 	ft_itoa.c \
-	heredoc.c
+	heredoc.c \
+	expansion.c
 
 BUILTINS_SRC_FILES := \
 	built_in.c \

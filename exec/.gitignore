@@ -1,2 +1,7 @@
 *.d
 *.o
+*infile*
+*outfile*
+minishell
+NoPerm
+log

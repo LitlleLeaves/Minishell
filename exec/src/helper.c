@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:02:36 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:39:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/09 15:04:54 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,50 @@ char	*ft_strdup(const char *s)
 int	ft_isdigit(int c)
 {
 	if ((c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}
+
+//return 1 if char is alphabetic, els e returns 0
+int	ft_isalpha(int c)
+{
+	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+		return (1);
+	return (0);
+}
+
+
+char	*ft_substr(char const *str, int start, int length)
+{
+	char	*new;
+	int		counter;
+	int		str_len;
+
+	counter = 0;
+	if (!str)
+		return (printf("bad input\n"), NULL);
+	str_len = ft_strlen(str);
+	if (start > str_len)
+		return (ft_strdup(""));
+	if (start + length > str_len)
+		new = (char *)malloc((str_len - start) + 1);
+	else
+		new = (char *)malloc(length + 1);
+	if (!new)
+		return (printf("malloc error"), NULL);
+	while (counter < length && str[start + counter] != '\0')
+	{
+		new[counter] = str[start + counter];
+		counter++;
+	}
+	new[counter] = '\0';
+	return (new);
+}
+
+int	ft_isalnum(int c)
+{
+	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
 }

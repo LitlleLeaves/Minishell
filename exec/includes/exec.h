@@ -85,6 +85,9 @@ size_t	ft_strlen(const char *str);
 char	*ft_strchr(const char *str, int c);
 char	*ft_strdup(const char *s);
 int	ft_isdigit(int c);
+int	ft_isalpha(int c);
+char	*ft_substr(char const *str, int start, int length);
+int	ft_isalnum(int c);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int i);
@@ -172,6 +175,9 @@ char	*ft_itoa(int n);
 
 //heredoc.c
 int handle_heredoc(t_token *head, t_data *data);
+
+//expansion.c
+char	*get_key(char *line, int start);
 
 
 #endif
