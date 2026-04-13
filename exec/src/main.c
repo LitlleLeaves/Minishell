@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/09 12:48:39 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 12:18:22 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static int	ft_wait_all_children(t_data *data, int nmb_of_pipes)
 	}
 	data->exit_code = WEXITSTATUS(status);
 	return (WEXITSTATUS(status));
-}ft_relative_executable_help(command);
+	// ft_relative_executable_help(command); //?
+}
 
 //fork a proces for each command
 int	ft_fork_process(t_token *head, t_data *data, int nmb_of_pipes)

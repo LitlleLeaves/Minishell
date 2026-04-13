@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <stdbool.h>
 // < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
 
 typedef enum	e_token_type
@@ -59,6 +60,7 @@ typedef struct s_data
 	int		exit_code;
 	t_token *head;
 	int		nmb_of_pipes;
+	char	*line;
 }	t_data;
 
 //free.c

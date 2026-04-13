@@ -24,18 +24,18 @@ t_token	*ft_get_head()
         char *value;
         t_token_type type;
     } token_data[] = {
-        // {"infile", REDIR_IN},
-        {"cd", WORD},
+        {"eof", HEREDOC_EXPANSION},
+        {"cat", WORD},
 		// {"~/Projects/Minishell/exec/infile", WORD},
-		{"infile", WORD},
-		// {"outfile", REDIR_OUT_TRUNCT},
-        {NULL, PIPE},
-		// // {"infile", REDIR_IN},
-        {"echo", WORD},
-		{"-n", WORD},
+		// {"jjhurry", WORD},
+		{"outfile", REDIR_OUT_TRUNCT},
         // {NULL, PIPE},
-        // {"wc", WORD},
-		// {"-l", WORD},
+		// // // {"infile", REDIR_IN},
+        // {"cat", WORD},
+		// // {"-n", WORD},
+        // // {NULL, PIPE},
+        // // {"wc", WORD},
+		// // {"-l", WORD},
         // {"outfile2", REDIR_OUT_APPEND},
 		
     };

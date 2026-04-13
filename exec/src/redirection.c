@@ -6,12 +6,13 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/09 12:45:33 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 13:09:15 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include <errno.h>
+#include <unistd.h>
 
 //infile regular
 int ft_handle_in(int *fd_in, t_token *curr)
@@ -34,10 +35,20 @@ int ft_handle_in(int *fd_in, t_token *curr)
 //infile heredoc
 int ft_handle_in_heredoc(int *fd_in, t_token *curr)
 {
-	printf("%i %s", *fd_in, curr->value);
-	write(2, "heredoc not implemented yet\n", 29);
-	//TODO heredoc implemntation
-	return (1);
+	if (*fd_in >= 0)
+		close(*fd_in);
+	*fd_in = curr->heredoc_fd;
+	// write(2, "heredoc not implemented yet\n", 29); //debug
+	if (*fd_in == -1)
+	{
+		write(2, "Minishell: ", 12);
+		write(2, curr->value, ft_strlen(curr->value));
+		write(2, ": ", 3);
+		write(2, strerror(errno), ft_strlen(strerror(errno)));
+		write(2, "\n", 2);
+    	return (-1); 
+	}
+	return (*fd_in);
 }
 
 //outfile append

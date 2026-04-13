@@ -7,7 +7,7 @@
 ################################################################################
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g -I includes
+CFLAGS := -Wall -Wextra -Werror -g -I includes 
 
 NAME := minishell
 
@@ -16,6 +16,7 @@ OBJ_DIR := obj
 DEP_DIR := dep
 BUILTINS_DIR := src/built-ins
 INCLUDES := includes
+LDLIBS  = -lreadline -lhistory
 HEADERS := $(INCLUDES)/exec.h
 
 # List sources once by directory (basenames)
@@ -35,7 +36,7 @@ SRC_FILES := \
 	free.c \
 	ft_itoa.c \
 	heredoc.c \
-	expansion.c
+# 	expansion.c
 
 BUILTINS_SRC_FILES := \
 	built_in.c \
@@ -59,7 +60,7 @@ DEPS := $(addprefix $(DEP_DIR)/, $(SRC_FILES:.c=.d) $(BUILTINS_SRC_FILES:.c=.d))
 all: $(NAME)
 
 $(NAME): $(OBJS) | $(OBJ_DIR) $(DEP_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDLIBS)
 
 $(OBJ_DIR):
 	@if [ ! -d $(OBJ_DIR) ]; then echo "creating $(OBJ_DIR)"; mkdir -p $(OBJ_DIR); fi
