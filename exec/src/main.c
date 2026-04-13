@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 12:18:22 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:26:10 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int ft_start_exec(t_token *head, t_data *data)
 	if (ft_fork_process(head, data, nmb_of_pipes) < 0)
 		return (ft_free_tokens(head), ft_close_all_pipes(data, nmb_of_pipes),- 3);
 	ft_close_all_pipes(data, nmb_of_pipes);
+	// ft_close_heredoc_fds(head);
 	ft_wait_all_children(data, nmb_of_pipes);
 	return (ft_cleanup(head, data, nmb_of_pipes), 1);
 }
@@ -116,5 +117,6 @@ int	main(int argc, char *argv[], char *envp[])
 	if (ft_start_exec(head, &data) < 0)
 		return (ft_free_arr((void **)data.envp), ft_free_tokens(head), -1);
 	ft_free_arr((void **)data.envp);
+
 	return (0);
 }

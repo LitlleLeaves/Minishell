@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 16:53:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 13:14:38 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:31:11 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int ft_heredoc_create_file(t_token *curr, t_data *data)
 		return (-3);
 	/* Open heredoc file read/write so it can be used later as stdin */
 	curr->heredoc_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	curr->filename = strdup(file);
 	free(file);
 	if (curr->heredoc_fd == -1)
 		return (-4);
@@ -47,32 +48,23 @@ int ft_heredoc_create_file(t_token *curr, t_data *data)
 
 char *ft_heredoc_replace_line(char *line, char *key, char *value, int start)
 {
-	int		i;
-	int		len;
+	int		key_len;
+	int		value_len;
 	char	*new_line;
-	int		val_len;
-	int		val_index;
-	
-	i = 0;
-	val_len = ft_strlen(value);
-	len = ft_strlen(line) - ft_strlen(key) - 1 + val_len + 1;
-	new_line = ft_calloc(len, sizeof(char));
+
+	key_len = ft_strlen(key);
+	value_len = ft_strlen(value);
+	new_line = ft_calloc((ft_strlen(line) - key_len) + value_len + 1, sizeof(char));
 	if (new_line == NULL)
 		return (NULL);
-	while (i < start)
-	{
-		new_line[i] = line[i];
-		i++;
-	}
-	val_index = 0;
-	while (i < start + val_len + 1)
-		new_line[i++] = value[val_index++];
-	while (i < len)
-	{
-		new_line[i] = line[i + val_len - ft_strlen(key)];
-		i++;
-	}
-	return(free(line), new_line);
+	if (start != 0)
+		ft_memcpy(new_line, line, start);
+	fprintf(stderr, "newline = %s\n", new_line);
+	ft_memcpy(new_line + start, value, value_len);
+	fprintf(stderr, "newline = %s\n", new_line);
+	ft_memcpy(new_line + value_len + start, line + start + key_len, ft_strlen(line) - start - key_len - 1);
+	fprintf(stderr, "newline = %s\n", new_line);
+	return (new_line);
 }
 
 char *ft_heredoc_expansion(char *line, t_data *data)
@@ -83,6 +75,7 @@ char *ft_heredoc_expansion(char *line, t_data *data)
 	char	*value;
 
 	i = 0;
+	fprintf(stderr, "line = %s\n", line); //DEBUG
 	while (line[i] != '\0')
 	{
 		key_len = 0;
@@ -94,12 +87,19 @@ char *ft_heredoc_expansion(char *line, t_data *data)
 			while(ft_isalnum(line[i + key_len]) == 1 || line[i + key_len] == '_')
 				key_len++;	
 			key = ft_substr(line, i , key_len);
-			value = ft_getenv(data, key);
-			fprintf(stderr, "%s %s\n", key, value);
-			if (key == NULL || value == NULL)
+			if (key == NULL )
 				return (NULL);
-			line = ft_heredoc_replace_line(line, key, value, i);
+			value = ft_getenv(data, key);
+			if (value == NULL)
+			{
+				free(key);
+				i++;
+				continue ;
+			}
+			fprintf(stderr, "%s %s\n", key, value); //DEBUG
+			line = ft_heredoc_replace_line(line, key, value, i - 1);
 			free(key);
+			i = i - 1;
 		}
 		if (line[i] != '$')
 			i++;
@@ -131,6 +131,7 @@ ft_strncmp(line, curr->value, ft_strlen(curr->value)) == 0)
     	write(curr->heredoc_fd, "\n", 1);
     	free(line);
 	}
+	close(curr->heredoc_fd);
 	return (1);
 }
 

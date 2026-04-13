@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:02:36 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 12:17:16 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 14:39:38 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,4 +160,24 @@ int	ft_isalnum(int c)
 		|| (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);
+}
+
+//copies n bytes of memory from -> to, does not take overlap in mind
+void	*ft_memcpy(void	*to, const void*from, size_t bytes)
+{
+	size_t			i;
+	unsigned char	*res;
+	const char		*tmp;
+
+	if (to == NULL && from == NULL)
+		return (NULL);
+	tmp = from;
+	res = to;
+	i = 0;
+	while (i < bytes)
+	{
+		res[i] = tmp[i];
+		i++;
+	}
+	return (res);
 }

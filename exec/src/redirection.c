@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 12:04:50 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 13:09:15 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:32:27 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ int ft_handle_in_heredoc(int *fd_in, t_token *curr)
 {
 	if (*fd_in >= 0)
 		close(*fd_in);
-	*fd_in = curr->heredoc_fd;
-	// write(2, "heredoc not implemented yet\n", 29); //debug
+	*fd_in = open(curr->filename, O_RDONLY, 0644);
 	if (*fd_in == -1)
 	{
 		write(2, "Minishell: ", 12);

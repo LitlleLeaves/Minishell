@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:52:21 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:38:59 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/13 15:33:01 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void ft_free_tokens(t_token *head)
 		temp = curr;
 		curr = curr->next;
 		free(temp->value);
+		free(temp->filename);
 		free(temp);
 	}
 }

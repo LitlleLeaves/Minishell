@@ -37,6 +37,7 @@ typedef struct	s_token
     t_token_type    type;
     struct s_token  *next;
 	int				heredoc_fd;
+	char			*filename;
 }				t_token;
 
 typedef struct	s_exec_info
@@ -90,6 +91,7 @@ int	ft_isdigit(int c);
 int	ft_isalpha(int c);
 char	*ft_substr(char const *str, int start, int length);
 int	ft_isalnum(int c);
+void	*ft_memcpy(void	*to, const void*from, size_t bytes);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int i);
@@ -177,6 +179,7 @@ char	*ft_itoa(int n);
 
 //heredoc.c
 int handle_heredoc(t_token *head, t_data *data);
+void ft_close_heredoc_fds(t_token *head);
 
 //expansion.c
 char	*get_key(char *line, int start);

@@ -11,6 +11,7 @@ t_token	*create_token(char *value, t_token_type type)
 		token->value = strdup(value);
 	else
 		token->value = NULL;
+	token->filename = NULL;
 	token->type = type;
 	token->next = NULL;
 	return (token);
@@ -25,18 +26,18 @@ t_token	*ft_get_head()
         t_token_type type;
     } token_data[] = {
         {"eof", HEREDOC_EXPANSION},
-        {"cat", WORD},
+        {"echo", WORD},
 		// {"~/Projects/Minishell/exec/infile", WORD},
 		// {"jjhurry", WORD},
 		{"outfile", REDIR_OUT_TRUNCT},
-        // {NULL, PIPE},
+        {NULL, PIPE},
 		// // // {"infile", REDIR_IN},
-        // {"cat", WORD},
+        {"cat", WORD},
 		// // {"-n", WORD},
         // // {NULL, PIPE},
         // // {"wc", WORD},
 		// // {"-l", WORD},
-        // {"outfile2", REDIR_OUT_APPEND},
+        {"outfile2", REDIR_OUT_APPEND},
 		
     };
 	// printf("dummy function called\n"); // debug
