@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   built_in.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/17 15:29:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:33:12 by jjhurry          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   built_in.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2026/03/17 15:29:13 by jjhurry       #+#    #+#                 */
+/*   Updated: 2026/04/14 14:33:25 by jjhurry       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void ft_builtin_cd(t_exec_info *exec_info, t_data *data, char **arguments)
 {
-
-	char	*curr_dir;
-
-	curr_dir = ft_getenv(data, "PWD");
 	if (exec_info->words > 2)
 	{
 		write(2, "minishell: cd: too many arguments\n", 35);

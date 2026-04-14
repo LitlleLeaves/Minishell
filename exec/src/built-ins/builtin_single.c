@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_single.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 14:28:04 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:33:35 by jjhurry          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   builtin_single.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2026/03/19 14:28:04 by jjhurry       #+#    #+#                 */
+/*   Updated: 2026/04/14 14:33:38 by jjhurry       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,6 @@
 
 void ft_builtin_single_cd(int words, char **arguments, t_data *data)
 {
-	char	*curr_dir;
-
-	curr_dir = ft_getenv(data, "PWD");
 	if (words > 2)
 	{
 		write(2, "minishell: cd: too many arguments\n", 35);

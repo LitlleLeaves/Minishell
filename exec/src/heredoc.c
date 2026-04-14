@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/08 16:53:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 15:31:11 by jjhurry          ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   heredoc.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2026/04/08 16:53:13 by jjhurry       #+#    #+#                 */
+/*   Updated: 2026/04/14 14:39:54 by jjhurry       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ int ft_heredoc_create_file(t_token *curr, t_data *data)
 	free(tmp2);
 	if (file == NULL)
 		return (-3);
-	/* Open heredoc file read/write so it can be used later as stdin */
 	curr->heredoc_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	curr->filename = strdup(file);
-	free(file);
 	if (curr->heredoc_fd == -1)
-		return (-4);
-	return (1);
+		return (free(file), -4);
+	return (free(file), 1);
 }
 
 char *ft_heredoc_replace_line(char *line, char *key, char *value, int start)
@@ -54,16 +52,17 @@ char *ft_heredoc_replace_line(char *line, char *key, char *value, int start)
 
 	key_len = ft_strlen(key);
 	value_len = ft_strlen(value);
-	new_line = ft_calloc((ft_strlen(line) - key_len) + value_len + 1, sizeof(char));
+	new_line = ft_calloc((ft_strlen(line) - key_len - 1) + value_len + 1, sizeof(char));
 	if (new_line == NULL)
 		return (NULL);
 	if (start != 0)
 		ft_memcpy(new_line, line, start);
-	fprintf(stderr, "newline = %s\n", new_line);
+	fprintf(stderr, "newline = %s\n", new_line); //debug
 	ft_memcpy(new_line + start, value, value_len);
-	fprintf(stderr, "newline = %s\n", new_line);
-	ft_memcpy(new_line + value_len + start, line + start + key_len, ft_strlen(line) - start - key_len - 1);
-	fprintf(stderr, "newline = %s\n", new_line);
+	fprintf(stderr, "newline = %s\n", new_line); //debug
+	ft_memcpy(new_line + value_len + start, line + start + key_len + 1, \
+    ft_strlen(line) - start - key_len - 1);
+	fprintf(stderr, "newline = %s\n", new_line); //debug
 	return (new_line);
 }
 
