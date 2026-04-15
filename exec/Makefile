@@ -36,6 +36,7 @@ SRC_FILES := \
 	free.c \
 	ft_itoa.c \
 	heredoc.c \
+	expansion.c
 # 	expansion.c
 
 BUILTINS_SRC_FILES := \

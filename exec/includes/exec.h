@@ -62,6 +62,7 @@ typedef struct s_data
 	t_token *head;
 	int		nmb_of_pipes;
 	char	*line;
+	int		index;
 }	t_data;
 
 //free.c
@@ -92,6 +93,7 @@ int	ft_isalpha(int c);
 char	*ft_substr(char const *str, int start, int length);
 int	ft_isalnum(int c);
 void	*ft_memcpy(void	*to, const void*from, size_t bytes);
+int		check_delimeters(char c);
 
 //childs.c
 int	ft_child_process(t_token *head, t_data *data, int i);
@@ -183,6 +185,14 @@ void ft_close_heredoc_fds(t_token *head);
 
 //expansion.c
 char	*get_key(char *line, int start);
+
+//expansions
+char	*check_expansions(t_data *data);
+bool	convert_expansions(t_data *d, int start);
+char 	*ft_getenv(t_data *data, char *var);
+char	*get_key(char *line, int start);
+bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key_len);
+
 
 
 #endif

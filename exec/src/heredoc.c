@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 16:53:13 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/15 12:23:43 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/15 15:39:40 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,12 @@ ft_strncmp(line, curr->value, ft_strlen(curr->value)) == 0)
 			break;
 		if (curr->type == HEREDOC_EXPANSION)
 		{
+			data->line = line;
 			if (ft_strchr(line, '$') != NULL)
-				line = ft_heredoc_expansion(line, data);
-					if (line == NULL)
-						return (-1);
+				check_expansions(data);
+			line = data->line;
+			if (line == NULL)
+				return (-1);
 		}
 		write(curr->heredoc_fd, line, ft_strlen(line));
     	write(curr->heredoc_fd, "\n", 1);

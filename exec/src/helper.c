@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 12:02:36 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 14:39:38 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/15 15:16:41 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,4 +180,11 @@ void	*ft_memcpy(void	*to, const void*from, size_t bytes)
 		i++;
 	}
 	return (res);
+}
+
+int		check_delimeters(char c)
+{
+	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
+		return (1);
+	return (0);
 }
