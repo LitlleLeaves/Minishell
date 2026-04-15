@@ -6,27 +6,27 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:23:46 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/10 16:11:11 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:06:16 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h" 
 
-void	check_expansions(t_data *d)
+char	*check_expansions(t_data *d, char *line)
 {
 	int		index;
 	bool	check;
 
 	index = 0;
-	while (d->line[index] != '\0')
+	while (line[index] != '\0')
 	{
-		if (d->line[index] == '\'')
+		if (line[index] == '\'')
 		{
 			index++;
-			while (d->line[index] != '\'' && d->line[index] != '\0')
+			while (line[index] != '\'' && line[index] != '\0')
 				index++;
 		}
-		while (d->line[index] == '$')
+		while (line[index] == '$')
 		{
 			check = convert_expansions(d, index);
 			if (check == false)
@@ -34,6 +34,7 @@ void	check_expansions(t_data *d)
 		}
 		index++;
 	}
+	return (line);
 }
 
 char	*get_key(char *line, int start)

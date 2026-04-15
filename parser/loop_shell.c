@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/14 14:24:11 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:07:34 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		main_loop(char	*envp[])
 		if (data.line && *data.line)
 		{
 			add_history(data.line);
-			check_expansions(&data);
+			check_expansions(&data, &data.line);
 			if (data.line == NULL)
 				break ;
 			data.head = tokenize_input(&data, data.line);
@@ -83,10 +83,10 @@ static char	*stringify_enum(t_token_type token)
 		return ("REDIR_OUT_TRUNC");
 	if (token == REDIR_IN)
 		return ("REDIR_IN");
-	if (token == HEREDOC)
-		return ("HEREDOC");
-	if (token == HEREDOC_QUOTES)
-		return ("HEREDOC_QUOTES");
+	if (token == HEREDOC_EXPANSION)
+		return ("HEREDOC_EXPANSION");
+	if (token == HEREDOC_NO_EXPANSION)
+		return ("HEREDOC_NO_EXPANSION");
 	return (NULL);
 }
 
