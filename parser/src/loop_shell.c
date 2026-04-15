@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   loop_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/15 15:07:34 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:37:34 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
 static char	*stringify_enum(t_token_type token);
 static void	print_tokenized_list(t_data	*data);
 
