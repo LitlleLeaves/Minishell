@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_garbage.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:17:09 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/14 14:20:24 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:50:04 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ t_token	*classify_and_make(t_data *d, char *line)
  	else if (line[index] == '>' && line[index + 1] == '>') //append
 		return (if_redirection(d, index, line, REDIR_OUT_APP));
  	else if (line[index] == '<' && line[index + 1] == '<') // heredeoc
-		return (if_redirection(d, index, line, HEREDOC));
+		return (if_redirection(d, index, line, HEREDOC_EXPANSION));
  	else if (line[index] == '>') // truncate
 		return (if_redirection(d, index, line, REDIR_OUT_TRUNC));
  	else if (line[index] == '<') // input

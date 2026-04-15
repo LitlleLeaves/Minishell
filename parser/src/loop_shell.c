@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/15 15:07:34 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:49:57 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,41 @@ int	main(int argc, char *argv[], char *envp[])
 	return (0);
 }
 
+void	ft_init_data(t_data *data)
+{
+	data->current = NULL;
+	data->head = NULL;
+	data->line = NULL;
+	data->shutdown = -1;
+	data->exit_code = 0;
+}
+
 //main loop of te shell
 int		main_loop(char	*envp[])
 {
 	t_data	data;
 
-	data.current = NULL;
-	data.head = NULL;
-	data.line = NULL;
+	ft_init_data(&data);
 	if (ft_copy_envp(&data, envp) == -1)
 		return (printf("error"));
 	while (1)
 	{
 		data.line = get_line();
-		//printf("%s\n", data.line);
 		if (data.line && *data.line)
 		{
 			add_history(data.line);
-			check_expansions(&data, &data.line);
+			check_expansions(&data);
 			if (data.line == NULL)
 				break ;
 			data.head = tokenize_input(&data, data.line);
 			data.current = data.head;
-			//printf("woopwooop\n");
 			print_tokenized_list(&data);
+			if (handle_heredoc(data.head, &data) < 0)
+				return (ft_free_arr((void **)data.envp), ft_free_tokens(data.head), -1);
+			if (ft_start_exec(data.head, &data) < 0)
+				return (ft_free_arr((void **)data.envp), ft_free_tokens(data.head), -1);
+			ft_free_arr((void **)data.envp);
 		}
-		//printf("%s\n", data.line);
 	}
 	rl_clear_history();	
 	return (0);
@@ -90,43 +99,43 @@ static char	*stringify_enum(t_token_type token)
 	return (NULL);
 }
 
-int ft_copy_envp(t_data *data, char **envp)
-{
-    int i = 0;
+// int ft_copy_envp(t_data *data, char **envp)
+// {
+//     int i = 0;
 
-    while (envp[i] != NULL)
-        i++;
-    data->envp = ft_calloc(i + 1, sizeof(char *));
-    if (data->envp == NULL)
-        return (-1);
-    int j = 0;
-    while (j < i)
-    {
-        data->envp[j] = ft_strdup(envp[j]);
-        if (!data->envp[j])
-            return (-1);
-        j++;
-    }
-    return (1);
-}
+//     while (envp[i] != NULL)
+//         i++;
+//     data->envp = ft_calloc(i + 1, sizeof(char *));
+//     if (data->envp == NULL)
+//         return (-1);
+//     int j = 0;
+//     while (j < i)
+//     {
+//         data->envp[j] = ft_strdup(envp[j]);
+//         if (!data->envp[j])
+//             return (-1);
+//         j++;
+//     }
+//     return (1);
+// }
 
-void	*ft_calloc(size_t nmemb, size_t size)
-{
-	unsigned char	*ptr;
-	size_t			i;
+// void	*ft_calloc(size_t nmemb, size_t size)
+// {
+// 	unsigned char	*ptr;
+// 	size_t			i;
 
-	if (nmemb == 0 || size == 0)
-		return (malloc(0));
-	if (nmemb > INT_MAX / size)
-		return (NULL);
-	ptr = malloc(nmemb * size);
-	if (ptr == NULL)
-		return (NULL);
-	i = 0;
-	while (i < nmemb * size)
-	{
-		ptr[i] = 0;
-		i++;
-	}
-	return ((void *)ptr);
-}
+// 	if (nmemb == 0 || size == 0)
+// 		return (malloc(0));
+// 	if (nmemb > INT_MAX / size)
+// 		return (NULL);
+// 	ptr = malloc(nmemb * size);
+// 	if (ptr == NULL)
+// 		return (NULL);
+// 	i = 0;
+// 	while (i < nmemb * size)
+// 	{
+// 		ptr[i] = 0;
+// 		i++;
+// 	}
+// 	return ((void *)ptr);
+// }

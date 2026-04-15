@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/13 15:26:10 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/15 17:39:26 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,24 +99,15 @@ int ft_copy_envp(t_data *data, char **envp)
 	return (1);
 }
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	t_token	*head;
-	t_data	data;
+// int	main(int argc, char *argv[], char *envp[])
+// {
+// 	t_token	*head;
+// 	t_data	data;
 
-	if (argc != 1 || argv[1] != NULL)
-		return (1);
-	head = ft_get_head();
-	data.shutdown = -1;
-	data.exit_code = 0;
-	data.head = head;
-	if (ft_copy_envp(&data, envp) == -1)
-		return (ft_free_arr((void **)head), -1);
-	if (handle_heredoc(head, &data) < 0)
-		return (ft_free_arr((void **)data.envp), ft_free_tokens(head), -1);
-	if (ft_start_exec(head, &data) < 0)
-		return (ft_free_arr((void **)data.envp), ft_free_tokens(head), -1);
-	ft_free_arr((void **)data.envp);
 
-	return (0);
-}
+// 	if (ft_copy_envp(&data, envp) == -1)
+// 		return (ft_free_arr((void **)head), -1);
+	
+
+// 	return (0);
+// }

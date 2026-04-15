@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_funcs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/14 14:26:00 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/15 17:50:58 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ t_token	*make_new_token(char *value, t_token_type type)
 	return (token);	
 }
 
-int		check_delimeters(char c)
-{
-	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
-		return (1);
-	return (0);
-}
+// int		check_delimeters(char c)
+// {
+// 	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
+// 		return (1);
+// 	return (0);
+// }
 
 t_token	*if_quotes(t_data *d, char *line, int start)
 {
