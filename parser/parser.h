@@ -25,9 +25,14 @@ typedef enum	e_token_type
     REDIR_OUT_TRUNC, 	// >
     REDIR_OUT_APP,		// >>
     REDIR_IN,			// <
+<<<<<<< HEAD
+    HEREDOC,			// <<
+	HEREDOC_QUOTES,
+=======
     HEREDOC_EXPANSION,		// << eof
 	HEREDOC_NO_EXPANSION,	// << 'eof' || << "eof"
 
+>>>>>>> refs/remotes/origin/master
 	ENVIRONMENT,
 }				t_token_type;
 
@@ -40,8 +45,11 @@ typedef struct	s_token
 
 typedef struct	s_data
 {
-	char	**envp;
+	int		shell_level;
+	int		exit_val;
+	int		index;
 	t_token	*head;
+	char	**envp;
 	t_token	*current;
 	char	*line;
 }				t_data;
@@ -54,18 +62,18 @@ char	*get_line(void);
 int		ft_copy_envp(t_data *data, char **envp);
 
 //tokens
-t_token	*classify_and_make(char *line);
-t_token	*tokenize_input(char *str);
+t_token	*classify_and_make(t_data *d, char *line);
+t_token	*tokenize_input(t_data *d, char *str);
 int		check_delimeters(char c);
-t_token *if_redirection(int start, char *line, t_token_type type);
-t_token	*if_word(int start, char *line);
+t_token *if_redirection(t_data *d, int start, char *line, t_token_type type);
+t_token	*if_word(t_data *d, int start, char *line);
 t_token	*make_new_token(char *value, t_token_type type);
-t_token	*if_quotes(char *line, int start);
+t_token	*if_quotes(t_data *d, char *line, int start);
 //t_token	*if_pipe(char *line);
 
 //token_indexer
-int		index_to_next_delimeter(char *line, int index);
-int		move_over_quotes(char *line, int index);
+//int		index_to_next_delimeter(char *line, int index);
+//int		move_over_quotes(char *line, int index);
 
 //ft_helpers
 char	*ft_strdup(char const *str);
@@ -76,11 +84,17 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 
 //expansions
-bool	check_expansions(t_data *data);
+void	check_expansions(t_data *data);
 bool	convert_expansions(t_data *d, int start);
 char 	*ft_getenv(t_data *data, char *var);
 char	*get_key(char *line, int start);
 bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key_len);
+
+
+
+//hoppa
+int		index_to_char(char	*str, char c);
+
 //errorhandler
 
 #endif

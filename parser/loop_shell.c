@@ -6,13 +6,13 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/06 19:15:05 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/14 14:24:11 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-//static char	*stringify_enum(t_token_type token);
-//static void	print_tokenized_list(t_data	*data);
+static char	*stringify_enum(t_token_type token);
+static void	print_tokenized_list(t_data	*data);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -35,15 +35,17 @@ int		main_loop(char	*envp[])
 	while (1)
 	{
 		data.line = get_line();
+		//printf("%s\n", data.line);
 		if (data.line && *data.line)
 		{
 			add_history(data.line);
-			if (check_expansions(&data) == false)
-				return (printf("weirderror"));
-		//	data.head = tokenize_input(data.line);
-		//	data.current = data.head;
-		//	//printf("woopwooop\n");
-		//	print_tokenized_list(&data);
+			check_expansions(&data);
+			if (data.line == NULL)
+				break ;
+			data.head = tokenize_input(&data, data.line);
+			data.current = data.head;
+			//printf("woopwooop\n");
+			print_tokenized_list(&data);
 		}
 		//printf("%s\n", data.line);
 	}
@@ -51,42 +53,42 @@ int		main_loop(char	*envp[])
 	return (0);
 }
 
-//static void	print_tokenized_list(t_data	*data)
-//{
-//	while (data->current != NULL)
-//	{
-//		if (data->current->value == NULL)
-//			data->current = data->current->next;
-//		printf("%s %s\n", data->current->value, stringify_enum(data->current->type));
-//		data->current = data->current->next;
-//	}
-//	while (data->head != NULL)
-//	{
-//		data->current = data->head;
-//		data->head = data->head->next;
-//		free(data->current->value);
-//		free(data->current);
-//	}
-//}
+static void	print_tokenized_list(t_data	*data)
+{
+	while (data->current != NULL)
+	{
+		if (data->current->value == NULL)
+			data->current = data->current->next;
+		printf("%s %s\n", data->current->value, stringify_enum(data->current->type));
+		data->current = data->current->next;
+	}
+	while (data->head != NULL)
+	{
+		data->current = data->head;
+		data->head = data->head->next;
+		free(data->current->value);
+		free(data->current);
+	}
+}
 
-
-
-//static char	*stringify_enum(t_token_type token)
-//{
-//	if (token == WORD)
-//		return ("command");
-//	if (token == PIPE)
-//		return ("PIPE");
-//	if (token == REDIR_OUT_APP)
-//		return ("REDIR_OUT_APP");
-//	if (token == REDIR_OUT_TRUNC)
-//		return ("REDIR_OUT_TRUNC");
-//	if (token == REDIR_IN)
-//		return ("REDIR_IN");
-//	if (token == HEREDOC)
-//		return ("HEREDOC");
-//	return (NULL);
-//}
+static char	*stringify_enum(t_token_type token)
+{
+	if (token == WORD)
+		return ("WORD");
+	if (token == PIPE)
+		return ("PIPE");
+	if (token == REDIR_OUT_APP)
+		return ("REDIR_OUT_APP");
+	if (token == REDIR_OUT_TRUNC)
+		return ("REDIR_OUT_TRUNC");
+	if (token == REDIR_IN)
+		return ("REDIR_IN");
+	if (token == HEREDOC)
+		return ("HEREDOC");
+	if (token == HEREDOC_QUOTES)
+		return ("HEREDOC_QUOTES");
+	return (NULL);
+}
 
 int ft_copy_envp(t_data *data, char **envp)
 {

@@ -6,100 +6,105 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:17:09 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/04 16:17:33 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/14 14:20:24 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 
-int		index_to_next_delimeter(char *line, int index)
-{
-	while (line[index] == ' ')
-		index++;
-	if (line[index] == '<' || line[index] == '>')
-	{
-		while (check_delimeters(line[index]) == 1)
-			index++;
-		while (check_delimeters(line[index]) == 0)
-			index++;
-	}
-	if (line[index] == '\'' || line[index] == '"')
-		index = move_over_quotes(line, index);
-	else if (line[index] == '|')
-		index++;
-	else
-	{
-		while (check_delimeters(line[index]) == 0)
-			index++;
-	}
-	return (index);
-}
+//int		index_to_next_delimeter(char *line, int index)
+//{
+//	while (line[index] == ' ')
+//		index++;
+//	if (line[index] == '<' || line[index] == '>')
+//	{
+//		while (check_delimeters(line[index]) == 1)
+//			index++;
+//		if (line[index] == '\'' || line[index] == '"')
+//			index = index_to_char(line + index + 1, line[index]);
+//		else
+//		{
+//			while (check_delimeters(line[index]) == 0)
+//				index++;
+//		}
+//	}
+//	else if (line[index] == '\'' || line[index] == '"')
+//		index = move_over_quotes(line, index);
+//	else if (line[index] == '|')
+//		index++;
+//	else
+//	{
+//		while (check_delimeters(line[index]) == 0)
+//			index++;
+//	}
+//	return (index);
+//}
 
-int		move_over_quotes(char *line, int index)
-{
-	char	c_to_find;
+//int		move_over_quotes(char *line, int index)
+//{
+//	char	c_to_find;
 	
-	c_to_find = line[index];
-	if (line[index] != '\0')
-		index++;
-	while (line[index] != '\0' && line[index] != c_to_find)
-		index++;
-	if (line[index] != '\0')
-		index++;
-	// printf("yowpindex = %s\n", line + index);
-	return (index);
-}
+//	c_to_find = line[index];
+//	if (line[index] != '\0')
+//		index++;
+//	while (line[index] != '\0' && line[index] != c_to_find)
+//		index++;
+//	if (line[index] != '\0')
+//		index++;
+//	// printf("yowpindex = %s\n", line + index);
+//	return (index);
+//}
 
-t_token	*tokenize_input(char *str)
+t_token	*tokenize_input(t_data *d, char *str)
 {
 	t_token *head;
 	t_token	*current;
-	int		index;
 	int		start;
 
 	current = NULL;
-	index = 0;
-	while (str[index] != '\0')
+	d->index = 0;
+	while (str[d->index] != '\0')
 	{
-		start = index;
+		start = d->index;
 		//make the token
 		if (current == NULL)
 		{
-			current = classify_and_make(str + start);
+			current = classify_and_make(d, str + start);
 			head = current;
 		}
 		else
 		{
-			current->next = classify_and_make(str + start);
+			current->next = classify_and_make(d, str + start);
 			current = current->next;
 		}
-		index = index_to_next_delimeter(str, index);
+		//printf("%d\n", d->index);
+		//printf("%s\n", d->line);
+		//d->index = index_to_next_delimeter(str, d->index);
 	}
 	return (head);
 }
 
-t_token	*classify_and_make(char *line)
+t_token	*classify_and_make(t_data *d, char *line)
 {
 	int		index;
 
 	index = 0;
 	while (line[index] == ' ')
 		index++;
-	//printf("index%d\n", index);
-	//printf("on:%c\n", line[index]);
 	if (check_delimeters(line[index]) == 0) //command
-		return (if_word(index, line));
+		return (if_word(d, index, line));
 	else if (line[index] == '|') //pipe
-		return (make_new_token("|", PIPE));
+		return (d->index += index + 1 ,make_new_token("|", PIPE));
  	else if (line[index] == '>' && line[index + 1] == '>') //append
-		return (if_redirection(index, line, REDIR_OUT_APP));
+		return (if_redirection(d, index, line, REDIR_OUT_APP));
  	else if (line[index] == '<' && line[index + 1] == '<') // heredeoc
-		return (if_redirection(index, line, HEREDOC));
+		return (if_redirection(d, index, line, HEREDOC));
  	else if (line[index] == '>') // truncate
-		return (if_redirection(index, line, REDIR_OUT_TRUNC));
+		return (if_redirection(d, index, line, REDIR_OUT_TRUNC));
  	else if (line[index] == '<') // input
-		return (if_redirection(index, line, REDIR_IN));
+		return (if_redirection(d, index, line, REDIR_IN));
+	d->index += index;
 	return (NULL);
 }
 

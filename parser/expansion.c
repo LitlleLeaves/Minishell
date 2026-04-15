@@ -6,16 +6,16 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:23:46 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/06 21:07:35 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/10 16:11:11 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h" 
 
-bool	check_expansions(t_data *d)
+void	check_expansions(t_data *d)
 {
-	//char	*temp;
 	int		index;
+	bool	check;
 
 	index = 0;
 	while (d->line[index] != '\0')
@@ -26,14 +26,14 @@ bool	check_expansions(t_data *d)
 			while (d->line[index] != '\'' && d->line[index] != '\0')
 				index++;
 		}
-		if (d->line[index] == '$')
+		while (d->line[index] == '$')
 		{
-			convert_expansions(d, index);
+			check = convert_expansions(d, index);
+			if (check == false)
+				index++;
 		}
-		//else
-			index++;
+		index++;
 	}
-	return (true);
 }
 
 char	*get_key(char *line, int start)
@@ -50,7 +50,6 @@ char	*get_key(char *line, int start)
 	key = ft_substr(line, start, index);
 	if (!key)
 		return (printf("error in getkey\n"), NULL);
-	//printf("key%s\n", key);
 	return (key);
 }
 
@@ -61,19 +60,26 @@ bool	convert_expansions(t_data *d, int start)
 	char	*value;
 	int		length;
 	int		key_length;
+	bool	check;
 
 	index = 0;
 	start++;
 	key = get_key(d->line, start);
 	key_length = ft_strlen(key);
 	value = ft_getenv(d, key);
+	if (!value)
+	{
+		check = replace_key_in_line(d, NULL, start - 1, 0, key_length);
+		if (check == false)
+			d->line = NULL;
+		return (printf("invalid key\n"), false);
+	}
 	length = ft_strlen(value);
 	if (replace_key_in_line(d, value, start - 1, length, key_length) == false)
 		return (printf("ERROR\n"), false);
-	//printf()
-	//printf("value%s\n", value);
 	return (true);
 }
+
 bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key_len)
 {
 	int		index;
@@ -81,30 +87,34 @@ bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key
 	int		old_len;
 	int		tot_len;
 	int		val_index;
+	int		len_diff;
 
 	val_index = 0;
 	index = 0;
 	old_len = ft_strlen(d->line);
-	tot_len = (val_len - key_len + 1) + (old_len + 1);
-	new = malloc(tot_len);
+	len_diff = (val_len - key_len) - 1;
+	if (key_len == old_len && !value)
+		return (false);
+	tot_len = len_diff + old_len;
+	new = malloc(tot_len + 1);
 	if (!new)
 		return (printf("mallocerror\n"), false);
 	while (index < start)
 	{
 		new[index] = d->line[index];
 		index++;
-	}	
-	while (index < start + val_len + 1)
+	}
+	while (index < start + val_len)
 		new[index++] = value[val_index++];
 	while (index < tot_len)
 	{
-		new[index] = d->line[index + val_len - key_len];
+		new[index] = d->line[index - len_diff];
 		index++;
 	}
 	new[index] = '\0';
 	printf("%s\n", new);
-	d->line = ft_strdup(new);
-	return (new);
+	d->line = new;
+	return (true);
 }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)

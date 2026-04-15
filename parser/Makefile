@@ -1,4 +1,4 @@
-NAME    := MINISHELLL
+NAME    := MINISHELL
 
 # Compiler and flags
 CC      := cc

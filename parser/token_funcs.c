@@ -6,7 +6,7 @@
 /*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/04 17:22:54 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/14 14:26:00 by side-lan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_token	*make_new_token(char *value, t_token_type type)
 	return (token);	
 }
 
-
 int		check_delimeters(char c)
 {
 	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
@@ -43,7 +42,7 @@ int		check_delimeters(char c)
 	return (0);
 }
 
-t_token	*if_quotes(char *line, int start)
+t_token	*if_quotes(t_data *d, char *line, int start)
 {
 	char	c_to_find;
 	int		index;
@@ -51,25 +50,22 @@ t_token	*if_quotes(char *line, int start)
 
 	index = 0;
 	c_to_find = line[start];
-	if (line[start] != '\0')
+	if (line[start] != '\0')	
 		start++;
 	while (line[start + index] != '\0' && line[start + index] != c_to_find)
-	{
 		index++;
-		//if (line[start + index] == '$' && c_to_find == '"')
-		//	line = expansion_in_quotes(line, start, index);
-	}
 	if (index == 0)
 	{
 		value = ft_strdup("");
+		d->index += start + 2;
 		return (make_new_token(value, WORD));
 	}
 	value = ft_substr(line, start, index);
+	d->index += index + start + 1;
 	return (make_new_token(value, WORD));
 }
 
-// wc -l | wc -l
-t_token	*if_word(int start, char *line)
+t_token	*if_word(t_data *d, int start, char *line)
 {	
 	t_token	*token;
 	int		index;
@@ -78,36 +74,82 @@ t_token	*if_word(int start, char *line)
 	index = 0;
 	if (line[start] == '\'' || line[start] == '"')
 	{
-		return (if_quotes(line, start));
+		return (if_quotes(d, line, start));
 	}
-	while (check_delimeters(line[index + start]) == 0 && line[index + start] != '\0')
+	while (check_delimeters(line[index + start]) == 0 && line[index + start] != '\0' \
+			&& (line[index + start] != '\'' && line[index + start] != '"'))
 		index++;
 	value = ft_substr(line, start, index);
 	if (!value)
 		return (printf("substr error"), NULL);
 	token = make_new_token(value, WORD);
 	free(value);
+	d->index += index + start;
 	return (token);
 }
 
-t_token *if_redirection(int start, char *line, t_token_type type)
+int	index_to_char(char	*str, char c)
+{
+	int	index;
+	
+	index = 0;
+	while (str[index] != '\0' && str[index] != c)
+		index++;
+	return (index);
+}
+
+t_token *if_redirection(t_data *d, int start, char *line, t_token_type type)
 {
 	int		index;
 	char 	*value;
 	t_token	*token;
-	
+
 	index = 0;
 	while (check_delimeters(line[start]) == 1)
 	{
 		start++;
 		if (line[start] == '\0')
-			return (printf("huh??"), NULL);
+			return (d->index += start + 1, make_new_token(ft_strdup(""), type));
 	}
-	while (check_delimeters(line[start + index]) == 0 && line[index + start] != '\0')
-		index++;
-	value = ft_substr(line, start, index);
+	if (line[start] == '\'' || line[start] == '"')
+		index = index_to_char(line + start + 1, line[start]);
+	else
+	{
+		while (check_delimeters(line[start + index]) == 0 && line[index + start] != '\0')
+			index++;
+	}
+	value = ft_substr(line, start, index);	
 	if (!value)
 		return (NULL);
 	token = make_new_token(value, type);
+	d->index += index + start;
+	return (token);
+}
+
+t_token *if_heredoc(t_data *d, int start, char *line, t_token_type type)
+{
+	int		index;
+	char 	*value;
+	t_token	*token;
+
+	index = 0;
+	while (check_delimeters(line[start]) == 1)
+	{
+		start++;
+		if (line[start] == '\0')
+			return (d->index += start + 1, make_new_token(ft_strdup(""), type));
+	}
+	if (line[start] == '\'' || line[start] == '"')
+		index = index_to_char(line + start + 1, line[start]);
+	else
+	{
+		while (check_delimeters(line[start + index]) == 0 && line[index + start] != '\0')
+			index++;
+	}
+	value = ft_substr(line, start, index);	
+	if (!value)
+		return (NULL);
+	token = make_new_token(value, type);
+	d->index += index + start;
 	return (token);
 }
