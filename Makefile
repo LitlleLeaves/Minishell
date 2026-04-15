@@ -55,7 +55,7 @@ BUILTINS_SRC_FILE_E := \
 SRC_FILES_P := \
 	ft_helpers.c \
 	loop_shell.c \
-	token_functs.c \
+	token_funcs.c \
 	token_garbage.c
 
 # Object filenames: place in obj/ with same basenames
@@ -89,7 +89,7 @@ $(OBJ_DIR_E)/%.o: $(SRC_DIR_E)/%.c | $(OBJ_DIR_E) $(DEP_DIR_E)
 	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MP -MF $(DEP_DIR_E)/$*.d
 
 $(OBJ_DIR_P)/%.o: $(SRC_DIR_P)/%.c | $(OBJ_DIR_P) $(DEP_DIR_P)
-	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MP -MF $(DEP_DIR_P)/$*.d
+	$(CC) $(CFLAGS) -DBUILD_PARSER -c $< -o $@ -MMD -MP -MF $(DEP_DIR_P)/$*.d
 
 $(OBJ_DIR_E)/%.o: $(BUILTINS_DIR)/%.c | $(OBJ_DIR_E) $(DEP_DIR_E)
 	$(CC) $(CFLAGS) -c $< -o $@ -MMD -MP -MF $(DEP_DIR_E)/$*.d
