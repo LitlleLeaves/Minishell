@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   heredoc.c                                          :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: jjhurry <jjhurry@student.42.fr>              +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2026/04/08 16:53:13 by jjhurry       #+#    #+#                 */
-/*   Updated: 2026/04/14 14:39:54 by jjhurry       ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/08 16:53:13 by jjhurry           #+#    #+#             */
+/*   Updated: 2026/04/15 12:23:43 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,35 @@ char *ft_heredoc_replace_line(char *line, char *key, char *value, int start)
 		return (NULL);
 	if (start != 0)
 		ft_memcpy(new_line, line, start);
-	fprintf(stderr, "newline = %s\n", new_line); //debug
 	ft_memcpy(new_line + start, value, value_len);
-	fprintf(stderr, "newline = %s\n", new_line); //debug
 	ft_memcpy(new_line + value_len + start, line + start + key_len + 1, \
     ft_strlen(line) - start - key_len - 1);
-	fprintf(stderr, "newline = %s\n", new_line); //debug
+	free(line);
 	return (new_line);
+}
+
+char *ft_heredoc_expansion_helper(int key_len, char *line, int i, t_data *data)
+{
+	char	*key;
+	char	*value;
+	
+	key = ft_substr(line, i , key_len);
+		if (key == NULL )
+			return (NULL);
+	value = ft_getenv(data, key);
+		if (value == NULL)
+			value = "";
+	line = ft_heredoc_replace_line(line, key, value, i - 1);
+	free(key);
+	return (line);
 }
 
 char *ft_heredoc_expansion(char *line, t_data *data)
 {
 	int		i;
 	int		key_len;
-	char	*key;
-	char	*value;
 
 	i = 0;
-	fprintf(stderr, "line = %s\n", line); //DEBUG
 	while (line[i] != '\0')
 	{
 		key_len = 0;
@@ -85,19 +96,9 @@ char *ft_heredoc_expansion(char *line, t_data *data)
 				continue;
 			while(ft_isalnum(line[i + key_len]) == 1 || line[i + key_len] == '_')
 				key_len++;	
-			key = ft_substr(line, i , key_len);
-			if (key == NULL )
+			line = ft_heredoc_expansion_helper(key_len, line, i, data);
+			if (line == NULL)
 				return (NULL);
-			value = ft_getenv(data, key);
-			if (value == NULL)
-			{
-				free(key);
-				i++;
-				continue ;
-			}
-			fprintf(stderr, "%s %s\n", key, value); //DEBUG
-			line = ft_heredoc_replace_line(line, key, value, i - 1);
-			free(key);
 			i = i - 1;
 		}
 		if (line[i] != '$')

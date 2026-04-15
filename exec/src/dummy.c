@@ -26,16 +26,17 @@ t_token	*ft_get_head()
         t_token_type type;
     } token_data[] = {
         {"eof", HEREDOC_EXPANSION},
-        {"echo", WORD},
-		// {"~/Projects/Minishell/exec/infile", WORD},
+		// {"infile", REDIR_IN},
+        {"grep", WORD},
+		{"j", WORD},
 		// {"jjhurry", WORD},
-		{"outfile", REDIR_OUT_TRUNCT},
+		// {"outfile", REDIR_OUT_TRUNCT},
         {NULL, PIPE},
 		// // // {"infile", REDIR_IN},
-        {"cat", WORD},
-		// // {"-n", WORD},
+        {"grep", WORD},
+		{"j", WORD},
         // // {NULL, PIPE},
-        // // {"wc", WORD},
+        // {"wc", WORD},
 		// // {"-l", WORD},
         {"outfile2", REDIR_OUT_APPEND},
 		
