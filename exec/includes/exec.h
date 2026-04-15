@@ -13,11 +13,9 @@
 #include <sys/ioctl.h>
 #include <termios.h>
 #include <termcap.h>
-#include <errno.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include <stdbool.h>
-// < infile <infile2 < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
+// < infile< infile2.txt < infile3 wc <infile4 -l |  wc -l  | wc -l > outfile
 
 typedef enum	e_token_type
 {
