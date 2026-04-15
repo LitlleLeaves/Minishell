@@ -6,11 +6,12 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/15 17:49:57 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/15 17:55:30 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
 static char	*stringify_enum(t_token_type token);
 static void	print_tokenized_list(t_data	*data);
 
