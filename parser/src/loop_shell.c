@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/16 12:10:26 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/16 14:09:01 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ int		main_loop(char	*envp[])
 		{
 			add_history(data.line);
 			check_expansions(&data);
-			check_expansions(&data);
+			// check_expansions(&data);
 			if (data.line == NULL)
 				break ;
 			data.head = tokenize_input(&data, data.line);
 			data.current = data.head;
 			print_tokenized_list(&data);
+			free(data.line);
 			if (handle_heredoc(data.head, &data) < 0)
 				return (ft_free_arr((void **)data.envp), ft_free_tokens(data.head), -1);
 			if (ft_start_exec(data.head, &data) < 0)
