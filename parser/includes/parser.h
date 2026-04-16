@@ -25,9 +25,8 @@ typedef enum	e_token_type
     REDIR_OUT_TRUNC, 	// >
     REDIR_OUT_APP,		// >>
     REDIR_IN,			// <
-    HEREDOC_EXPANSION,		// << eof
-	HEREDOC_NO_EXPANSION,	// << 'eof' || << "eof"
-
+    HEREDOC,			// <<
+	HEREDOC_QUOTES,
 	ENVIRONMENT,
 }				t_token_type;
 
@@ -75,7 +74,7 @@ char	*ft_substr(char const *str, int start, int length);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 //expansions
-char	*check_expansions(t_data *data, char *line);
+void	check_expansions(t_data *data);
 bool	convert_expansions(t_data *d, int start);
 char 	*ft_getenv(t_data *data, char *var);
 char	*get_key(char *line, int start);

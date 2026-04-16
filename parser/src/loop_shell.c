@@ -6,7 +6,15 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
+<<<<<<< HEAD:parser/src/loop_shell.c
 /*   Updated: 2026/04/15 17:55:30 by jjhurry          ###   ########.fr       */
+=======
+<<<<<<< HEAD
+/*   Updated: 2026/04/15 15:07:34 by side-lan         ###   ########.fr       */
+=======
+/*   Updated: 2026/04/14 14:24:11 by side-lan         ###   ########.fr       */
+>>>>>>> 843164a (pushy)
+>>>>>>> 7a73c5d3078b23fb905618a039cdb9a0bb4897f4:parser/loop_shell.c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +54,15 @@ int		main_loop(char	*envp[])
 		if (data.line && *data.line)
 		{
 			add_history(data.line);
+<<<<<<< HEAD:parser/src/loop_shell.c
 			check_expansions(&data);
+=======
+<<<<<<< HEAD
+			check_expansions(&data, &data.line);
+=======
+			check_expansions(&data);
+>>>>>>> 843164a (pushy)
+>>>>>>> 7a73c5d3078b23fb905618a039cdb9a0bb4897f4:parser/loop_shell.c
 			if (data.line == NULL)
 				break ;
 			data.head = tokenize_input(&data, data.line);
@@ -93,10 +109,17 @@ static char	*stringify_enum(t_token_type token)
 		return ("REDIR_OUT_TRUNC");
 	if (token == REDIR_IN)
 		return ("REDIR_IN");
+<<<<<<< HEAD
 	if (token == HEREDOC_EXPANSION)
 		return ("HEREDOC_EXPANSION");
 	if (token == HEREDOC_NO_EXPANSION)
 		return ("HEREDOC_NO_EXPANSION");
+=======
+	if (token == HEREDOC)
+		return ("HEREDOC");
+	if (token == HEREDOC_QUOTES)
+		return ("HEREDOC_QUOTES");
+>>>>>>> 843164a (pushy)
 	return (NULL);
 }
 
