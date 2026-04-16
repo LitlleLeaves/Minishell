@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_funcs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: side-lan <side-lan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/14 14:26:00 by side-lan         ###   ########.fr       */
+/*   Updated: 2026/04/16 12:43:03 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,25 @@ t_token	*make_new_token(char *value, t_token_type type)
 		temp = NULL;
 	else
 	{
-		temp = strdup(value);
+		// temp = strdup(value); //debug veranderd want strdup doet all mallocen
+		temp = value;
 		if (!temp)
 			return (printf("value error"), NULL);
 	}
 	token->value = temp;
 	token->type = type;
 	token->next = NULL;
+	token->filename = NULL;
 	//printf("token:%s\n", token->value);
 	return (token);	
 }
 
-int		check_delimeters(char c)
-{
-	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
-		return (1);
-	return (0);
-}
+// int		check_delimeters(char c)
+// {
+// 	if (c == '|' || c == '>' || c == '<' || c == ' ' || c == '\0')
+// 		return (1);
+// 	return (0);
+// }
 
 t_token	*if_quotes(t_data *d, char *line, int start)
 {
@@ -83,7 +85,7 @@ t_token	*if_word(t_data *d, int start, char *line)
 	if (!value)
 		return (printf("substr error"), NULL);
 	token = make_new_token(value, WORD);
-	free(value);
+	// free(value);
 	d->index += index + start;
 	return (token);
 }

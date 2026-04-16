@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/12 14:56:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/08 16:38:25 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:37:00 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,14 @@ char *ft_make_executable(char *executable, t_data *data)
 		if (access(exec, F_OK) == 0)
 			return (free(path), ft_free_arr((void **)paths), exec);
 		i++;
+		free(path);
+		free(exec);
 	}
+	ft_free_tokens(data->head);
 	write(2, executable, ft_strlen(executable));
 	write(2,": command not found\n", 21);
-	return (free(exec), free(path), ft_free_arr((void **)paths), NULL);
+
+	return (ft_free_arr((void **)paths), NULL);
 }
 
 //decide if the exucatble path is relative or if it needs to be found in the path, and return the executable path
