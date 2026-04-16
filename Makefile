@@ -7,8 +7,7 @@
 ################################################################################
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g -I exec/includes -I parser/includes
-
+CFLAGS := -Wall -Wextra -Werror -g -I exec/includes
 NAME := minishell
 
 SRC_DIR_E := exec/src
