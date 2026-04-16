@@ -69,7 +69,7 @@ typedef struct s_data
     int     nmb_of_pipes;
     char    *line;
     int     index;
-
+	int		level;
     /* parser-related */
     int     shell_level;
     int     exit_val;
