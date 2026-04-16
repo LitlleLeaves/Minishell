@@ -1,0 +1,9 @@
+*.d
+*.o
+*infile*
+*outfile*
+minishell
+NoPerm
+log
+parser/dep/*
+exec/dep/*

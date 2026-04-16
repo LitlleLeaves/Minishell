@@ -6,39 +6,27 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:23:46 by side-lan          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2026/04/15 15:40:05 by jjhurry          ###   ########.fr       */
-=======
-/*   Updated: 2026/04/10 16:11:11 by side-lan         ###   ########.fr       */
->>>>>>> 843164a (pushy)
+/*   Updated: 2026/04/16 14:22:21 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h" 
 
-<<<<<<< HEAD
-char	*check_expansions(t_data *d, char *line)
-=======
 void	check_expansions(t_data *d)
->>>>>>> 843164a (pushy)
 {
 	int		index;
 	bool	check;
 
 	index = 0;
-	while (line[index] != '\0')
+	while (d->line[index] != '\0')
 	{
-		if (line[index] == '\'')
+		if (d->line[index] == '\'')
 		{
 			index++;
-			while (line[index] != '\'' && line[index] != '\0')
+			while (d->line[index] != '\'' && d->line[index] != '\0')
 				index++;
 		}
-<<<<<<< HEAD
-		while (line[index] == '$')
-=======
 		while (d->line[index] == '$')
->>>>>>> 843164a (pushy)
 		{
 			check = convert_expansions(d, index);
 			if (check == false)
@@ -46,10 +34,6 @@ void	check_expansions(t_data *d)
 		}
 		index++;
 	}
-<<<<<<< HEAD
-	return (line);
-=======
->>>>>>> 843164a (pushy)
 }
 
 char	*get_key(char *line, int start)
@@ -128,10 +112,7 @@ bool	replace_key_in_line(t_data *d, char *value, int start, int val_len, int key
 		index++;
 	}
 	new[index] = '\0';
-<<<<<<< HEAD
-=======
 	printf("%s\n", new);
->>>>>>> 843164a (pushy)
 	d->line = new;
 	return (true);
 }
