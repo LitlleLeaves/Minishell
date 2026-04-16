@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:30:48 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/16 11:39:56 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:10:26 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		main_loop(char	*envp[])
 		if (data.line && *data.line)
 		{
 			add_history(data.line);
-			check_expansions(&data, &data.line);
+			check_expansions(&data);
 			check_expansions(&data);
 			if (data.line == NULL)
 				break ;
@@ -59,9 +59,15 @@ int		main_loop(char	*envp[])
 				return (ft_free_arr((void **)data.envp), ft_free_tokens(data.head), -1);
 			if (ft_start_exec(data.head, &data) < 0)
 				return (ft_free_arr((void **)data.envp), ft_free_tokens(data.head), -1);
+		}
+		if (data.shutdown != -1)
+		{
 			ft_free_arr((void **)data.envp);
+			rl_clear_history();
+			exit(data.exit_code);
 		}
 	}
+	ft_free_arr((void **)data.envp);
 	rl_clear_history();	
 	return (0);
 }
@@ -74,13 +80,6 @@ static void	print_tokenized_list(t_data	*data)
 			data->current = data->current->next;
 		printf("%s %s\n", data->current->value, stringify_enum(data->current->type));
 		data->current = data->current->next;
-	}
-	while (data->head != NULL)
-	{
-		data->current = data->head;
-		data->head = data->head->next;
-		free(data->current->value);
-		free(data->current);
 	}
 }
 
@@ -102,44 +101,3 @@ static char	*stringify_enum(t_token_type token)
 		return ("HEREDOC_NO_EXPANSION");
 	return (NULL);
 }
-
-// int ft_copy_envp(t_data *data, char **envp)
-// {
-//     int i = 0;
-
-//     while (envp[i] != NULL)
-//         i++;
-//     data->envp = ft_calloc(i + 1, sizeof(char *));
-//     if (data->envp == NULL)
-//         return (-1);
-//     int j = 0;
-//     while (j < i)
-//     {
-//         data->envp[j] = ft_strdup(envp[j]);
-//         if (!data->envp[j])
-//             return (-1);
-//         j++;
-//     }
-//     return (1);
-// }
-
-// void	*ft_calloc(size_t nmemb, size_t size)
-// {
-// 	unsigned char	*ptr;
-// 	size_t			i;
-
-// 	if (nmemb == 0 || size == 0)
-// 		return (malloc(0));
-// 	if (nmemb > INT_MAX / size)
-// 		return (NULL);
-// 	ptr = malloc(nmemb * size);
-// 	if (ptr == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	while (i < nmemb * size)
-// 	{
-// 		ptr[i] = 0;
-// 		i++;
-// 	}
-// 	return ((void *)ptr);
-// }

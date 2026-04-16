@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/18 20:36:59 by side-lan          #+#    #+#             */
-/*   Updated: 2026/04/15 17:50:58 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:43:03 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,15 @@ t_token	*make_new_token(char *value, t_token_type type)
 		temp = NULL;
 	else
 	{
-		temp = strdup(value);
+		// temp = strdup(value); //debug veranderd want strdup doet all mallocen
+		temp = value;
 		if (!temp)
 			return (printf("value error"), NULL);
 	}
 	token->value = temp;
 	token->type = type;
 	token->next = NULL;
+	token->filename = NULL;
 	//printf("token:%s\n", token->value);
 	return (token);	
 }
@@ -83,7 +85,7 @@ t_token	*if_word(t_data *d, int start, char *line)
 	if (!value)
 		return (printf("substr error"), NULL);
 	token = make_new_token(value, WORD);
-	free(value);
+	// free(value);
 	d->index += index + start;
 	return (token);
 }

@@ -6,7 +6,7 @@
 /*   By: jjhurry <jjhurry@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 11:14:47 by jjhurry           #+#    #+#             */
-/*   Updated: 2026/04/15 17:39:26 by jjhurry          ###   ########.fr       */
+/*   Updated: 2026/04/16 12:06:15 by jjhurry          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ int ft_start_exec(t_token *head, t_data *data)
 
 	nmb_of_pipes = ft_find_pipes(head);
 	if (nmb_of_pipes == 0 && ft_check_builtins_before_fork(head, data) > 0)
-		return (ft_free_tokens(head), -1);
+	{
+		fprintf(stderr, "test: %s\n", ft_getenv(data, "PWD"));
+		ft_free_tokens(head);
+		return (1);
+	}
 	if (ft_create_pipes_and_pids(nmb_of_pipes,data) < 0)
 		return (ft_free_tokens(head),-2);
 	if (ft_fork_process(head, data, nmb_of_pipes) < 0)
@@ -76,7 +80,8 @@ int ft_start_exec(t_token *head, t_data *data)
 	ft_close_all_pipes(data, nmb_of_pipes);
 	// ft_close_heredoc_fds(head);
 	ft_wait_all_children(data, nmb_of_pipes);
-	return (ft_cleanup(head, data, nmb_of_pipes), 1);
+	ft_cleanup(head, data, nmb_of_pipes);
+	return (1);
 }
 
 int ft_copy_envp(t_data *data, char **envp)
